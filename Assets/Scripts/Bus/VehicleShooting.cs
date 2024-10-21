@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq; // For sorting with LINQ
 using TMPro;
 
@@ -10,6 +11,8 @@ public class VehicleShooting : MonoBehaviour
     [SerializeField] private GameObject shootingUI;
     [SerializeField] private TextMeshProUGUI ammoCountUI;
     [SerializeField] private GameObject crosshairUI;
+    [SerializeField] private Slider shootingSlidingTimerUI;
+
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float crosshairScaleDuration = 0.1f;  // Time for the crosshair to scale
     [SerializeField] private float crosshairMaxScale = 1.5f;  // Max scale of the crosshair during shooting effect
@@ -20,6 +23,9 @@ public class VehicleShooting : MonoBehaviour
     [SerializeField] private float bulletSpeed = 1000f;   // Speed of the bullet
     [SerializeField] private float bulletLifetime = 5f;
 
+    [SerializeField] private float shootingTime = 10f;
+    private float shootingTimeElaspedTime;
+
     private int currentAmmo;
     private float elaspedTime;
     private Vector3 originalCrosshairScale;  // Store the original crosshair scale
@@ -29,6 +35,7 @@ public class VehicleShooting : MonoBehaviour
         currentAmmo = 0;
         UpdateShootingUI();
         originalCrosshairScale = crosshairUI.transform.localScale;  // Store the initial scale
+        shootingSlidingTimerUI.maxValue = shootingTime;
     }
 
     // Update is called once per frame
@@ -56,6 +63,17 @@ public class VehicleShooting : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))
         {
             GiveAmmo();
+        }
+
+        if (shootingTimeElaspedTime > 0)
+        {
+            shootingTimeElaspedTime -= Time.deltaTime;
+            shootingSlidingTimerUI.value = shootingTimeElaspedTime;
+        }
+        else
+        {
+            currentAmmo = 0;
+            UpdateShootingUI();
         }
     }
 
@@ -120,15 +138,13 @@ public class VehicleShooting : MonoBehaviour
     private void UpdateShootingUI()
     {
         shootingUI.SetActive(currentAmmo > 0);
-        if (ammoCountUI)
-        {
-            ammoCountUI.text = "Ammo: " + currentAmmo;
-        }
+        ammoCountUI.text = "Ammo: " + currentAmmo;
     }
 
     public void GiveAmmo()
     {
         currentAmmo = maxAmmo;
+        shootingTimeElaspedTime = shootingTime;
         UpdateShootingUI();
 
         // Start the crosshair animation
