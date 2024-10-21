@@ -410,13 +410,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff37d2e218a7ab449ccfc2c9edf21a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 0
+  maxAmmo: 5
   shootingUI: {fileID: 0}
   ammoCountUI: {fileID: 0}
   crosshairUI: {fileID: 0}
   fireRate: 1
   crosshairScaleDuration: 0.1
   crosshairMaxScale: 2
+  bulletPrefab: {fileID: 3469903934765407235, guid: b3e01cba14436a142a633d9e5e5ae577, type: 3}
+  bulletSpawnPointOffset: {x: 0, y: 2, z: 0}
+  bulletSpeed: 4000
+  bulletLifetime: 5
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
