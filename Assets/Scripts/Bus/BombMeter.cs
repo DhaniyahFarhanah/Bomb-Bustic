@@ -14,12 +14,14 @@ public class BombMeter : MonoBehaviour
 
     [Header("UI")]
     public Slider bombMeterSlider;
+    public RectTransform bombMeterSliderFill;
     public TextMeshProUGUI speedTextUI;
     public TextMeshProUGUI countdownTextUI;
 
     private Vehicle bus;
     private Rigidbody rb;
     private float currentSpeed;
+    private float maxSpeed;
 
     void Start()
     {
@@ -27,7 +29,8 @@ public class BombMeter : MonoBehaviour
         bus = GetComponent<Vehicle>();
 
         countdownTimer = bombBuffer;
-        bombMeterSlider.maxValue = bus.Settings.MaxSpeed;
+        maxSpeed = bus.Settings.MaxSpeed;
+        bombMeterSlider.maxValue = maxSpeed;
     }
 
     // Update is called once per frame
@@ -42,6 +45,7 @@ public class BombMeter : MonoBehaviour
     private void UIUpdate()
     {
         bombMeterSlider.value = currentSpeed;
+        bombMeterSlider.fillRect.anchorMin = new Vector2(0f, 1 - (minSpeed / maxSpeed));
         speedTextUI.text = "Speed: " + Mathf.FloorToInt(currentSpeed).ToString();
     }
 
@@ -50,7 +54,7 @@ public class BombMeter : MonoBehaviour
         if (currentSpeed <= minSpeed)
         {
             countdownTimer -= Time.deltaTime; 
-            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s";
+            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
             if (!countdownTextUI.gameObject.activeSelf)
             {
                 countdownTextUI.gameObject.SetActive(true);
