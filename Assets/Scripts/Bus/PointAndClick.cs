@@ -39,7 +39,7 @@ public class PointAndClick : MonoBehaviour
             GameObject clickedObject = hit.collider.gameObject;
             if (clickedObject)
             {
-                Debug.Log("Hit: " + clickedObject.name + " at distance: " + hit.distance);
+                //Debug.Log("Hit: " + clickedObject.name + " at distance: " + hit.distance);
                 if (clickedObject.GetComponentInParent<RougeAI>())
                 {
                     clickedObject.GetComponentInParent<RougeAI>().SelfDestruct();
