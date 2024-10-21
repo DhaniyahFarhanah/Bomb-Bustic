@@ -2,15 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq; // For sorting with LINQ
+using TMPro;
 
 public class VehicleShooting : MonoBehaviour
 {
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private GameObject shootingUI;
+    [SerializeField] private TextMeshProUGUI ammoCountUI;
+    private int currentAmmo;
+
+    private void Start()
+    {
+        shootingUI.SetActive(false);
+        GiveAmmo();
+    }
+
     // Update is called once per frame
     void Update()
     {
         // Check if the left mouse button was clicked
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
         {
+            AmmoLogic();
+
             // Create a ray from the center of the camera's viewport
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
 
@@ -28,6 +42,11 @@ public class VehicleShooting : MonoBehaviour
 
                 CheckHitList(hitList);
             }
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            GiveAmmo();
         }
     }
 
@@ -50,6 +69,29 @@ public class VehicleShooting : MonoBehaviour
                 if (clickedObject.GetComponent<ObstacleType>())
                     return;
             }
+        }
+    }
+
+    private void AmmoLogic()
+    {
+        --currentAmmo;
+        if (currentAmmo <= 0)
+        {
+            shootingUI.SetActive(false);
+        }
+        else if (ammoCountUI)
+        {
+            ammoCountUI.text = "Ammo: " + currentAmmo;
+        }
+    }
+
+    public void GiveAmmo()
+    {
+        currentAmmo = maxAmmo;
+        shootingUI.SetActive(true);
+        if (ammoCountUI)
+        {
+            ammoCountUI.text = "Ammo: " + currentAmmo;
         }
     }
 }
