@@ -13,11 +13,12 @@ public class VehicleShooting : MonoBehaviour
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float crosshairScaleDuration = 0.1f;  // Time for the crosshair to scale
     [SerializeField] private float crosshairMaxScale = 1.5f;  // Max scale of the crosshair during shooting effect
+    [SerializeField] private float crosshairSpinDuration = 0.5f;  // Time for the crosshair to spin when ammo is given
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Vector3 bulletSpawnPointOffset;  // Where the bullet will spawn
     [SerializeField] private float bulletSpeed = 1000f;   // Speed of the bullet
-    [SerializeField] private float bulletLifetime = 5f; 
+    [SerializeField] private float bulletLifetime = 5f;
 
     private int currentAmmo;
     private float elaspedTime;
@@ -100,6 +101,22 @@ public class VehicleShooting : MonoBehaviour
         UpdateShootingUI();
     }
 
+    private IEnumerator SpinCrosshair()
+    {
+        // Rotate the crosshair over time
+        float elapsed = 0f;
+        while (elapsed < crosshairSpinDuration)
+        {
+            elapsed += Time.deltaTime;
+            float angle = Mathf.Lerp(0f, 360f, elapsed / crosshairSpinDuration); // Full 360-degree spin
+            crosshairUI.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            yield return null;
+        }
+
+        // Reset the crosshair rotation to its original value
+        crosshairUI.transform.rotation = Quaternion.identity;
+    }
+
     private void UpdateShootingUI()
     {
         shootingUI.SetActive(currentAmmo > 0);
@@ -113,5 +130,9 @@ public class VehicleShooting : MonoBehaviour
     {
         currentAmmo = maxAmmo;
         UpdateShootingUI();
+
+        // Start the crosshair animation
+        StartCoroutine(ScaleCrosshair());
+        StartCoroutine(SpinCrosshair());
     }
 }
