@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq; // For sorting with LINQ
 
-public class PointAndClick : MonoBehaviour
+public class VehicleShooting : MonoBehaviour
 {
     // Update is called once per frame
     void Update()
@@ -11,8 +11,8 @@ public class PointAndClick : MonoBehaviour
         // Check if the left mouse button was clicked
         if (Input.GetMouseButtonDown(0))
         {
-            // Create a ray from the camera to the point where the mouse clicked
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            // Create a ray from the center of the camera's viewport
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
 
             // Raycast all objects along the ray
             RaycastHit[] hits = Physics.RaycastAll(ray);

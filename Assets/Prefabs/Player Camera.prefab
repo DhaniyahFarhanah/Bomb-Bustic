@@ -68,17 +68,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CameraHolder: {fileID: 8468319474737891205}
-  m_Distance: 10.25
-  m_Height: 3.65
-  m_HeightDamping: 2.02
-  m_RotationDamping: 3
+  m_Distance: 10
+  m_Height: 4
   m_MoveSpeed: 100
   m_NormalFov: 60
   m_FastFov: 70
   m_FovDampingSpeeding: 1
-  m_FovDampingSlowing: 2.04
-  m_Offset: 1.32
+  m_FovDampingSlowing: 2
   activateFovVelocity: 30
+  m_MouseSensitivity: 100
+  m_MaxPitchAngle: 80
+  m_MinPitchAngle: -30
+  m_MaxDistance: 20
+  m_MinDistance: 3
+  m_ScrollSensitivity: 5
 --- !u!1 &8468319474737891205
 GameObject:
   m_ObjectHideFlags: 0
