@@ -7,7 +7,6 @@ namespace ArcadeVehicleController
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private float m_Distance = 10.0f;         // Initial camera distance
         [SerializeField] private float m_Height = 5.0f;
-        [SerializeField] private float m_HeightDamping = 2.0f;
         [SerializeField] private float m_MoveSpeed = 1.0f;
         [SerializeField] private float m_NormalFov = 60.0f;
         [SerializeField] private float m_FastFov = 90.0f;
