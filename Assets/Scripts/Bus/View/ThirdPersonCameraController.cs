@@ -5,7 +5,7 @@ namespace ArcadeVehicleController
     public class ThirdPersonCameraController : MonoBehaviour
     {
         [SerializeField] private GameObject m_CameraHolder;
-        [SerializeField] private float m_Distance = 10.0f;
+        [SerializeField] private float m_Distance = 10.0f;         // Initial camera distance
         [SerializeField] private float m_Height = 5.0f;
         [SerializeField] private float m_HeightDamping = 2.0f;
         [SerializeField] private float m_MoveSpeed = 1.0f;
@@ -15,8 +15,11 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_FovDampingSlowing = 0.25f;
         [SerializeField] private float activateFovVelocity;
         [SerializeField] private float m_MouseSensitivity = 100.0f;
-        [SerializeField] private float m_MaxPitchAngle = 80.0f;  // Maximum look-up angle
-        [SerializeField] private float m_MinPitchAngle = -30.0f; // Maximum look-down angle
+        [SerializeField] private float m_MaxPitchAngle = 80.0f;    // Maximum look-up angle
+        [SerializeField] private float m_MinPitchAngle = -30.0f;   // Maximum look-down angle
+        [SerializeField] private float m_MaxDistance = 20.0f;      // Max camera zoom-out distance
+        [SerializeField] private float m_MinDistance = 3.0f;       // Min camera zoom-in distance
+        [SerializeField] private float m_ScrollSensitivity = 5.0f; // Sensitivity of the scroll wheel
 
         private Transform m_Transform;
         private Camera m_Camera;
@@ -44,6 +47,7 @@ namespace ArcadeVehicleController
             }
 
             HandleMouseRotation();
+            HandleCameraZoom();
             HandleCameraPosition();
             HandleCameraFOV();
         }
@@ -62,25 +66,38 @@ namespace ArcadeVehicleController
             m_PitchRotation = Mathf.Clamp(m_PitchRotation, m_MinPitchAngle, m_MaxPitchAngle);
         }
 
+        private void HandleCameraZoom()
+        {
+            // Get the scroll wheel input to zoom in/out
+            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+
+            // Adjust the distance based on scroll input
+            m_Distance -= scrollInput * m_ScrollSensitivity;
+
+            // Clamp the distance to the allowed min and max values
+            m_Distance = Mathf.Clamp(m_Distance, m_MinDistance, m_MaxDistance);
+        }
+
         private void HandleCameraPosition()
         {
-            float wantedHeight = FollowTarget.position.y + m_Height;
-            float currentHeight = m_Transform.position.y;
+            // Use the car's position as a base for the camera position
+            Vector3 followPosition = FollowTarget.position;
 
-            currentHeight = Mathf.Lerp(currentHeight, wantedHeight, m_HeightDamping * Time.deltaTime);
+            // Extract only the yaw (Y-axis) rotation from the car, ignoring roll (Z-axis) and pitch (X-axis)
+            Quaternion followRotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
 
-            // Apply both yaw (horizontal) and pitch (vertical) rotations to the camera
-            Quaternion rotation = Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
+            // Apply the camera's mouse-controlled yaw and pitch rotation on top of the car's yaw rotation
+            Quaternion combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
 
-            // Calculate the desired position based on the rotation and distance from the car
-            Vector3 desiredPosition = FollowTarget.position - rotation * Vector3.forward * m_Distance;
-            desiredPosition.y = currentHeight;
+            // Calculate the desired position based on the car's position and the combined rotation
+            Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
+            desiredPosition.y += m_Height;
 
             // Smoothly move the camera to the desired position
             m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
 
-            // Rotate the camera manually instead of using LookAt to ensure pitch control
-            m_Transform.rotation = rotation;
+            // Apply the combined rotation to the camera to follow the car's yaw while allowing mouse input for looking around
+            m_Transform.rotation = combinedRotation;
         }
 
         private void HandleCameraFOV()
