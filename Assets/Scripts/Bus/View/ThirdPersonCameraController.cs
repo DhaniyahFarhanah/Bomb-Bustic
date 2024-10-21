@@ -5,27 +5,37 @@ namespace ArcadeVehicleController
     public class ThirdPersonCameraController : MonoBehaviour
     {
         [SerializeField] private GameObject m_CameraHolder;
-        [SerializeField] private float m_Distance = 10.0f;
+        [SerializeField] private float m_Distance = 10.0f;         // Initial camera distance
         [SerializeField] private float m_Height = 5.0f;
-        [SerializeField] private float m_HeightDamping = 2.0f;
-        [SerializeField] private float m_RotationDamping = 3.0f;
         [SerializeField] private float m_MoveSpeed = 1.0f;
         [SerializeField] private float m_NormalFov = 60.0f;
         [SerializeField] private float m_FastFov = 90.0f;
         [SerializeField] private float m_FovDampingSpeeding = 0.25f;
         [SerializeField] private float m_FovDampingSlowing = 0.25f;
-        [SerializeField] private float m_Offset = 0.0f;
         [SerializeField] private float activateFovVelocity;
+        [SerializeField] private float m_MouseSensitivity = 100.0f;
+        [SerializeField] private float m_MaxPitchAngle = 80.0f;    // Maximum look-up angle
+        [SerializeField] private float m_MinPitchAngle = -30.0f;   // Maximum look-down angle
+        [SerializeField] private float m_MaxDistance = 20.0f;      // Max camera zoom-out distance
+        [SerializeField] private float m_MinDistance = 3.0f;       // Min camera zoom-in distance
+        [SerializeField] private float m_ScrollSensitivity = 5.0f; // Sensitivity of the scroll wheel
 
         private Transform m_Transform;
         private Camera m_Camera;
         public Transform FollowTarget { get; set; }
         public float SpeedRatio { get; set; }
 
+        private float m_YawRotation;
+        private float m_PitchRotation;
+
         private void Awake()
         {
             m_Transform = transform;
             m_Camera = m_CameraHolder.GetComponent<Camera>();
+
+            // Lock the cursor for mouse camera control
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         public void LateUpdate()
@@ -35,47 +45,76 @@ namespace ArcadeVehicleController
                 return;
             }
 
-            float wantedRotationAngle = FollowTarget.eulerAngles.y;
-            float wantedHeight = FollowTarget.position.y + m_Height;
-            float currentRotationAngle = m_Transform.eulerAngles.y;
-            float currentHeight = m_Transform.position.y;
+            HandleMouseRotation();
+            HandleCameraZoom();
+            HandleCameraPosition();
+            HandleCameraFOV();
+        }
 
-            currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, m_RotationDamping * Time.deltaTime);
+        private void HandleMouseRotation()
+        {
+            // Get mouse input and adjust the yaw and pitch rotation
+            float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.deltaTime;
 
-            currentHeight = Mathf.Lerp(currentHeight, wantedHeight, m_HeightDamping * Time.deltaTime);
+            // Adjust yaw rotation (left-right rotation)
+            m_YawRotation += mouseX;
 
-            Quaternion currentRotation = Quaternion.Euler(0.0f, currentRotationAngle, 0.0f);
+            // Adjust pitch rotation (up-down rotation) and clamp it within allowed angles
+            m_PitchRotation -= mouseY;
+            m_PitchRotation = Mathf.Clamp(m_PitchRotation, m_MinPitchAngle, m_MaxPitchAngle);
+        }
 
-            Vector3 desiredPosition = FollowTarget.position;
-            desiredPosition -= currentRotation * Vector3.forward * m_Distance;
-            desiredPosition.y = currentHeight;
+        private void HandleCameraZoom()
+        {
+            // Get the scroll wheel input to zoom in/out
+            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
+            // Adjust the distance based on scroll input
+            m_Distance -= scrollInput * m_ScrollSensitivity;
+
+            // Clamp the distance to the allowed min and max values
+            m_Distance = Mathf.Clamp(m_Distance, m_MinDistance, m_MaxDistance);
+        }
+
+        private void HandleCameraPosition()
+        {
+            // Use the car's position as a base for the camera position
+            Vector3 followPosition = FollowTarget.position;
+
+            // Extract only the yaw (Y-axis) rotation from the car, ignoring roll (Z-axis) and pitch (X-axis)
+            Quaternion followRotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
+
+            // Apply the camera's mouse-controlled yaw and pitch rotation on top of the car's yaw rotation
+            Quaternion combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
+
+            // Calculate the desired position based on the car's position and the combined rotation
+            Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
+            desiredPosition.y += m_Height;
+
+            // Smoothly move the camera to the desired position
             m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
 
-            Vector3 targetWithOffset = new Vector3(FollowTarget.position.x, FollowTarget.position.y + m_Offset, FollowTarget.position.z);
+            // Apply the combined rotation to the camera to follow the car's yaw while allowing mouse input for looking around
+            m_Transform.rotation = combinedRotation;
+        }
 
-            m_Transform.LookAt(targetWithOffset);
+        private void HandleCameraFOV()
+        {
+            float velocityMagnitude = FollowTarget.GetComponent<Rigidbody>().velocity.magnitude;
 
-            //const float FAST_SPEED_RATIO = 0.9f;
-            //float targetFov = SpeedRatio > FAST_SPEED_RATIO ? m_FastFov : m_NormalFov;
-            //m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, targetFov, Time.deltaTime * m_FovDampingSlowing);
-
-            if (FollowTarget == null)
-                return;
-
-            if(FollowTarget.GetComponent<Rigidbody>().velocity.magnitude > activateFovVelocity)
+            if (velocityMagnitude > activateFovVelocity)
             {
-                if(m_Camera.fieldOfView < m_FastFov)
+                if (m_Camera.fieldOfView < m_FastFov)
                 {
                     m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov, Time.deltaTime * m_FovDampingSpeeding);
                 }
-                else if (m_Camera.fieldOfView > m_FastFov) 
+                else if (m_Camera.fieldOfView > m_FastFov)
                 {
                     m_Camera.fieldOfView = m_FastFov;
                 }
             }
-
-            else if(FollowTarget.GetComponent<Rigidbody>().velocity.magnitude < activateFovVelocity)
+            else if (velocityMagnitude < activateFovVelocity)
             {
                 if (m_Camera.fieldOfView > m_NormalFov)
                 {
@@ -83,7 +122,7 @@ namespace ArcadeVehicleController
                 }
                 else
                 {
-                    m_Camera.fieldOfView = m_FastFov;
+                    m_Camera.fieldOfView = m_NormalFov;
                 }
             }
         }

@@ -170,8 +170,6 @@ GameObject:
   - component: {fileID: 1331975426342428464}
   - component: {fileID: 930155380597902409}
   - component: {fileID: 327423668309869974}
-  - component: {fileID: 8601617881795437899}
-  - component: {fileID: 3625885534110916942}
   m_Layer: 9
   m_Name: Bus
   m_TagString: Player
@@ -317,12 +315,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50229a9fbbfa3d24c987ad9d227544f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poopMaxTime: 280
+  poopMaxTime: 180
   poopCurrentTime: 0
   poopSlider: {fileID: 0}
   speedTextUI: {fileID: 0}
@@ -333,7 +331,7 @@ MonoBehaviour:
   disgustTextUI: {fileID: 0}
   fartScreen: {fileID: 0}
   poopCanvas: {fileID: 0}
-  poopImagePrefab: {fileID: 677718906464243051, guid: 9eab9e577b4a95347b0d55b47f998eb6, type: 3}
+  poopImagePrefab: {fileID: 0}
   minLightSpeed: 10
   lightObstacle: 1
   minMediumSpeed: 30
@@ -394,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5984d89d095d3f142a27fc7eeaff50aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 30
+  minSpeed: 5
   bombBuffer: 5
   bombMeterSlider: {fileID: 0}
   bombMeterSliderFill: {fileID: 0}
@@ -412,133 +410,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff37d2e218a7ab449ccfc2c9edf21a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &8601617881795437899
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &3625885534110916942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumebgm: 0.8
-  sCrash:
-  - {fileID: 8300000, guid: 45fc10b47087bbf4c99d4c081303ff6b, type: 3}
-  - {fileID: 8300000, guid: c9771cac84e43aa4492e529a627f4b58, type: 3}
-  - {fileID: 8300000, guid: e7228cf9ef0a2ec4c8583df2215ddd31, type: 3}
-  mCrash: {fileID: 8300000, guid: 40cd52cd36ae97246ace04fbcf253a54, type: 3}
-  lCrash: {fileID: 8300000, guid: 5b6c00abcffd6c04d92db6833ba37e95, type: 3}
-  lose: {fileID: 8300000, guid: c2e2f3d5bcbde0843abaa8f29397bc3f, type: 3}
-  passengerPop: {fileID: 8300000, guid: 1d112062fd31bc143b59ba3f8c2afc6b, type: 3}
-  passengerWee: {fileID: 8300000, guid: 502631008c555434784a1a4af81ca755, type: 3}
-  passengerScream: {fileID: 0}
-  passengerDisgust: {fileID: 8300000, guid: 36ae3e00a104eb343a2b6aa4540b582c, type: 3}
-  flush: {fileID: 8300000, guid: 9faaab59347d93d4aad5ac09de982d8c, type: 3}
-  win: {fileID: 8300000, guid: 7430b1d3b715a9940b951a63eeed2a46, type: 3}
-  DrivingSoundtrack:
-  - {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
-  - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
-  WinningSoundtrack: {fileID: 0}
-  PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
+  maxAmmo: 5
+  shootingUI: {fileID: 0}
+  ammoCountUI: {fileID: 0}
+  crosshairUI: {fileID: 0}
+  fireRate: 1
+  crosshairScaleDuration: 0.1
+  crosshairMaxScale: 2
+  bulletPrefab: {fileID: 3469903934765407235, guid: b3e01cba14436a142a633d9e5e5ae577, type: 3}
+  bulletSpawnPointOffset: {x: 0, y: 2, z: 0}
+  bulletSpeed: 4000
+  bulletLifetime: 5
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
