@@ -12,6 +12,7 @@ public class VehicleShooting : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ammoCountUI;
     [SerializeField] private GameObject crosshairUI;
     [SerializeField] private Slider shootingSlidingTimerUI;
+    [SerializeField] private Image sliderFillImage;  // Reference to the slider's fill image
 
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float crosshairScaleDuration = 0.1f;  // Time for the crosshair to scale
@@ -26,6 +27,13 @@ public class VehicleShooting : MonoBehaviour
     [SerializeField] private float shootingTime = 10f;
     private float shootingTimeElaspedTime;
 
+    [SerializeField] private float slowMotionScale = 0.2f;   // Time scale for slow motion
+    [SerializeField] private float slowMotionTransitionSpeed = 3f;  // Speed to transition to slow motion
+    private bool SlowMoActivated = false;
+
+    [SerializeField] private Color slowMotionColor = Color.blue;  // Color for the slider during slow motion
+    [SerializeField] private Color normalColor = Color.green;  // Color for the slider in normal mode
+
     private int currentAmmo;
     private float elaspedTime;
     private Vector3 originalCrosshairScale;  // Store the original crosshair scale
@@ -36,6 +44,7 @@ public class VehicleShooting : MonoBehaviour
         UpdateShootingUI();
         originalCrosshairScale = crosshairUI.transform.localScale;  // Store the initial scale
         shootingSlidingTimerUI.maxValue = shootingTime;
+        sliderFillImage.color = normalColor;  // Set the slider color to the default normal color
     }
 
     // Update is called once per frame
@@ -44,8 +53,14 @@ public class VehicleShooting : MonoBehaviour
         if (elaspedTime > 0f)
         {
             elaspedTime -= Time.deltaTime;
+            crosshairUI.GetComponent<Image>().color = Color.black;
         }
-        else if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
+        else
+        {
+            crosshairUI.GetComponent<Image>().color = Color.white;
+        }
+
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0)
         {
             elaspedTime = fireRate;
             --currentAmmo;
@@ -60,14 +75,35 @@ public class VehicleShooting : MonoBehaviour
             StartCoroutine(ScaleCrosshair());
         }
 
+        // Handle ammo reload
         if (Input.GetKeyUp(KeyCode.R))
         {
             GiveAmmo();
         }
 
+        // Handle slow-motion effect when right mouse button is held
+        if (currentAmmo > 0 && Input.GetMouseButton(1))  // Right mouse button held
+        {
+            ApplySlowMotion();
+            SlowMoActivated = true;
+        }
+        else
+        {
+            ResetTimeScale();
+            SlowMoActivated = false;
+        }
+
+        // Update shooting time slider
         if (shootingTimeElaspedTime > 0)
         {
-            shootingTimeElaspedTime -= Time.deltaTime;
+            if (SlowMoActivated)
+            {
+                shootingTimeElaspedTime -= Time.unscaledDeltaTime * 2;  // Decrease timer twice as fast in slow-motion
+            }
+            else
+            {
+                shootingTimeElaspedTime -= Time.unscaledDeltaTime;  // Normal timer decrease
+            }
             shootingSlidingTimerUI.value = shootingTimeElaspedTime;
         }
         else
@@ -150,5 +186,29 @@ public class VehicleShooting : MonoBehaviour
         // Start the crosshair animation
         StartCoroutine(ScaleCrosshair());
         StartCoroutine(SpinCrosshair());
+    }
+
+    private void ApplySlowMotion()
+    {
+        // Smoothly transition to slow motion
+        Time.timeScale = Mathf.Lerp(Time.timeScale, slowMotionScale, Time.deltaTime * slowMotionTransitionSpeed);
+
+        // Maintain a consistent fixedDeltaTime for physics during slow motion
+        Time.fixedDeltaTime = 0.02f;  // Keep it constant during slow motion
+
+        // Change the slider color to the slow-motion color
+        sliderFillImage.color = slowMotionColor;
+    }
+
+    private void ResetTimeScale()
+    {
+        // Smoothly return to normal time scale
+        Time.timeScale = Mathf.Lerp(Time.timeScale, 1f, Time.deltaTime * slowMotionTransitionSpeed);
+
+        // Reset the fixedDeltaTime to the normal value
+        Time.fixedDeltaTime = 0.02f;  // Reset to normal physics timestep
+
+        // Change the slider color back to the normal color
+        sliderFillImage.color = normalColor;
     }
 }

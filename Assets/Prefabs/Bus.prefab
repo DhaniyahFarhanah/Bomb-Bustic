@@ -414,13 +414,21 @@ MonoBehaviour:
   shootingUI: {fileID: 0}
   ammoCountUI: {fileID: 0}
   crosshairUI: {fileID: 0}
+  shootingSlidingTimerUI: {fileID: 0}
+  sliderFillImage: {fileID: 0}
   fireRate: 1
   crosshairScaleDuration: 0.1
   crosshairMaxScale: 2
+  crosshairSpinDuration: 0.5
   bulletPrefab: {fileID: 3469903934765407235, guid: b3e01cba14436a142a633d9e5e5ae577, type: 3}
   bulletSpawnPointOffset: {x: 0, y: 2, z: 0}
   bulletSpeed: 4000
   bulletLifetime: 5
+  shootingTime: 20
+  slowMotionScale: 0.2
+  slowMotionTransitionSpeed: 3
+  slowMotionColor: {r: 0, g: 0, b: 1, a: 1}
+  normalColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
