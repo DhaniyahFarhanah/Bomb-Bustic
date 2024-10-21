@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 3547083861134151980}
   - component: {fileID: 7979273278392798622}
   - component: {fileID: 1331975426342428464}
+  - component: {fileID: 930155380597902409}
   m_Layer: 9
   m_Name: Bus
   m_TagString: Player
@@ -313,7 +314,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50229a9fbbfa3d24c987ad9d227544f4, type: 3}
   m_Name: 
@@ -378,6 +379,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleTag: 6
+--- !u!114 &930155380597902409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5984d89d095d3f142a27fc7eeaff50aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombBuffer: 5
+  speedTextUI: {fileID: 0}
+  bombMeterSlider: {fileID: 0}
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
