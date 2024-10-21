@@ -410,6 +410,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff37d2e218a7ab449ccfc2c9edf21a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAmmo: 0
+  shootingUI: {fileID: 0}
+  ammoCountUI: {fileID: 0}
+  crosshairUI: {fileID: 0}
+  fireRate: 1
+  crosshairScaleDuration: 0.1
+  crosshairMaxScale: 2
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
