@@ -205,4 +205,9 @@ public class RougeAI : AICarEngine
         }
     }
     #endregion
+
+    public void SelfDestruct()
+    {
+        Destroy(gameObject);
+    }
 }

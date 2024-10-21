@@ -3443,19 +3443,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 643701203994181999, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 643701203994181999, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 643701203994181999, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 672181437959578246, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_Name
       value: Bomb meter
+      objectReference: {fileID: 0}
+    - target: {fileID: 672181437959578246, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1957707708556035012, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_Pivot.x
@@ -3539,15 +3543,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2724942126922823469, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2724942126922823469, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2724942126922823469, guid: 278d4d8c48514954abf9c083d4c14628, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
