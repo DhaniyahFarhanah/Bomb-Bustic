@@ -189,7 +189,7 @@ namespace ArcadeVehicleController
             m_Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             m_Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
             m_Rigidbody.constraints = RigidbodyConstraints.None;
-            m_Rigidbody.centerOfMass = Vector3.zero;
+            m_Rigidbody.centerOfMass = new Vector3(0f, 0.04f, 0f);
         }
 
         // To be called once per physics frame per spring.
