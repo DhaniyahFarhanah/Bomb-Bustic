@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 1.0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
@@ -108,8 +109,10 @@ public class UIManager : MonoBehaviour
         {
             Time.timeScale = 1.0f;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            
-            
+            if (m_HideMouseOnStart)
+            {
+                Cursor.visible = false;
+            }
         }
         else
         {

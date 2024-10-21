@@ -7,12 +7,14 @@ namespace ArcadeVehicleController
         [SerializeField] private Vehicle m_Vehicle;
         [SerializeField] private JeepVisual m_JeepVisual;
         [SerializeField] private ThirdPersonCameraController m_CameraController;
+        [SerializeField] private DrivingCameraController m_DrivingCamera;
 
         private void Start()
         {
             m_JeepVisual.SpringsRestLength = m_Vehicle.Settings.SpringRestLength;
             m_JeepVisual.SteerAngle = m_Vehicle.Settings.SteerAngle;
             m_CameraController.FollowTarget = m_Vehicle.transform;
+            m_DrivingCamera.FollowTarget = m_Vehicle.transform;
         }
 
         private void Update()

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7100947807018220616}
   - component: {fileID: 5208755479700734976}
+  - component: {fileID: 2976827039857887788}
   - component: {fileID: 5064827365284208538}
   m_Layer: 0
   m_Name: Player Camera
@@ -55,7 +56,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5064827365284208538
+--- !u!114 &2976827039857887788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,6 +64,38 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501151329034376359}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d6ae885520178429f3c73afc640408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CameraHolder: {fileID: 8468319474737891205}
+  m_Distance: 18.7
+  m_Height: 36.1
+  m_HeightDamping: 2.02
+  m_RotationDamping: 3
+  m_MoveSpeed: 100
+  m_NormalFov: 60
+  m_FastFov: 70
+  m_FovDampingSpeeding: 1
+  m_FovDampingSlowing: 2.04
+  m_Offset: 1.79
+  activateFovVelocity: 50
+  Shoot: 1
+  Crosshair: {fileID: 0}
+  m_DistanceNorm: 10.25
+  m_HeightNorm: 3.65
+  m_OffsetNorm: 1.32
+  m_DistanceTurret: 18.7
+  m_HeightTurret: 36.1
+  m_OffsetTurret: 1.79
+--- !u!114 &5064827365284208538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501151329034376359}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df655ed6ad31f614992215fcca311624, type: 3}
   m_Name: 
