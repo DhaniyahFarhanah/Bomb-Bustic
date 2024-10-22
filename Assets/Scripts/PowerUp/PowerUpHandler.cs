@@ -24,9 +24,9 @@ public class PowerUpHandler : MonoBehaviour
 
     //Turret activates Turret powerup
     [Header("Turret PowerUp")]
-    [SerializeField] GameObject Turret;
+    [SerializeField] GameObject turret;
     [SerializeField] DrivingCameraController cam;
-    [SerializeField] float Cooldown;
+    [SerializeField] float turretCooldown;
 
     //Hack makes the bomb limit to 0 for a while
     [Header("Hack PowerUp")]
@@ -34,8 +34,9 @@ public class PowerUpHandler : MonoBehaviour
 
     //speeds up bus (maybe make acceleration 100 or smth)
     [Header("Nitro PowerUp")]
-    [SerializeField] float speedUpMulti;
-    [SerializeField] float addSpeedCap;
+    [SerializeField] float nitroCooldown;
+    [SerializeField] float addFov;
+    [SerializeField] GameObject NitroProtector;
 
     //Stops the speed of every movable object in a large range. Idk yet
     [Header("Energy Pulse")]
@@ -56,6 +57,16 @@ public class PowerUpHandler : MonoBehaviour
     void Update()
     {
         PickUpInput();
+
+        if(currentTimer >= 0 && activated)
+        {
+            currentTimer -= Time.deltaTime;
+        }
+
+        else if(currentTimer <= 0 && activated)
+        {
+            Deactivate(currentPickUp);
+        }
     }
 
     private void FixedUpdate()
@@ -79,13 +90,14 @@ public class PowerUpHandler : MonoBehaviour
                 //activate pickup
                 activated = true;
                 ActivatePickup(currentPickUp);
-
             }
         }
     }
 
     void ActivatePickup(PickUpType type)
     {
+        activated = true;
+
         switch (type)
         {
             case PickUpType.Empty: 
@@ -105,7 +117,6 @@ public class PowerUpHandler : MonoBehaviour
                 break;
         }
         //navigate to correct mechanic
-        currentPickUp = PickUpType.Empty;
     }
 
     public void ReceivePickup(Sprite img, PickUpType type)
@@ -113,26 +124,62 @@ public class PowerUpHandler : MonoBehaviour
         currentPickUp = type;
         powerUpImage.gameObject.SetActive(true);
         powerUpImage.sprite = img;
+        powerUpImage.fillAmount = 1f;
     }
 
-    void Deactivate()
+    void Deactivate(PickUpType type)
     {
+        Debug.Log("Deactivate");
 
+        switch (type)
+        {
+            case PickUpType.Turret:
+                turret.SetActive(false);
+                cam.Shoot = false;
+                Cursor.visible = false;
+                break;
+            case PickUpType.Hack:
+                //ActivateHack();
+                break;
+            case PickUpType.Nitro:
+                busValues.Nitro = false;
+                cam.fovAdd = 0f;
+                NitroProtector.SetActive(false);
+                gameObject.GetComponent<CollisionHandler>().enabled = true;
+                break;
+            case PickUpType.EnergyPulse:
+                //ActivateEnergyPulse();
+                break;
+        }
+
+        activated = false;
+        currentPickUp = PickUpType.Empty;
+        powerUpImage.sprite = null;
+        powerUpImage.fillAmount = 1f;
     }
 
     void ActivateTurret()
     {
         Debug.Log("Turret");
+        turret.SetActive(true);
+        cam.Shoot = true;
+        currentTimer = turretCooldown;
     }
 
     void ActivateHack()
     {
         Debug.Log("Hack");
+        
     }
 
     void ActivateNitro()
     {
         Debug.Log("Nitro");
+        gameObject.GetComponent<CollisionHandler>().enabled = false;
+        busValues.Nitro = true;
+        cam.fovAdd = addFov;
+        NitroProtector.SetActive(true);
+        currentTimer = nitroCooldown;
     }
 
     void ActivateEnergyPulse()

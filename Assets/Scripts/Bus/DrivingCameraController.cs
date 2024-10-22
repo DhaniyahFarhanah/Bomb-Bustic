@@ -14,6 +14,7 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_MoveSpeed = 1.0f;
         [SerializeField] private float m_NormalFov = 60.0f;
         [SerializeField] private float m_FastFov = 90.0f;
+        public float fovAdd = 0f;
         [SerializeField] private float m_FovDampingSpeeding = 0.25f;
         [SerializeField] private float m_FovDampingSlowing = 0.25f;
         [SerializeField] private float m_Offset = 0.0f;
@@ -22,7 +23,6 @@ namespace ArcadeVehicleController
         //test run. remove if idea doesn't pan out. will change to another script if it does
         [Header("Missile Test")]
         public bool Shoot;
-        bool canShoot = true;
         RaycastHit hit;
         private Vector3 targetPos;
         [SerializeField] LayerMask drivable;
@@ -104,7 +104,7 @@ namespace ArcadeVehicleController
             {
                 if (m_Camera.fieldOfView < m_FastFov)
                 {
-                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov, Time.unscaledDeltaTime * m_FovDampingSpeeding);
+                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov + fovAdd, Time.unscaledDeltaTime * m_FovDampingSpeeding);
                 }
                 else if (m_Camera.fieldOfView > m_FastFov)
                 {
@@ -120,7 +120,7 @@ namespace ArcadeVehicleController
                 }
                 else
                 {
-                    m_Camera.fieldOfView = m_FastFov;
+                    m_Camera.fieldOfView = m_FastFov + fovAdd;
                 }
             }
         }

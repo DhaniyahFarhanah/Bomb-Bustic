@@ -31,7 +31,7 @@ namespace ArcadeVehicleController
             m_JeepVisual.SpringsCurrentLength[Wheel.BackLeft] = m_Vehicle.GetSpringCurrentLength(Wheel.BackLeft);
             m_JeepVisual.SpringsCurrentLength[Wheel.BackRight] = m_Vehicle.GetSpringCurrentLength(Wheel.BackRight);
 
-            m_CameraController.SpeedRatio = m_Vehicle.Velocity.magnitude / m_Vehicle.Settings.MaxSpeed;
+            m_CameraController.SpeedRatio = m_Vehicle.Velocity.magnitude / (m_Vehicle.Settings.MaxSpeed);
         }
     }
 }

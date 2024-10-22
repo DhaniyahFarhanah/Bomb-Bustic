@@ -48,6 +48,12 @@ namespace ArcadeVehicleController
             }
         }
 
+        [Header("PowerUpStats")]
+        public bool Nitro;
+        [SerializeField] float nitroAcceleration;
+        [SerializeField] float nitroSteering;
+        [SerializeField] float nitroSpeed;
+
         [Header("Passenger Stuff")]
         public int m_Passengers = 0;
         public int m_DeliveredPassengers = 0;
@@ -255,8 +261,16 @@ namespace ArcadeVehicleController
 
             if (frontWheel)
             {
-                var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
-                return steerQuaternion * m_Transform.forward;
+                if (Nitro)
+                {
+                    var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * (m_Settings.SteerAngle + nitroSteering), Vector3.up);
+                    return steerQuaternion * m_Transform.forward;
+                }
+                else
+                {
+                    var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
+                    return steerQuaternion * m_Transform.forward;
+                }
             }
             else
             {
@@ -375,7 +389,16 @@ namespace ArcadeVehicleController
 
                 Vector3 position = GetWheelTorquePosition(wheel);
                 Vector3 wheelForward = GetWheelRollDirection(wheel);
-                m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower) * wheelForward, position);
+
+                if (Nitro)
+                {
+                    m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower * nitroAcceleration) * wheelForward, position);
+                }
+                else
+                {
+                    m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower) * wheelForward, position);
+                }
+                
             }
         }
 

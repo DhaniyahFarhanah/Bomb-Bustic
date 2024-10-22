@@ -54,7 +54,5 @@ public class Missile : MonoBehaviour
             Destroy(hitObject.transform.parent.gameObject);
             Destroy(gameObject);
         }
-
-
     }
 }

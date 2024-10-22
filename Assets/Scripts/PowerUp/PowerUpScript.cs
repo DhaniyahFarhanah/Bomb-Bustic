@@ -16,7 +16,7 @@ public class PowerUpScript : MonoBehaviour
 
         if (hit.gameObject.CompareTag("Player"))
         {
-            PickUpType powerUp = (PickUpType)Random.Range(1, 4);
+            PickUpType powerUp = (PickUpType)Random.Range(1, 5);
 
             switch (powerUp)
             {
@@ -38,8 +38,6 @@ public class PowerUpScript : MonoBehaviour
             }
 
             hit.GetComponent<PowerUpHandler>().ReceivePickup(givenImage, powerUp);
-
-            Debug.Log("pick up power up");
             Destroy(this.gameObject);
         }
     }
