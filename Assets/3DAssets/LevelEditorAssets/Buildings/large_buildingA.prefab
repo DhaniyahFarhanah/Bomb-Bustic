@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8393555542532354302}
   m_Layer: 0
   m_Name: large_buildingA
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

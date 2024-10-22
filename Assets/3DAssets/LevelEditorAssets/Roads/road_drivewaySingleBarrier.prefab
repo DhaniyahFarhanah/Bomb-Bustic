@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6170762462339175346}
   m_Layer: 0
   m_Name: road_drivewaySingleBarrier
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

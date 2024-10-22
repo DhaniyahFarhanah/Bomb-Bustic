@@ -81,7 +81,13 @@ MonoBehaviour:
   m_Offset: 1.79
   activateFovVelocity: 50
   Shoot: 1
+  drivable:
+    serializedVersion: 2
+    m_Bits: 128
   Crosshair: {fileID: 0}
+  TurretHead: {fileID: 0}
+  MissilePrefab: {fileID: 2484465873928644165, guid: 11951a78c64eaab4d9cc07ff2ce10a31, type: 3}
+  ShootCooldown: 0.5
   m_DistanceNorm: 10.25
   m_HeightNorm: 3.65
   m_OffsetNorm: 1.32

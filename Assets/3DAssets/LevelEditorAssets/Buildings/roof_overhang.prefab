@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2847087838080935819}
   m_Layer: 0
   m_Name: roof_overhang
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

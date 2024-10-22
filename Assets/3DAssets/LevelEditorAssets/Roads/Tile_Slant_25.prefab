@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7077782725216096351}
   m_Layer: 0
   m_Name: Tile_Slant_25
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
