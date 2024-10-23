@@ -34,7 +34,6 @@ public class RougeAI : AICarEngine
         player = GameObject.FindGameObjectWithTag("Player");
         playerNearestNode = nodeGraph.GetNearestNode(player.transform.position);
         stop = true;
-        StartCoroutine(DelayedPathfinding());
     }
 
     // Update is called once per frame
@@ -45,14 +44,20 @@ public class RougeAI : AICarEngine
     }
 
     #region Pathfinding
-    private IEnumerator DelayedPathfinding()
+    public IEnumerator ActiveAI()
     {
-        // Wait for 1 second
-        yield return new WaitForSeconds(delayedStart + Random.Range(0f, 5f));
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(FlashLights());
-        FindAnyObjectByType<PoliceUI>().activatePoliceUI();
         GetComponent<AudioSource>().Play();
+        StartCoroutine(DelayedAudio());
+        PathfindToPlayer();
         stop = false;
+    }
+
+    private IEnumerator DelayedAudio()
+    {
+        yield return new WaitForSeconds(Random.Range(0f, 2f));
+        GetComponent<AudioSource>().Play();
     }
 
     private void PathfindToPlayer()
@@ -208,6 +213,7 @@ public class RougeAI : AICarEngine
 
     public void SelfDestruct()
     {
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 }
