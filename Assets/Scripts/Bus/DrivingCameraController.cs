@@ -106,9 +106,9 @@ namespace ArcadeVehicleController
                 {
                     m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov + fovAdd, Time.unscaledDeltaTime * m_FovDampingSpeeding);
                 }
-                else if (m_Camera.fieldOfView > m_FastFov)
+                else if (m_Camera.fieldOfView > m_FastFov + fovAdd)
                 {
-                    m_Camera.fieldOfView = m_FastFov;
+                    m_Camera.fieldOfView = m_FastFov + fovAdd;
                 }
             }
 

@@ -8,6 +8,7 @@ TagManager:
   - DropOff
   - Passenger
   - Indestructable
+  - EmpBurst
   layers:
   - Default
   - TransparentFX

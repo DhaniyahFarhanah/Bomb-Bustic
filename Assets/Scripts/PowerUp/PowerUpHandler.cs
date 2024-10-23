@@ -19,6 +19,7 @@ public class PowerUpHandler : MonoBehaviour
     public PickUpType currentPickUp;
     [SerializeField] GameObject Bus;
     [SerializeField] float currentTimer;
+    [SerializeField] float imageTimer;
     [SerializeField] bool activated;
     [SerializeField] Image powerUpImage;
 
@@ -30,7 +31,10 @@ public class PowerUpHandler : MonoBehaviour
 
     //Hack makes the bomb limit to 0 for a while
     [Header("Hack PowerUp")]
+    [SerializeField] float hackCooldown;
+    BombMeter bombMeter;
     Vehicle busValues;
+    float bombMeterNorm;
 
     //speeds up bus (maybe make acceleration 100 or smth)
     [Header("Nitro PowerUp")]
@@ -40,7 +44,8 @@ public class PowerUpHandler : MonoBehaviour
 
     //Stops the speed of every movable object in a large range. Idk yet
     [Header("Energy Pulse")]
-    [SerializeField] float range;
+    [SerializeField] GameObject empPulse;
+    [SerializeField] float energyPulseCooldown;
     
 
     // Start is called before the first frame update
@@ -48,7 +53,9 @@ public class PowerUpHandler : MonoBehaviour
     {
         //Default empty on start up
         busValues = Bus.GetComponent<Vehicle>();
+        bombMeter = Bus.GetComponent<BombMeter>();
 
+        bombMeterNorm = bombMeter.minSpeed;
         activated = false;
         currentPickUp = PickUpType.Empty;
     }
@@ -61,6 +68,8 @@ public class PowerUpHandler : MonoBehaviour
         if(currentTimer >= 0 && activated)
         {
             currentTimer -= Time.deltaTime;
+
+            powerUpImage.fillAmount = (currentTimer / imageTimer) * 1f;
         }
 
         else if(currentTimer <= 0 && activated)
@@ -139,7 +148,7 @@ public class PowerUpHandler : MonoBehaviour
                 Cursor.visible = false;
                 break;
             case PickUpType.Hack:
-                //ActivateHack();
+                bombMeter.minSpeed = bombMeterNorm;
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
@@ -148,7 +157,7 @@ public class PowerUpHandler : MonoBehaviour
                 gameObject.GetComponent<CollisionHandler>().enabled = true;
                 break;
             case PickUpType.EnergyPulse:
-                //ActivateEnergyPulse();
+                empPulse.SetActive(false);
                 break;
         }
 
@@ -164,12 +173,17 @@ public class PowerUpHandler : MonoBehaviour
         turret.SetActive(true);
         cam.Shoot = true;
         currentTimer = turretCooldown;
+        imageTimer = turretCooldown;
     }
 
     void ActivateHack()
     {
+        //this powerup, you have a bar protection and the bomb wont have a limit anymore. Last for a certain amount of minutes
         Debug.Log("Hack");
-        
+        currentTimer = hackCooldown;
+        imageTimer = hackCooldown;
+        bombMeter.minSpeed = 0f;
+
     }
 
     void ActivateNitro()
@@ -180,11 +194,15 @@ public class PowerUpHandler : MonoBehaviour
         cam.fovAdd = addFov;
         NitroProtector.SetActive(true);
         currentTimer = nitroCooldown;
+        imageTimer = nitroCooldown;
     }
 
     void ActivateEnergyPulse()
     {
         Debug.Log("EnergyPulse");
+        empPulse.SetActive(true);
+        currentTimer = energyPulseCooldown;
+        imageTimer = energyPulseCooldown;
         //For this powerup, it sends out a "pulse" through particle that stops the speed of all cars within a range for a certain amount of time
     }
 }

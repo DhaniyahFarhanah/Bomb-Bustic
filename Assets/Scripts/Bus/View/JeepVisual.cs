@@ -127,7 +127,7 @@ namespace ArcadeVehicleController
         }
         void SkidMarks()
         {
-            if (ForwardSpeed > 50.0f || (ForwardSpeed > 10.0f && (SteerInput > 0.05f || SteerInput < -0.05f)) || ForwardSpeed < 0.0f || BrakeInput < 0.0f)
+            if ((ForwardSpeed > 0.0f && (SteerInput > 0.05f || SteerInput < -0.05f)) || ForwardSpeed < 0.0f || BrakeInput < 0.0f)
             {
                 currentTime = skidDelay;
 
