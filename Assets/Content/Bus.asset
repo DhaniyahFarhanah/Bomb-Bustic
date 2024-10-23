@@ -15,21 +15,21 @@ MonoBehaviour:
   m_Width: 2.45
   m_Height: 2
   m_Length: 6.15
-  m_Weight: 60
-  m_Drag: 0.1
-  m_AirDrag: 0
+  m_Weight: 10
+  m_Drag: 0.5
+  m_AirDrag: 2
   m_WheelsPaddingX: 0.133
   m_WheelsPaddingZ: 0.218
-  m_ChassiMass: 40
-  m_TireMass: 2
+  m_ChassiMass: 45
+  m_TireMass: 4
   m_SpringRestLength: 1.2
   m_SpringStrength: 1200
   m_SpringDamper: 109.9
-  m_AcceleratePower: 600
-  m_BrakesPower: 0.2
+  m_AcceleratePower: 650
+  m_BrakesPower: 0.05
   m_MaxSpeed: 80
   m_MaxReverseSpeed: 20
   m_SteerAngle: 12.3
-  m_FrontWheelsGripFactor: 0.637
-  m_RearWheelsGripFactor: 0.651
-  m_AirResistance: 0.2
+  m_FrontWheelsGripFactor: 0.223
+  m_RearWheelsGripFactor: 0.228
+  m_AirResistance: 0.3

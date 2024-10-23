@@ -7,11 +7,12 @@ TagManager:
   - Waypoint
   - DropOff
   - Passenger
+  - MinimapIcon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - MiniMap
   - Water
   - UI
   - 
