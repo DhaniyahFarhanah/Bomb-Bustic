@@ -15927,15 +15927,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.1961
+      value: 7.4300346
       objectReference: {fileID: 0}
     - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.1961
+      value: 7.4300346
       objectReference: {fileID: 0}
     - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.1961
+      value: 7.4300346
       objectReference: {fileID: 0}
     - target: {fileID: 327423668309869974, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: shootingUI
