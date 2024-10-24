@@ -15,7 +15,6 @@ public class BombMeter : MonoBehaviour
     [Header("UI")]
     public Slider bombMeterSlider;
     public RectTransform bombMeterSliderFill;
-    public TextMeshProUGUI speedTextUI;
     public TextMeshProUGUI countdownTextUI;
 
     private Vehicle bus;
@@ -46,7 +45,6 @@ public class BombMeter : MonoBehaviour
     {
         bombMeterSlider.value = currentSpeed;
         bombMeterSlider.fillRect.anchorMin = new Vector2(0f, 1 - (minSpeed / maxSpeed));
-        speedTextUI.text = "Speed: " + Mathf.FloorToInt(currentSpeed).ToString();
     }
 
     private void BombLogic()
