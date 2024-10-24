@@ -166,10 +166,8 @@ GameObject:
   - component: {fileID: 3548545743966341369}
   - component: {fileID: 8434654239452625271}
   - component: {fileID: 3547083861134151980}
-  - component: {fileID: 7979273278392798622}
   - component: {fileID: 1331975426342428464}
   - component: {fileID: 930155380597902409}
-  - component: {fileID: 327423668309869974}
   m_Layer: 9
   m_Name: Bus
   m_TagString: Player
@@ -308,65 +306,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.8507856
   m_Center: {x: 0.02507299, y: -0.09752405, z: 0.04432964}
---- !u!114 &7979273278392798622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50229a9fbbfa3d24c987ad9d227544f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poopMaxTime: 180
-  poopCurrentTime: 0
-  poopSlider: {fileID: 0}
-  speedTextUI: {fileID: 0}
-  poopTextUI: {fileID: 0}
-  loseCanvas: {fileID: 0}
-  loseScreen: {fileID: 0}
-  winScreen: {fileID: 0}
-  disgustTextUI: {fileID: 0}
-  fartScreen: {fileID: 0}
-  poopCanvas: {fileID: 0}
-  poopImagePrefab: {fileID: 0}
-  minLightSpeed: 10
-  lightObstacle: 1
-  minMediumSpeed: 30
-  mediumObstacle: 3
-  minHeavySpeed: 50
-  heavyObstacle: 5
-  minPedestrianSpeed: 10
-  pedestrian: 10
-  wobbleLight: 0
-  wobbleMedium: 0
-  wobbleHeavy: 0
-  wobbleLightDuration: 0.5
-  wobbleLightMagnitude: 0.1
-  wobbleMediumDuration: 0.5
-  wobbleMediumMagnitude: 3
-  wobbleMediumOscillations: 4
-  wobbleHeavyDuration: 0.5
-  wobbleHeavyMagnitude: 10
-  wobbleHeavyOscillations: 8
-  minAirTime: 2
-  minAirCrashTime: 3
-  triggerDisgust: 0
-  maxDisgust: 20
-  disgustThreshold: 0.1
-  disgustChance: 1
-  maxDisgustEffectDeltaDuration: 1.5
-  maxDisgustEffectHoldDuration: 3
-  maxDisgustEffectAlpha: 240
-  poopImageMinScale: 1.5
-  poopImageMaxScale: 4
-  poopImageGrowlength: 0.2
-  poopImageDelay: 8
-  poopImageVerticalSpeed: 30
-  poopImageHorizontalSpeed: 25
-  poopImageFadeDuration: 8
 --- !u!114 &1331975426342428464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,43 +331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5984d89d095d3f142a27fc7eeaff50aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 5
+  minSpeed: 20
   bombBuffer: 5
   bombMeterSlider: {fileID: 0}
   bombMeterSliderFill: {fileID: 0}
   speedTextUI: {fileID: 0}
   countdownTextUI: {fileID: 0}
---- !u!114 &327423668309869974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aff37d2e218a7ab449ccfc2c9edf21a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAmmo: 5
-  shootingUI: {fileID: 0}
-  ammoCountUI: {fileID: 0}
-  crosshairUI: {fileID: 0}
-  shootingSlidingTimerUI: {fileID: 0}
-  sliderFillImage: {fileID: 0}
-  fireRate: 1
-  crosshairScaleDuration: 0.1
-  crosshairMaxScale: 2
-  crosshairSpinDuration: 0.5
-  bulletPrefab: {fileID: 3469903934765407235, guid: b3e01cba14436a142a633d9e5e5ae577, type: 3}
-  bulletSpawnPointOffset: {x: 0, y: 2, z: 0}
-  bulletSpeed: 4000
-  bulletLifetime: 5
-  shootingTime: 20
-  slowMotionScale: 0.2
-  slowMotionTransitionSpeed: 3
-  slowMotionColor: {r: 0, g: 0, b: 1, a: 1}
-  normalColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0

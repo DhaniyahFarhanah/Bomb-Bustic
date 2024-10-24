@@ -26,18 +26,17 @@ public class EngineAudioHandler : MonoBehaviour
     
     void Update()
     {
-        PoopMeter _poopMeter = _bus.GetComponent<PoopMeter>();
-        if(_poopMeter.GetCurrentSpeed() > 0.0f)
+        BombMeter _bombMeter = _bus.GetComponent<BombMeter>();
+        if(_bombMeter.GetCurrentSpeed() > 0.0f)
         {
             AdjustPitch();
         }
-
     }
 
     void AdjustPitch()
     {
         //float maxSpeed = _bus.GetComponent<Vehicle>().MaxSpeed;        
-        float pitch = Mathf.Lerp(minPitch, maxPitch, _bus.GetComponent<PoopMeter>().GetCurrentSpeed()/maxSpeed);
+        float pitch = Mathf.Lerp(minPitch, maxPitch, _bus.GetComponent<BombMeter>().GetCurrentSpeed()/maxSpeed);
 
         _AudioSource.pitch = pitch;
     }

@@ -82,6 +82,8 @@ MonoBehaviour:
   m_MaxDistance: 20
   m_MinDistance: 3
   m_ScrollSensitivity: 5
+  idleTimeThreshold: 1
+  returnSpeed: 2
 --- !u!1 &8468319474737891205
 GameObject:
   m_ObjectHideFlags: 0

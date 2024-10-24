@@ -71,4 +71,9 @@ public class BombMeter : MonoBehaviour
             countdownTextUI.text = "Countdown: BOOM!";
         }
     }
+
+    public float GetCurrentSpeed()
+    {
+        return currentSpeed;
+    }
 }

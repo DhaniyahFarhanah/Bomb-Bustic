@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         if (m_Bus == null)
             return;
 
-        PassengerUpdate();
+        //PassengerUpdate();
     }
 
     private void Update()
