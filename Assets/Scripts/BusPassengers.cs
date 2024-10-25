@@ -79,13 +79,22 @@ public class BusPassengers : MonoBehaviour
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
 
-        // Get the Rigidbody component
-        Rigidbody rb = passenger.GetComponent<Rigidbody>();
+        // Get the Rigidbody component of the passenger
+        Rigidbody passengerRb = passenger.GetComponent<Rigidbody>();
 
-        // Apply a force in the specified direction with upward tilt
-        if (rb != null)
+        // Get the Rigidbody of the bus (the object this script is attached to)
+        Rigidbody busRb = GetComponent<Rigidbody>();
+
+        if (passengerRb != null && busRb != null)
         {
-            rb.AddForce(directionWithAngle * passengerExitForce);
+            // Set the passenger's velocity to match the bus's current velocity
+            passengerRb.velocity = busRb.velocity;
+
+            // Now apply the additional force in the specified direction with upward tilt
+            Vector3 additionalForce = directionWithAngle * passengerExitForce;
+
+            // Apply the additional force (on top of the inherited velocity)
+            passengerRb.AddForce(additionalForce);  // Use Impulse to add force gradually
         }
 
         // Decrease the number of current passengers
@@ -93,21 +102,25 @@ public class BusPassengers : MonoBehaviour
         UpdatePassengerText();
     }
 
+
     public void DeliveredPassenger()
     {
         ++passengerDelivered;
         passengerIcons.DeliveredPassenger();
+        UpdatePassengerText();
     }
 
     public void InjuredPassenger()
     {
         ++passengerInjured;
         passengerIcons.InjuredPassenger();
+        UpdatePassengerText();
     }
 
     public void LostPassenger()
     {
         ++passengerLost;
         passengerIcons.LostPassenger();
+        UpdatePassengerText();
     }
 }
