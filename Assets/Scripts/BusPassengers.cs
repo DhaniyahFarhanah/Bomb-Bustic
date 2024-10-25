@@ -23,7 +23,6 @@ public class BusPassengers : MonoBehaviour
     [Header("UI")]
     [SerializeField] private PassengerIcons passengerIcons;
     [SerializeField] private TextMeshProUGUI passengerText;
-    [SerializeField] private RectTransform passengerBackground;
 
     // Start is called before the first frame update
     void Start()
@@ -59,52 +58,59 @@ public class BusPassengers : MonoBehaviour
         }
     }
 
-private void ShootPassenger(Vector3 direction, bool isLeft)
-{
-    // Calculate the upward direction using the angleUp
-    Vector3 directionWithAngle;
-    if (isLeft)
+    private void ShootPassenger(Vector3 direction, bool isLeft)
     {
-        // When shooting to the left, angle up by rotating downward slightly
-        directionWithAngle = Quaternion.AngleAxis(-angleUp, transform.forward) * direction;
-    }
-    else
-    {
-        // When shooting to the right, angle up by rotating upward
-        directionWithAngle = Quaternion.AngleAxis(angleUp, transform.forward) * direction;
-    }
-
-    // Calculate the position based on the exit offset, using the bus's local orientation
-    Vector3 exitPosition = transform.TransformPoint(exitOffset);
-
-    // Instantiate the passenger at the calculated exit position
-    GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
-
-    // Find the root Rigidbody component of the ragdoll (often on the hips or main body)
-    Rigidbody[] passengerRigidbodies = passenger.GetComponentsInChildren<Rigidbody>();
-
-    // Get the Rigidbody of the bus (the object this script is attached to)
-    Rigidbody busRb = GetComponent<Rigidbody>();
-
-    if (passengerRigidbodies.Length > 0 && busRb != null)
-    {
-        // Set the velocity of the ragdoll root Rigidbody to match the bus's current velocity
-        foreach (Rigidbody rb in passengerRigidbodies)
+        // Calculate the upward direction using the angleUp
+        Vector3 directionWithAngle;
+        if (isLeft)
         {
-            rb.velocity = busRb.velocity;
+            directionWithAngle = Quaternion.AngleAxis(-angleUp, transform.forward) * direction;
+        }
+        else
+        {
+            directionWithAngle = Quaternion.AngleAxis(angleUp, transform.forward) * direction;
         }
 
-        // Apply the additional force in the specified direction with upward tilt to the root Rigidbody
-        Vector3 additionalForce = directionWithAngle * passengerExitForce;
+        // Calculate the position based on the exit offset, using the bus's local orientation
+        Vector3 exitPosition = transform.TransformPoint(exitOffset);
 
-        // Apply the force to the root Rigidbody of the ragdoll
-        passengerRigidbodies[0].AddForce(additionalForce, ForceMode.Impulse);
+        // Instantiate the passenger at the calculated exit position
+        GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
+
+        // Find the root Rigidbody component of the ragdoll (often on the hips or main body)
+        Rigidbody[] passengerRigidbodies = passenger.GetComponentsInChildren<Rigidbody>();
+
+        // Get the Rigidbody of the bus (the object this script is attached to)
+        Rigidbody busRb = GetComponent<Rigidbody>();
+
+        if (passengerRigidbodies.Length > 0 && busRb != null)
+        {
+            // Set the velocity of the ragdoll root Rigidbody to match the bus's current velocity
+            foreach (Rigidbody rb in passengerRigidbodies)
+            {
+                rb.velocity = busRb.velocity;
+            }
+
+            // Apply force gradually over a few frames
+            StartCoroutine(ApplyForceGradually(passengerRigidbodies[0], directionWithAngle * passengerExitForce));
+        }
+
+        // Decrease the number of current passengers
+        passengerCurrent--;
+        UpdatePassengerText();
     }
 
-    // Decrease the number of current passengers
-    passengerCurrent--;
-    UpdatePassengerText();
-}
+    private IEnumerator ApplyForceGradually(Rigidbody passengerRb, Vector3 force)
+    {
+        int steps = (int)(passengerExitForce / 100f); // Number of frames to apply force over
+        Vector3 incrementalForce = force / steps;
+
+        for (int i = 0; i < steps; i++)
+        {
+            passengerRb.AddForce(incrementalForce, ForceMode.Impulse);
+            yield return new WaitForFixedUpdate();
+        }
+    }
 
 
     public void DeliveredPassenger()

@@ -352,7 +352,7 @@ MonoBehaviour:
   passengerPrefab: {fileID: 838689364423267720, guid: 0e202b7da0347ef4398bf408e43ba153, type: 3}
   passengerTotal: 20
   exitOffset: {x: 0, y: 0, z: 2}
-  passengerExitForce: 250
+  passengerExitForce: 400
   angleUp: 10
   passengerIcons: {fileID: 0}
   passengerText: {fileID: 0}
