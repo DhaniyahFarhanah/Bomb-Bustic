@@ -102,16 +102,20 @@ public class BusPassengers : MonoBehaviour
         // Create a ray from the center of the camera's viewport
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
 
-        // Add vertical angle boost by rotating the direction slightly upwards
-        Vector3 directionWithAngle = Quaternion.AngleAxis(angleUp * -1f, transform.right) * ray.direction;
-
         // Calculate the position based on the exit offset, using the bus's local orientation
         Vector3 exitPosition = transform.TransformPoint(exitOffset);
 
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
 
-        ApplyPassengerPhysics(passenger, directionWithAngle);
+        // Apply horizontal shooting direction force and add vertical force
+        Vector3 shootingDirection = ray.direction * passengerExitForce;
+        Vector3 verticalForce = Vector3.up * passengerExitForce * 0.5f; // Add vertical force (0.5 multiplier for balance)
+
+        // Combine both forces (forward and upward)
+        Vector3 totalForce = shootingDirection + verticalForce;
+
+        ApplyPassengerPhysics(passenger, totalForce);
 
         // Decrease the number of current passengers
         --currentAmmo;
@@ -119,7 +123,7 @@ public class BusPassengers : MonoBehaviour
         UpdatePassengerText();
     }
 
-    private void ApplyPassengerPhysics(GameObject passenger, Vector3 directionWithAngle)
+    private void ApplyPassengerPhysics(GameObject passenger, Vector3 totalForce)
     {
         // Get all the Rigidbody components of the ragdoll (the passenger object and its children)
         Rigidbody[] passengerRigidbodies = passenger.GetComponentsInChildren<Rigidbody>();
@@ -135,8 +139,8 @@ public class BusPassengers : MonoBehaviour
                 rb.velocity = busRb.velocity;
             }
 
-            // Apply force to the root Rigidbody of the ragdoll
-            StartCoroutine(ApplyForceGradually(passengerRigidbodies[0], directionWithAngle * passengerExitForce));
+            // Apply the total force (forward + vertical) to the root Rigidbody of the ragdoll
+            StartCoroutine(ApplyForceGradually(passengerRigidbodies[0], totalForce));
         }
     }
 
