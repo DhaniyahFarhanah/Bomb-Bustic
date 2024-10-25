@@ -49,13 +49,33 @@ public class PassengerLanding : MonoBehaviour
         if (!collided && passengerState != PassengerState.Delivered)
         {
             collided = true;
-            StartCoroutine(StartCountdown());
+            StartCoroutine(CheckIfStopped());
         }
     }
 
-    private IEnumerator StartCountdown()
+    private IEnumerator CheckIfStopped()
     {
-        yield return new WaitForSeconds(1f);
+        bool isMoving = true;
+
+        // Keep checking if the passenger has stopped moving
+        while (isMoving)
+        {
+            isMoving = false; // Assume the passenger is stopped
+
+            foreach (Rigidbody rb in passengerRigidbodies)
+            {
+                // Check if any rigidbody has a velocity or angular velocity above a threshold
+                if (rb.velocity.magnitude > 1f || rb.angularVelocity.magnitude > 1f)
+                {
+                    isMoving = true; // The passenger is still moving
+                    break;
+                }
+            }
+
+            yield return null;
+        }
+
+        // Once the passenger has stopped moving, decide the final state
         if (passengerState == PassengerState.Injured)
         {
             if (!done)
