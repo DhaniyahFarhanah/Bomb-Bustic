@@ -15,61 +15,95 @@ public class BusPassengers : MonoBehaviour
     private int passengerInjured = 0;
     private int passengerLost = 0;
 
-    [Header("Exit Settings")]
+    [Header("Turret Settings")]
+    [SerializeField] private int maxAmmo;
     [SerializeField] private Vector3 exitOffset;
-    [SerializeField] private float passengerExitForce = 1000f;
-    [SerializeField] private float angleUp = 30f;
+    [SerializeField] private float passengerExitForce = 500f;
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private float angleUp = 15f; // Angle for vertical boost
+    [SerializeField] private float slowMotionTime = 10f;
+    [SerializeField] private float slowMotionScale = 0.2f;
+    [SerializeField] private float slowMotionTransitionSpeed = 3f;
+    private bool slowMoActive = false;
+    private float slowMotionElapsedTime;
+    private int currentAmmo;
+    private float elapsedTime;
 
     [Header("UI")]
     [SerializeField] private PassengerIcons passengerIcons;
     [SerializeField] private TextMeshProUGUI passengerText;
+    [SerializeField] private GameObject shootingObject;
+    [SerializeField] private TextMeshProUGUI ammoCountUI;
+    [SerializeField] private GameObject crosshairUI;
+    [SerializeField] private Slider shootingSlidingTimerUI;
+    [SerializeField] private Image sliderFillImage;
+    [SerializeField] private float crosshairScaleDuration = 0.1f;
+    [SerializeField] private float crosshairMaxScale = 1.5f;
+    [SerializeField] private float crosshairSpinDuration = 0.5f;
+    [SerializeField] private Color slowMotionColor = Color.blue;
+    [SerializeField] private Color normalColor = Color.green;
+    private Vector3 originalCrosshairScale;
 
     // Start is called before the first frame update
     void Start()
     {
-        passengerCurrent = passengerTotal;
-        passengerIcons.InitPassengers(passengerTotal);
-        UpdatePassengerText();
+        InitializeSettings();
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandleInput();
+        UpdateCrosshairColor();
+        HandleSlowMotion();
+        UpdateSlowMotionTimer();
     }
 
-    private void UpdatePassengerText()
+    private void OnTriggerEnter(Collider other)
     {
-        passengerText.text = "Current: " + passengerCurrent + " | Delivered: " + passengerDelivered + " | Injured: " + passengerInjured + " | Lost: " + passengerLost;
+        if (other.gameObject.tag == "ShootZone")
+        {
+            GiveAmmo();
+        }
+    }
+
+    private void InitializeSettings()
+    {
+        passengerCurrent = passengerTotal;
+        passengerIcons.InitPassengers(passengerTotal);
+        UpdatePassengerText();
+
+        currentAmmo = 0;
+        originalCrosshairScale = crosshairUI.transform.localScale;
+        shootingSlidingTimerUI.maxValue = slowMotionTime;
+        sliderFillImage.color = normalColor;
     }
 
     private void HandleInput()
     {
-        if (passengerCurrent > 0)
+        if (passengerCurrent > 0 && elapsedTime <= 0f && currentAmmo > 0)
         {
             if (Input.GetMouseButtonDown(0)) // Left mouse button
             {
-                ShootPassenger(-transform.right, true); // Shoot to the left based on bus orientation
+                elapsedTime = fireRate;
+                ShootPassenger();
+                StartCoroutine(AnimateCrosshairScale());
             }
-            else if (Input.GetMouseButtonDown(1)) // Right mouse button
-            {
-                ShootPassenger(transform.right, false); // Shoot to the right based on bus orientation
-            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log("Ammo");
+            GiveAmmo();
         }
     }
 
-    private void ShootPassenger(Vector3 direction, bool isLeft)
+    private void ShootPassenger()
     {
-        // Calculate the upward direction using the angleUp
-        Vector3 directionWithAngle;
-        if (isLeft)
-        {
-            directionWithAngle = Quaternion.AngleAxis(-angleUp, transform.forward) * direction;
-        }
-        else
-        {
-            directionWithAngle = Quaternion.AngleAxis(angleUp, transform.forward) * direction;
-        }
+        // Create a ray from the center of the camera's viewport
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
+
+        // Add vertical angle boost by rotating the direction slightly upwards
+        Vector3 directionWithAngle = Quaternion.AngleAxis(angleUp * -1f, transform.right) * ray.direction;
 
         // Calculate the position based on the exit offset, using the bus's local orientation
         Vector3 exitPosition = transform.TransformPoint(exitOffset);
@@ -77,7 +111,17 @@ public class BusPassengers : MonoBehaviour
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
 
-        // Find the root Rigidbody component of the ragdoll (often on the hips or main body)
+        ApplyPassengerPhysics(passenger, directionWithAngle);
+
+        // Decrease the number of current passengers
+        --currentAmmo;
+        --passengerCurrent;
+        UpdatePassengerText();
+    }
+
+    private void ApplyPassengerPhysics(GameObject passenger, Vector3 directionWithAngle)
+    {
+        // Get all the Rigidbody components of the ragdoll (the passenger object and its children)
         Rigidbody[] passengerRigidbodies = passenger.GetComponentsInChildren<Rigidbody>();
 
         // Get the Rigidbody of the bus (the object this script is attached to)
@@ -85,19 +129,15 @@ public class BusPassengers : MonoBehaviour
 
         if (passengerRigidbodies.Length > 0 && busRb != null)
         {
-            // Set the velocity of the ragdoll root Rigidbody to match the bus's current velocity
+            // Set the velocity of the ragdoll's Rigidbody to match the bus's current velocity
             foreach (Rigidbody rb in passengerRigidbodies)
             {
                 rb.velocity = busRb.velocity;
             }
 
-            // Apply force gradually over a few frames
+            // Apply force to the root Rigidbody of the ragdoll
             StartCoroutine(ApplyForceGradually(passengerRigidbodies[0], directionWithAngle * passengerExitForce));
         }
-
-        // Decrease the number of current passengers
-        passengerCurrent--;
-        UpdatePassengerText();
     }
 
     private IEnumerator ApplyForceGradually(Rigidbody passengerRb, Vector3 force)
@@ -112,6 +152,110 @@ public class BusPassengers : MonoBehaviour
         }
     }
 
+    private void HandleSlowMotion()
+    {
+        if (Input.GetMouseButton(1) && currentAmmo > 0) // Right mouse button held
+        {
+            ApplySlowMotion();
+            shootingSlidingTimerUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            ResetTimeScale();
+            shootingSlidingTimerUI.gameObject.SetActive(false);
+        }
+    }
+
+    private void ApplySlowMotion()
+    {
+        Time.timeScale = Mathf.Lerp(Time.timeScale, slowMotionScale, Time.deltaTime * slowMotionTransitionSpeed);
+        Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
+        sliderFillImage.color = slowMotionColor;
+        slowMoActive = true;
+    }
+
+    private void ResetTimeScale()
+    {
+        Time.timeScale = Mathf.Lerp(Time.timeScale, 1f, Time.deltaTime * slowMotionTransitionSpeed);
+        Time.fixedDeltaTime = 0.02f; // Reset to normal fixed time step
+        sliderFillImage.color = normalColor;
+        slowMoActive = false;
+    }
+
+    private void UpdateSlowMotionTimer()
+    {
+        if (slowMotionElapsedTime > 0 && slowMoActive)
+        {
+            slowMotionElapsedTime -= Time.unscaledDeltaTime;
+            shootingSlidingTimerUI.value = slowMotionElapsedTime;
+        }
+        else if (slowMotionElapsedTime <= 0)
+        {
+            currentAmmo = 0;
+            UpdateShootingUI();
+        }
+    }
+
+    private void UpdateCrosshairColor()
+    {
+        if (elapsedTime > 0f)
+        {
+            elapsedTime -= Time.deltaTime;
+            crosshairUI.GetComponent<Image>().color = Color.black;
+        }
+        else
+        {
+            crosshairUI.GetComponent<Image>().color = Color.white;
+        }
+    }
+
+    private IEnumerator AnimateCrosshairScale()
+    {
+        yield return ScaleCrosshair(1f, crosshairMaxScale, crosshairScaleDuration);
+        yield return ScaleCrosshair(crosshairMaxScale, 1f, crosshairScaleDuration);
+        crosshairUI.transform.localScale = originalCrosshairScale;
+        UpdateShootingUI();
+    }
+
+    private IEnumerator ScaleCrosshair(float startScale, float endScale, float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float scale = Mathf.Lerp(startScale, endScale, time / duration);
+            crosshairUI.transform.localScale = originalCrosshairScale * scale;
+            yield return null;
+        }
+    }
+
+    private IEnumerator SpinCrosshair()
+    {
+        float elapsed = 0f;
+        while (elapsed < crosshairSpinDuration)
+        {
+            elapsed += Time.deltaTime;
+            float angle = Mathf.Lerp(0f, 360f, elapsed / crosshairSpinDuration);
+            crosshairUI.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            yield return null;
+        }
+        crosshairUI.transform.rotation = Quaternion.identity;
+    }
+
+    private void UpdateShootingUI()
+    {
+        shootingObject.SetActive(currentAmmo > 0);
+        ammoCountUI.text = currentAmmo + " / " + maxAmmo;
+    }
+
+    public void GiveAmmo()
+    {
+        currentAmmo = maxAmmo;
+        slowMotionElapsedTime = slowMotionTime;
+        UpdateShootingUI();
+        StartCoroutine(AnimateCrosshairScale());
+        StartCoroutine(SpinCrosshair());
+    }
 
     public void DeliveredPassenger()
     {
@@ -132,5 +276,10 @@ public class BusPassengers : MonoBehaviour
         ++passengerLost;
         passengerIcons.LostPassenger();
         UpdatePassengerText();
+    }
+
+    private void UpdatePassengerText()
+    {
+        passengerText.text = $"Current: {passengerCurrent} | Delivered: {passengerDelivered} | Injured: {passengerInjured} | Lost: {passengerLost}";
     }
 }

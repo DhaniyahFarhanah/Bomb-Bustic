@@ -8,6 +8,7 @@ TagManager:
   - DropOff
   - Passenger
   - NearDropOff
+  - ShootZone
   layers:
   - Default
   - TransparentFX
