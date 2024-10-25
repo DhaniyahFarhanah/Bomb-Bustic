@@ -44,6 +44,15 @@ public class PassengerLanding : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        // If the passenger leaves the DropOff area, freeze them immediately
+        if (other.gameObject.CompareTag("DropOff") && passengerState == PassengerState.Delivered)
+        {
+            FreezePassenger();
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (!collided && passengerState != PassengerState.Delivered)
@@ -119,6 +128,11 @@ public class PassengerLanding : MonoBehaviour
         }
 
         // Once all bodies are sufficiently slow, freeze the ragdoll
+        FreezePassenger();
+    }
+
+    private void FreezePassenger()
+    {
         foreach (Rigidbody rb in passengerRigidbodies)
         {
             rb.velocity = Vector3.zero;
