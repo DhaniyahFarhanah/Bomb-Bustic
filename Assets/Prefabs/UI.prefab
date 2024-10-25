@@ -1643,6 +1643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30996105af705b64ca96dd4429b52f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passengerBackground: {fileID: 4765448704389599794}
   passengerIcons:
   - {fileID: 4448364719680195430}
   - {fileID: 3321625195920287698}

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PassengerIcons : MonoBehaviour
 {
+    [SerializeField] private RectTransform passengerBackground;
     public List<GameObject> passengerIcons;
     private int inactivePassengers;
     private int lastPassenger = 0;
@@ -17,6 +18,13 @@ public class PassengerIcons : MonoBehaviour
             passengerIcons[i].SetActive(false);
         }
         lastPassenger += inactivePassengers;
+
+        if (passengerTotal <= 20)
+        {
+            Vector2 size = passengerBackground.sizeDelta;
+            size.y = 150;
+            passengerBackground.sizeDelta = size;
+        }
     }
 
     public void DeliveredPassenger()

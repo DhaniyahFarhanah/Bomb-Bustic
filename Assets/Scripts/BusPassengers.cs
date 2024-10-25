@@ -23,6 +23,7 @@ public class BusPassengers : MonoBehaviour
     [Header("UI")]
     [SerializeField] private PassengerIcons passengerIcons;
     [SerializeField] private TextMeshProUGUI passengerText;
+    [SerializeField] private RectTransform passengerBackground;
 
     // Start is called before the first frame update
     void Start()
