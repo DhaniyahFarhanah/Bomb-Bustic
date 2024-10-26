@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f4df01a6e298a343b7aa73cb6294e91, type: 2}
+  - {fileID: 2100000, guid: 1db4ad5f1af3eaa49aa6108532394a4b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   catchCapacity: 5
   catchText: {fileID: 5885196633771457631}
   nearArea: {fileID: 8001042732394007608}
+  materialAtCapacity: {fileID: 2100000, guid: a07b8b79ac60472479583f8fbabedcef, type: 2}
 --- !u!1 &3681445423307580146
 GameObject:
   m_ObjectHideFlags: 0

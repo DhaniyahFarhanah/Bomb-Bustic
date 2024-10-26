@@ -8,6 +8,7 @@ public class PassengerCatcher : MonoBehaviour
     [SerializeField] private int catchCapacity;
     [SerializeField] private TextMeshPro catchText;
     [SerializeField] private GameObject nearArea;
+    [SerializeField] private Material materialAtCapacity;
 
     private int catchCurrent = 0;
     private Camera mainCamera;
@@ -50,6 +51,7 @@ public class PassengerCatcher : MonoBehaviour
             GetComponent<BoxCollider>().isTrigger = false;
             nearArea.SetActive(false);
             FindAnyObjectByType<BusPassengers>().EnablePassengerEjection(false);
+            GetComponent<Renderer>().material = materialAtCapacity;
         }
     }
 
