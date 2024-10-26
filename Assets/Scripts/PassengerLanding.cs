@@ -15,6 +15,7 @@ public class PassengerLanding : MonoBehaviour
     private bool collided = false;
     private Rigidbody[] passengerRigidbodies;
     private bool done = false;
+    private bool caught = false;
 
     private void Start()
     {
@@ -32,14 +33,18 @@ public class PassengerLanding : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("DropOff"))
         {
-            // Mark as delivered and prevent further physics interactions
-            passengerState = PassengerState.Delivered;
-            StopAllCoroutines();
-            StartCoroutine(SlowAndFreezePassenger());
-            if (!done)
+            if (other.gameObject.GetComponent<PassengerCatcher>().CheckCapacity())
             {
-                done = true;
-                FindAnyObjectByType<BusPassengers>().DeliveredPassenger();
+                // Mark as delivered and prevent further physics interactions
+                passengerState = PassengerState.Delivered;
+                StopAllCoroutines();
+                StartCoroutine(SlowAndFreezePassenger());
+                if (!done)
+                {
+                    done = true;
+                    FindAnyObjectByType<BusPassengers>().DeliveredPassenger();
+                    other.gameObject.GetComponent<PassengerCatcher>().CaughtPassenger();
+                }
             }
         }
     }
@@ -139,5 +144,15 @@ public class PassengerLanding : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.isKinematic = true; // Make them kinematic to prevent further physics interactions
         }
+    }
+
+    public bool GetCaught()
+    {
+        return caught;
+    }
+
+    public void SetCaught(bool _bool)
+    {
+        caught = _bool;
     }
 }

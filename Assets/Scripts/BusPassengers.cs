@@ -20,7 +20,6 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private Vector3 exitOffset;
     [SerializeField] private float passengerExitForce = 500f;
     [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float angleUp = 15f; // Angle for vertical boost
     [SerializeField] private float slowMotionTime = 10f;
     [SerializeField] private float slowMotionScale = 0.2f;
     [SerializeField] private float slowMotionTransitionSpeed = 3f;

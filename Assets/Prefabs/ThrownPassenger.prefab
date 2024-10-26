@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 6923850285437126202}
   m_Layer: 8
   m_Name: Alpha_Surface
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1446,7 +1446,7 @@ GameObject:
   - component: {fileID: 3765089065340613063}
   m_Layer: 8
   m_Name: mixamorig:Hips
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1832,7 +1832,7 @@ GameObject:
   - component: {fileID: 5762570374972120122}
   m_Layer: 8
   m_Name: Alpha_Joints
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2222,7 +2222,7 @@ GameObject:
   - component: {fileID: 5222899577696513567}
   m_Layer: 8
   m_Name: mixamorig:RightUpLeg
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2929,7 +2929,7 @@ GameObject:
   - component: {fileID: 1036344650288452735}
   m_Layer: 8
   m_Name: mixamorig:Spine
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3127,7 +3127,7 @@ GameObject:
   - component: {fileID: 491747295683266049}
   m_Layer: 8
   m_Name: mixamorig:LeftUpLeg
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
