@@ -140,9 +140,15 @@ public class PassengerLanding : MonoBehaviour
     {
         foreach (Rigidbody rb in passengerRigidbodies)
         {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true; // Make them kinematic to prevent further physics interactions
+            // Set velocity and angular velocity before making the Rigidbody kinematic
+            if (!rb.isKinematic)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+
+                // After setting the velocity and angular velocity, make the Rigidbody kinematic
+                rb.isKinematic = true;
+            }
         }
     }
 

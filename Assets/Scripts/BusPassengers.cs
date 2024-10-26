@@ -16,23 +16,21 @@ public class BusPassengers : MonoBehaviour
     private int passengerLost = 0;
 
     [Header("Turret Settings")]
-    [SerializeField] private int maxAmmo;
     [SerializeField] private Vector3 exitOffset;
     [SerializeField] private float passengerExitForce = 500f;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private float slowMotionTime = 10f;
     [SerializeField] private float slowMotionScale = 0.2f;
     [SerializeField] private float slowMotionTransitionSpeed = 3f;
+    private bool passengerEjectionActive = false;
     private bool slowMoActive = false;
     private float slowMotionElapsedTime;
-    private int currentAmmo;
     private float elapsedTime;
 
     [Header("UI")]
     [SerializeField] private PassengerIcons passengerIcons;
     [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private GameObject shootingObject;
-    [SerializeField] private TextMeshProUGUI ammoCountUI;
     [SerializeField] private GameObject crosshairUI;
     [SerializeField] private Slider shootingSlidingTimerUI;
     [SerializeField] private Image sliderFillImage;
@@ -61,7 +59,15 @@ public class BusPassengers : MonoBehaviour
     {
         if (other.gameObject.tag == "ShootZone")
         {
-            GiveAmmo();
+            EnablePassengerEjection(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "ShootZone")
+        {
+            EnablePassengerEjection(false);
         }
     }
 
@@ -71,7 +77,7 @@ public class BusPassengers : MonoBehaviour
         passengerIcons.InitPassengers(passengerTotal);
         UpdatePassengerText();
 
-        currentAmmo = 0;
+        EnablePassengerEjection(false);
         originalCrosshairScale = crosshairUI.transform.localScale;
         shootingSlidingTimerUI.maxValue = slowMotionTime;
         sliderFillImage.color = normalColor;
@@ -79,7 +85,7 @@ public class BusPassengers : MonoBehaviour
 
     private void HandleInput()
     {
-        if (passengerCurrent > 0 && elapsedTime <= 0f && currentAmmo > 0)
+        if (passengerCurrent > 0 && elapsedTime <= 0f && passengerEjectionActive)
         {
             if (Input.GetMouseButtonDown(0)) // Left mouse button
             {
@@ -87,12 +93,6 @@ public class BusPassengers : MonoBehaviour
                 ShootPassenger();
                 StartCoroutine(AnimateCrosshairScale());
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Ammo");
-            GiveAmmo();
         }
     }
 
@@ -117,7 +117,6 @@ public class BusPassengers : MonoBehaviour
         ApplyPassengerPhysics(passenger, totalForce);
 
         // Decrease the number of current passengers
-        --currentAmmo;
         --passengerCurrent;
         UpdatePassengerText();
     }
@@ -157,7 +156,7 @@ public class BusPassengers : MonoBehaviour
 
     private void HandleSlowMotion()
     {
-        if (Input.GetMouseButton(1) && currentAmmo > 0) // Right mouse button held
+        if (Input.GetMouseButton(1) && passengerEjectionActive) // Right mouse button held
         {
             ApplySlowMotion();
             shootingSlidingTimerUI.gameObject.SetActive(true);
@@ -192,11 +191,6 @@ public class BusPassengers : MonoBehaviour
             slowMotionElapsedTime -= Time.unscaledDeltaTime;
             shootingSlidingTimerUI.value = slowMotionElapsedTime;
         }
-        else if (slowMotionElapsedTime <= 0)
-        {
-            currentAmmo = 0;
-            UpdateShootingUI();
-        }
     }
 
     private void UpdateCrosshairColor()
@@ -217,7 +211,6 @@ public class BusPassengers : MonoBehaviour
         yield return ScaleCrosshair(1f, crosshairMaxScale, crosshairScaleDuration);
         yield return ScaleCrosshair(crosshairMaxScale, 1f, crosshairScaleDuration);
         crosshairUI.transform.localScale = originalCrosshairScale;
-        UpdateShootingUI();
     }
 
     private IEnumerator ScaleCrosshair(float startScale, float endScale, float duration)
@@ -245,19 +238,16 @@ public class BusPassengers : MonoBehaviour
         crosshairUI.transform.rotation = Quaternion.identity;
     }
 
-    private void UpdateShootingUI()
+    public void EnablePassengerEjection(bool enabled)
     {
-        shootingObject.SetActive(currentAmmo > 0);
-        ammoCountUI.text = currentAmmo + " / " + maxAmmo;
-    }
-
-    public void GiveAmmo()
-    {
-        currentAmmo = maxAmmo;
-        slowMotionElapsedTime = slowMotionTime;
-        UpdateShootingUI();
-        StartCoroutine(AnimateCrosshairScale());
-        StartCoroutine(SpinCrosshair());
+        passengerEjectionActive = enabled;
+        shootingObject.SetActive(passengerEjectionActive);
+        if (passengerEjectionActive)
+        {
+            slowMotionElapsedTime = slowMotionTime;
+            StartCoroutine(AnimateCrosshairScale());
+            StartCoroutine(SpinCrosshair());
+        }
     }
 
     public void DeliveredPassenger()
