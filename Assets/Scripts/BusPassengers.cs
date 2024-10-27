@@ -28,7 +28,7 @@ public class BusPassengers : MonoBehaviour
     private float elapsedTime;
 
     [Header("UI")]
-    [SerializeField] private PassengerIcons passengerIcons;
+    [SerializeField] private PassengerInfoUI passengerIcons;
     [SerializeField] private GameObject shootingObject;
     [SerializeField] private GameObject crosshairUI;
     [SerializeField] private Slider shootingSlidingTimerUI;

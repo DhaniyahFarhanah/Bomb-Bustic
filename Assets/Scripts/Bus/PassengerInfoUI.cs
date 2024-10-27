@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PassengerIcons : MonoBehaviour
+public class PassengerInfoUI : MonoBehaviour
 {
     public bool passengerInfoEnabled;
+    [SerializeField] private GameObject ObjectiveObject;
     [SerializeField] private GameObject passengerTextObject;
     [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private RectTransform passengerBackground;
@@ -15,6 +16,17 @@ public class PassengerIcons : MonoBehaviour
     private int lastPassenger = 0;
     private float extraPassengerRowHeight = 50f;
     private float passengerInfoHeight = 80f;
+
+    private void Start()
+    {
+        StartCoroutine(DeactivateObjectiveText());
+    }
+
+    private IEnumerator DeactivateObjectiveText()
+    {
+        yield return new WaitForSeconds(5f);
+        ObjectiveObject.SetActive(false);
+    }
 
     public void InitPassengers(int passengerTotal)
     {
