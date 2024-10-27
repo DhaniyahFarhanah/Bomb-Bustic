@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PassengerIcons : MonoBehaviour
 {
+    public bool passengerInfoEnabled;
+    [SerializeField] private GameObject passengerTextObject;
+    [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private RectTransform passengerBackground;
     public List<GameObject> passengerIcons;
     private int inactivePassengers;
     private int lastPassenger = 0;
+    private float extraPassengerRowHeight = 50f;
+    private float passengerInfoHeight = 80f;
 
     public void InitPassengers(int passengerTotal)
     {
@@ -19,12 +25,18 @@ public class PassengerIcons : MonoBehaviour
         }
         lastPassenger += inactivePassengers;
 
+        Vector2 size = passengerBackground.sizeDelta;
         if (passengerTotal <= 20)
         {
-            Vector2 size = passengerBackground.sizeDelta;
-            size.y = 150;
-            passengerBackground.sizeDelta = size;
+            size.y -= extraPassengerRowHeight;
         }
+        if (!passengerInfoEnabled)
+        {
+            size.y -= passengerInfoHeight;
+        }
+        passengerBackground.sizeDelta = size;
+
+        passengerTextObject.SetActive(passengerInfoEnabled);
     }
 
     public void DeliveredPassenger()
@@ -43,5 +55,13 @@ public class PassengerIcons : MonoBehaviour
     {
         passengerIcons[lastPassenger].GetComponent<Image>().color = Color.red;
         ++lastPassenger;
+    }
+
+    public void UpdatePassengerInfoText(int current, int delivered, int injured, int lost)
+    {
+        if (passengerInfoEnabled)
+        {
+            passengerText.text = $"Current: {current} | Delivered: {delivered} | Injured: {injured} | Lost: {lost}";
+        }
     }
 }

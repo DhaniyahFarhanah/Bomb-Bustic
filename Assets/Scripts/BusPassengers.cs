@@ -29,7 +29,6 @@ public class BusPassengers : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private PassengerIcons passengerIcons;
-    [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private GameObject shootingObject;
     [SerializeField] private GameObject crosshairUI;
     [SerializeField] private Slider shootingSlidingTimerUI;
@@ -273,6 +272,6 @@ public class BusPassengers : MonoBehaviour
 
     private void UpdatePassengerText()
     {
-        passengerText.text = $"Current: {passengerCurrent} | Delivered: {passengerDelivered} | Injured: {passengerInjured} | Lost: {passengerLost}";
+        passengerIcons.UpdatePassengerInfoText(passengerCurrent, passengerDelivered, passengerInjured, passengerLost);
     }
 }
