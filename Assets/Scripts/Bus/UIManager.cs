@@ -96,6 +96,12 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
+
+        if(m_PauseCanvas == null)
+        {
+            return;
+        }
+
         m_IsPaused = !m_IsPaused;
         m_PauseCanvas.SetActive(m_IsPaused);
 
