@@ -299,7 +299,10 @@ public class BusPassengers : MonoBehaviour
         switch (crashType)
         {
             case CollisionHandler.CrashTypes.Medium:
-                passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
+                if (passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().currentStatus == PassengerIconStatus.IconStatus.Injured)
+                    passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
+                else
+                    passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
                 return;
 
             case CollisionHandler.CrashTypes.Heavy:
