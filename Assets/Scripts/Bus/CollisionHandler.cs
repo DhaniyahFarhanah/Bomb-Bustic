@@ -1,23 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ArcadeVehicleController;
 
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] private float m_CollisionCooldown;
     private CameraShake m_CamShake;
+    private GameObject bus;
 
     [Header("Light Obstacle Camera Shake")]
+    [SerializeField] private float minSpeedLight = 10f;
     [SerializeField] private float m_LightDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_LightIntensity;
 
     [Header("Medium Obstacle Camera Shake")]
+    [SerializeField] private float minSpeedMedium = 15f;
     [SerializeField] private float m_MediumDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_MediumIntensity;
 
     [Header("Heavy Obstacle Camera Shake")]
+    [SerializeField] private float minSpeedHeavy = 40f;
     [SerializeField] private float m_HeavyDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_HeavyIntensity;
+
+    public enum CrashTypes
+    {
+        None,
+        Light,
+        Medium,
+        Heavy
+    }
 
     private bool m_CanCollide = true;
     private float m_CurrentTime;
@@ -31,6 +44,8 @@ public class CollisionHandler : MonoBehaviour
 
         m_CanCollide = true;
         m_CurrentTime = m_CollisionCooldown;
+
+        bus = FindAnyObjectByType<BombMeter>().gameObject;
     }
 
     // Update is called once per frame
@@ -77,18 +92,53 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
-    //
-    //    if(obs == null) return;
-    //     
-    //    ObstacleTag m_ObstacleType = obs.obstacleTag;
-    //    if (m_CanCollide)
-    //    {
-    //        //Debug.Log("Collided with " + m_ObstacleType);
-    //        m_CanCollide = false;
-    //        ExecuteCollisionShit(m_ObstacleType);
-    //    } 
-    //}
+    private CrashTypes CollisionManager(ObstacleTag obstacleType, float speed)
+    {
+        switch (obstacleType)
+        {
+            case ObstacleTag.Light:
+                if (speed >= minSpeedLight)
+                    return CrashTypes.Light;
+                break;
+
+            case ObstacleTag.Medium:
+            case ObstacleTag.Pedestrian:
+                if (speed >= minSpeedMedium)
+                    return CrashTypes.Medium;
+                else if (speed >= minSpeedLight)
+                    return CrashTypes.Light;
+                break;
+
+            case ObstacleTag.CarAI:
+            case ObstacleTag.Heavy:
+                if (speed >= minSpeedHeavy)
+                    return CrashTypes.Heavy;
+                else if (speed >= minSpeedMedium)
+                    return CrashTypes.Medium;
+                else if(speed >= minSpeedLight)
+                    return CrashTypes.Light;
+                break;
+
+            case ObstacleTag.None:
+            default:
+                return CrashTypes.None;
+        }
+
+        return CrashTypes.None; // Default return if no conditions are met
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
+    
+        if(obs == null) return;
+         
+        ObstacleTag m_ObstacleType = obs.obstacleTag;
+        if (m_CanCollide)
+        {
+            m_CanCollide = false;
+            //ExecuteCollisionShit(m_ObstacleType);
+            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
+        } 
+    }
 }

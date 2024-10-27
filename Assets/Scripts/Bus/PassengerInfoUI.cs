@@ -9,13 +9,18 @@ public class PassengerInfoUI : MonoBehaviour
     public bool passengerInfoEnabled;
     [SerializeField] private GameObject ObjectiveObject;
     [SerializeField] private GameObject passengerTextObject;
+    [SerializeField] private GameObject currentIndicator;
     [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private RectTransform passengerBackground;
     public List<GameObject> passengerIcons;
     private int inactivePassengers;
-    private int lastPassenger = 0;
     private float extraPassengerRowHeight = 50f;
     private float passengerInfoHeight = 80f;
+
+    private void Awake()
+    {
+        passengerIcons.Reverse();
+    }
 
     private void Start()
     {
@@ -33,9 +38,9 @@ public class PassengerInfoUI : MonoBehaviour
         inactivePassengers = passengerIcons.Count - passengerTotal;
         for (int i = 0; i < inactivePassengers; ++i)
         {
-            passengerIcons[i].SetActive(false);
+            passengerIcons[i + passengerTotal].SetActive(false);
         }
-        lastPassenger += inactivePassengers;
+        currentIndicator.transform.position = passengerIcons[passengerTotal - 1].transform.position;
 
         Vector2 size = passengerBackground.sizeDelta;
         if (passengerTotal <= 20)
@@ -51,22 +56,19 @@ public class PassengerInfoUI : MonoBehaviour
         passengerTextObject.SetActive(passengerInfoEnabled);
     }
 
-    public void DeliveredPassenger()
+    public void DeliveredPassenger(int current)
     {
-        passengerIcons[lastPassenger].GetComponent<Image>().color = Color.green;
-        ++lastPassenger;
+        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Delivered);
     }
 
-    public void InjuredPassenger()
+    public void InjuredPassenger(int current)
     {
-        passengerIcons[lastPassenger].GetComponent<Image>().color = Color.yellow;
-        ++lastPassenger;
+        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
     }
 
-    public void LostPassenger()
+    public void LostPassenger(int current)
     {
-        passengerIcons[lastPassenger].GetComponent<Image>().color = Color.red;
-        ++lastPassenger;
+        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
     }
 
     public void UpdatePassengerInfoText(int current, int delivered, int injured, int lost)
@@ -75,5 +77,10 @@ public class PassengerInfoUI : MonoBehaviour
         {
             passengerText.text = $"Current: {current} | Delivered: {delivered} | Injured: {injured} | Lost: {lost}";
         }
+    }
+
+    public void UpdateCurrentIndicator(int current)
+    {
+        currentIndicator.transform.position = passengerIcons[current - 1].transform.position;
     }
 }

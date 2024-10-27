@@ -15,6 +15,7 @@ public class BusPassengers : MonoBehaviour
     private int passengerInjured = 0;
     private int passengerLost = 0;
 
+
     [Header("Turret Settings")]
     [SerializeField] private Vector3 exitOffset;
     [SerializeField] private float passengerExitForce = 500f;
@@ -28,7 +29,7 @@ public class BusPassengers : MonoBehaviour
     private float elapsedTime;
 
     [Header("UI")]
-    [SerializeField] private PassengerInfoUI passengerIcons;
+    [SerializeField] private PassengerInfoUI passengerInfoUI;
     [SerializeField] private GameObject shootingObject;
     [SerializeField] private GameObject crosshairUI;
     [SerializeField] private GameObject ShootingInfo;
@@ -74,7 +75,7 @@ public class BusPassengers : MonoBehaviour
     private void InitializeSettings()
     {
         passengerCurrent = passengerTotal;
-        passengerIcons.InitPassengers(passengerTotal);
+        passengerInfoUI.InitPassengers(passengerTotal);
         UpdatePassengerText();
 
         EnablePassengerEjection(false);
@@ -106,6 +107,7 @@ public class BusPassengers : MonoBehaviour
 
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
+        passenger.GetComponentInChildren<PassengerLanding>().PassengerID = passengerCurrent;
 
         // Apply horizontal shooting direction force and add vertical force
         Vector3 shootingDirection = ray.direction * passengerExitForce;
@@ -118,6 +120,11 @@ public class BusPassengers : MonoBehaviour
 
         // Decrease the number of current passengers
         --passengerCurrent;
+        if (IsCurrentPassengerLost())
+        {
+            --passengerCurrent;
+        }
+
         UpdatePassengerText();
     }
 
@@ -251,30 +258,31 @@ public class BusPassengers : MonoBehaviour
         }
     }
 
-    public void DeliveredPassenger()
+    public void DeliveredPassenger(int ID)
     {
         ++passengerDelivered;
-        passengerIcons.DeliveredPassenger();
+        passengerInfoUI.DeliveredPassenger(ID);
         UpdatePassengerText();
     }
 
-    public void InjuredPassenger()
+    public void InjuredPassenger(int ID)
     {
         ++passengerInjured;
-        passengerIcons.InjuredPassenger();
+        passengerInfoUI.InjuredPassenger(ID);
         UpdatePassengerText();
     }
 
-    public void LostPassenger()
+    public void LostPassenger(int ID)
     {
         ++passengerLost;
-        passengerIcons.LostPassenger();
+        passengerInfoUI.LostPassenger(ID);
         UpdatePassengerText();
     }
 
     private void UpdatePassengerText()
     {
-        passengerIcons.UpdatePassengerInfoText(passengerCurrent, passengerDelivered, passengerInjured, passengerLost);
+        passengerInfoUI.UpdatePassengerInfoText(passengerCurrent, passengerDelivered, passengerInjured, passengerLost);
+        passengerInfoUI.UpdateCurrentIndicator(passengerCurrent);
     }
 
     private IEnumerator RemoveShootingInfoAfterDelay()
@@ -282,5 +290,34 @@ public class BusPassengers : MonoBehaviour
         ShootingInfo.SetActive(true);
         yield return new WaitForSeconds(5f);
         ShootingInfo.SetActive(false);
+    }
+
+    public void CrashHandler(CollisionHandler.CrashTypes crashType)
+    {
+        int randPassenger = Random.Range(0, passengerCurrent);
+
+        switch (crashType)
+        {
+            case CollisionHandler.CrashTypes.Medium:
+                passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
+                return;
+
+            case CollisionHandler.CrashTypes.Heavy:
+                passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
+                return;
+
+            case CollisionHandler.CrashTypes.Light:
+            case CollisionHandler.CrashTypes.None:
+            default:
+                return;
+        }
+    }
+
+    private bool IsCurrentPassengerLost()
+    {
+        if (passengerCurrent - 1 >= 0)
+            return passengerInfoUI.passengerIcons[passengerCurrent - 1].GetComponent<PassengerIconStatus>().currentStatus == PassengerIconStatus.IconStatus.Lost;
+        else
+            return false;
     }
 }

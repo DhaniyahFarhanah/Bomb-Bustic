@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PassengerLanding : MonoBehaviour
 {
+    public int PassengerID;
     private enum PassengerState
     {
-        Starting,
+        Healthy,
         Delivered,
+        DeliveredInjured,
         Injured,
         Lost,
     }
-    private PassengerState passengerState = PassengerState.Starting;
+    private PassengerState passengerState = PassengerState.Healthy;
     private bool collided = false;
     private Rigidbody[] passengerRigidbodies;
     private bool done = false;
@@ -42,7 +44,7 @@ public class PassengerLanding : MonoBehaviour
                 if (!done)
                 {
                     done = true;
-                    FindAnyObjectByType<BusPassengers>().DeliveredPassenger();
+                    FindAnyObjectByType<BusPassengers>().DeliveredPassenger(PassengerID);
                     other.gameObject.GetComponent<PassengerCatcher>().CaughtPassenger();
                 }
             }
@@ -95,15 +97,15 @@ public class PassengerLanding : MonoBehaviour
             if (!done)
             {
                 done = true;
-                FindAnyObjectByType<BusPassengers>().InjuredPassenger();
+                FindAnyObjectByType<BusPassengers>().InjuredPassenger(PassengerID);
             }
         }
-        else if (passengerState == PassengerState.Starting) // Ensure it's not delivered
+        else if (passengerState == PassengerState.Healthy) // Ensure it's not delivered
         {
             if (!done)
             {
                 done = true;
-                FindAnyObjectByType<BusPassengers>().LostPassenger();
+                FindAnyObjectByType<BusPassengers>().LostPassenger(PassengerID);
             }
         }
     }
