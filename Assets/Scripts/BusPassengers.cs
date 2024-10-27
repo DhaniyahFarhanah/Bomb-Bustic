@@ -31,6 +31,7 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private PassengerInfoUI passengerIcons;
     [SerializeField] private GameObject shootingObject;
     [SerializeField] private GameObject crosshairUI;
+    [SerializeField] private GameObject ShootingInfo;
     [SerializeField] private Slider shootingSlidingTimerUI;
     [SerializeField] private Image sliderFillImage;
     [SerializeField] private float crosshairScaleDuration = 0.1f;
@@ -246,6 +247,7 @@ public class BusPassengers : MonoBehaviour
             slowMotionElapsedTime = slowMotionTime;
             StartCoroutine(AnimateCrosshairScale());
             StartCoroutine(SpinCrosshair());
+            StartCoroutine(RemoveShootingInfoAfterDelay());
         }
     }
 
@@ -273,5 +275,12 @@ public class BusPassengers : MonoBehaviour
     private void UpdatePassengerText()
     {
         passengerIcons.UpdatePassengerInfoText(passengerCurrent, passengerDelivered, passengerInjured, passengerLost);
+    }
+
+    private IEnumerator RemoveShootingInfoAfterDelay()
+    {
+        ShootingInfo.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        ShootingInfo.SetActive(false);
     }
 }
