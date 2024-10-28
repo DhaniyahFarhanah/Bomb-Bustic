@@ -24,6 +24,10 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float m_HeavyDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_HeavyIntensity;
 
+    [Header("Lost Ejection Settings")]
+    [SerializeField] private float EjectionForce = 200f;
+    [SerializeField] private float verticaDirection = 1.5f;
+
     [SerializeField] private NearMiss nearMiss;
 
     public enum CrashTypes
@@ -45,7 +49,7 @@ public class CollisionHandler : MonoBehaviour
             return;
 
         m_CanCollide = true;
-        m_CurrentTime = m_CollisionCooldown;
+        m_CurrentTime = 0;
 
         bus = FindAnyObjectByType<BombMeter>().gameObject;
     }
@@ -142,17 +146,14 @@ public class CollisionHandler : MonoBehaviour
 
             // Get the relative velocity of the collision, which can be used to calculate the force and direction
             Vector3 crashDirection = (-collision.relativeVelocity).normalized; // Direction of the crash
-            crashDirection += new Vector3(0, 2f, 0);
-            float impactForce = collision.relativeVelocity.magnitude * bus.GetComponent<Rigidbody>().mass; // Magnitude of the force based on the bus's mass and velocity
+            crashDirection += new Vector3(0, verticaDirection, 0);
 
             // Call the CrashHandler function with the calculated force and direction
-            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()), crashDirection, 200f);
+            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()), crashDirection, EjectionForce);
 
             // Trigger NearMiss behavior
             nearMiss.BusCollisionWith();
         }
-
-        //Debug.Log($"Crash with {obs.gameObject.name}");
     }
 
 }

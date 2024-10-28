@@ -341,11 +341,6 @@ public class BusPassengers : MonoBehaviour
             default:
                 break;
         }
-
-        if (IsCurrentPassengerLost())
-        {
-            --passengerCurrent;
-        }
     }
 
     private bool IsCurrentPassengerLost()
@@ -358,14 +353,11 @@ public class BusPassengers : MonoBehaviour
 
     private void CrashEjectPassenger(Vector3 crashDirection, float impactForce)
     {
-        if (passengerCurrent <= 0) return; // No more passengers to eject
-
         // Calculate the position based on the exit offset, using the bus's local orientation
         Vector3 exitPosition = transform.TransformPoint(exitOffset);
 
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
-        passenger.GetComponentInChildren<PassengerLanding>().PassengerID = passengerCurrent;
 
         // Apply ejection force in the crash direction, with some random variation
         Vector3 ejectionDirection = (crashDirection.normalized + Random.insideUnitSphere * 0.2f).normalized;
