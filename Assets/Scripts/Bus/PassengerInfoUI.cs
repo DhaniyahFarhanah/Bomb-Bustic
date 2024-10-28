@@ -81,6 +81,7 @@ public class PassengerInfoUI : MonoBehaviour
 
     public void UpdateCurrentIndicator(int current)
     {
-        currentIndicator.transform.position = passengerIcons[current - 1].transform.position;
+        if (current - 1 >= 0)
+            currentIndicator.transform.position = passengerIcons[current - 1].transform.position;
     }
 }

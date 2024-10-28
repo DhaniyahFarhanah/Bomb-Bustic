@@ -9,7 +9,6 @@ public class PassengerIconStatus : MonoBehaviour
     {
         Healthy,
         Delivered,
-        DeliveredInjured,
         Injured,
         Lost,
     }
@@ -30,8 +29,8 @@ public class PassengerIconStatus : MonoBehaviour
             case IconStatus.Delivered:
                 if (currentStatus == IconStatus.Injured)
                 {
-                    GetComponent<Image>().color = Color.magenta;
-                    currentStatus = IconStatus.DeliveredInjured;
+                    GetComponent<Image>().color = Color.yellow;
+                    currentStatus = IconStatus.Injured;
                 }
                 else if (currentStatus == IconStatus.Healthy)
                 {

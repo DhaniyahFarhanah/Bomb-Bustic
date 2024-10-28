@@ -9,7 +9,6 @@ public class PassengerLanding : MonoBehaviour
     {
         Healthy,
         Delivered,
-        DeliveredInjured,
         Injured,
         Lost,
     }

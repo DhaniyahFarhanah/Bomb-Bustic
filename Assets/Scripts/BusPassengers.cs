@@ -44,6 +44,10 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private Color normalColor = Color.green;
     private Vector3 originalCrosshairScale;
 
+    [Header("Crash Settings")]
+    [Range(0f, 1f)] [SerializeField] private float injuredChance = 0.5f;
+    [Range(0f, 1f)] [SerializeField] private float lostChance = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -307,20 +311,37 @@ public class BusPassengers : MonoBehaviour
         switch (crashType)
         {
             case CollisionHandler.CrashTypes.Medium:
-                if (passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().currentStatus == PassengerIconStatus.IconStatus.Injured)
+            if (passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().currentStatus == PassengerIconStatus.IconStatus.Injured)
+            {
+                if (Random.Range(0f, 1f) <= lostChance)
+                {
                     passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
-                else
+                }
+            }
+            else
+            {
+                if (Random.Range(0f, 1f) <= injuredChance)
+                {
                     passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
-                return;
+                }
+            }
+
+                    break;
 
             case CollisionHandler.CrashTypes.Heavy:
-                passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
-                return;
+                if (Random.Range(0f, 1f) <= lostChance)
+                    passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
+                break;
 
             case CollisionHandler.CrashTypes.Light:
             case CollisionHandler.CrashTypes.None:
             default:
-                return;
+                break;
+        }
+
+        if (IsCurrentPassengerLost())
+        {
+            --passengerCurrent;
         }
     }
 

@@ -24,7 +24,6 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float m_HeavyDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_HeavyIntensity;
 
-
     [SerializeField] private NearMiss nearMiss;
 
     public enum CrashTypes
