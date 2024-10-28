@@ -244,18 +244,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889830796186935929}
+  - component: {fileID: 3547083861134151980}
   - component: {fileID: 4723766497020543901}
   - component: {fileID: 4310510902827167036}
   - component: {fileID: 3548545743966341369}
   - component: {fileID: 8434654239452625271}
-  - component: {fileID: 3547083861134151980}
-  - component: {fileID: 7979273278392798622}
   - component: {fileID: 1331975426342428464}
   - component: {fileID: 930155380597902409}
-  - component: {fileID: 327423668309869974}
   - component: {fileID: 1713831921313684075}
-  - component: {fileID: 2091703669680996654}
   - component: {fileID: 8009369760897389329}
+  - component: {fileID: 2091703669680996654}
   m_Layer: 9
   m_Name: Bus
   m_TagString: Player
@@ -285,6 +283,27 @@ Transform:
   - {fileID: 7116057679406467007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3547083861134151980
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8507856
+  m_Center: {x: 0.02507299, y: -0.09752405, z: 0.04432964}
 --- !u!114 &4723766497020543901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,92 +393,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CollisionCooldown: 0
+  minSpeedLight: 10
   m_LightDuration: 0.2
   m_LightIntensity: 0.1
+  minSpeedMedium: 15
   m_MediumDuration: 0.4
   m_MediumIntensity: 0.2
+  minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
---- !u!135 &3547083861134151980
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.8507856
-  m_Center: {x: 0.02507299, y: -0.09752405, z: 0.04432964}
---- !u!114 &7979273278392798622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50229a9fbbfa3d24c987ad9d227544f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poopMaxTime: 280
-  poopCurrentTime: 0
-  poopSlider: {fileID: 0}
-  speedTextUI: {fileID: 0}
-  poopTextUI: {fileID: 0}
-  loseCanvas: {fileID: 0}
-  loseScreen: {fileID: 0}
-  winScreen: {fileID: 0}
-  disgustTextUI: {fileID: 0}
-  fartScreen: {fileID: 0}
-  poopCanvas: {fileID: 0}
-  poopImagePrefab: {fileID: 677718906464243051, guid: 9eab9e577b4a95347b0d55b47f998eb6, type: 3}
-  minLightSpeed: 10
-  lightObstacle: 1
-  minMediumSpeed: 30
-  mediumObstacle: 3
-  minHeavySpeed: 50
-  heavyObstacle: 5
-  minPedestrianSpeed: 10
-  pedestrian: 10
-  wobbleLight: 0
-  wobbleMedium: 0
-  wobbleHeavy: 0
-  wobbleLightDuration: 0.5
-  wobbleLightMagnitude: 0.1
-  wobbleMediumDuration: 0.5
-  wobbleMediumMagnitude: 3
-  wobbleMediumOscillations: 4
-  wobbleHeavyDuration: 0.5
-  wobbleHeavyMagnitude: 10
-  wobbleHeavyOscillations: 8
-  minAirTime: 2
-  minAirCrashTime: 3
-  triggerDisgust: 0
-  maxDisgust: 20
-  disgustThreshold: 0.1
-  disgustChance: 1
-  maxDisgustEffectDeltaDuration: 1.5
-  maxDisgustEffectHoldDuration: 3
-  maxDisgustEffectAlpha: 240
-  poopImageMinScale: 1.5
-  poopImageMaxScale: 4
-  poopImageGrowlength: 0.2
-  poopImageDelay: 8
-  poopImageVerticalSpeed: 30
-  poopImageHorizontalSpeed: 25
-  poopImageFadeDuration: 8
+  nearMiss: {fileID: 0}
 --- !u!114 &1331975426342428464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,38 +428,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5984d89d095d3f142a27fc7eeaff50aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 30
+  minSpeed: 20
   bombBuffer: 5
   bombMeterSlider: {fileID: 0}
   bombMeterSliderFill: {fileID: 0}
-  speedTextUI: {fileID: 0}
   countdownTextUI: {fileID: 0}
---- !u!114 &327423668309869974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aff37d2e218a7ab449ccfc2c9edf21a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAmmo: 5
-  shootingUI: {fileID: 0}
-  ammoCountUI: {fileID: 0}
-  crosshairUI: {fileID: 0}
-  shootingSlidingTimerUI: {fileID: 0}
-  fireRate: 1
-  crosshairScaleDuration: 0.1
-  crosshairMaxScale: 2
-  crosshairSpinDuration: 0.5
-  bulletPrefab: {fileID: 3469903934765407235, guid: b3e01cba14436a142a633d9e5e5ae577, type: 3}
-  bulletSpawnPointOffset: {x: 0, y: 2, z: 0}
-  bulletSpeed: 4000
-  bulletLifetime: 5
-  shootingTime: 10
+  BombImage: {fileID: 0}
 --- !u!114 &1713831921313684075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +461,37 @@ MonoBehaviour:
   NitroProtector: {fileID: 8802528110543123542}
   empPulse: {fileID: 2708971031930406992}
   energyPulseCooldown: 10
+--- !u!114 &8009369760897389329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumebgm: 0.8
+  sCrash:
+  - {fileID: 8300000, guid: 45fc10b47087bbf4c99d4c081303ff6b, type: 3}
+  - {fileID: 8300000, guid: c9771cac84e43aa4492e529a627f4b58, type: 3}
+  - {fileID: 8300000, guid: e7228cf9ef0a2ec4c8583df2215ddd31, type: 3}
+  mCrash: {fileID: 8300000, guid: 40cd52cd36ae97246ace04fbcf253a54, type: 3}
+  lCrash: {fileID: 8300000, guid: 5b6c00abcffd6c04d92db6833ba37e95, type: 3}
+  lose: {fileID: 8300000, guid: c2e2f3d5bcbde0843abaa8f29397bc3f, type: 3}
+  passengerPop: {fileID: 8300000, guid: 1d112062fd31bc143b59ba3f8c2afc6b, type: 3}
+  passengerWee: {fileID: 8300000, guid: 502631008c555434784a1a4af81ca755, type: 3}
+  passengerScream: {fileID: 0}
+  passengerDisgust: {fileID: 8300000, guid: 36ae3e00a104eb343a2b6aa4540b582c, type: 3}
+  flush: {fileID: 8300000, guid: 9faaab59347d93d4aad5ac09de982d8c, type: 3}
+  win: {fileID: 8300000, guid: 7430b1d3b715a9940b951a63eeed2a46, type: 3}
+  DrivingSoundtrack:
+  - {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
+  - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
+  WinningSoundtrack: {fileID: 0}
+  PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
 --- !u!82 &2091703669680996654
 AudioSource:
   m_ObjectHideFlags: 0
@@ -640,37 +588,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8009369760897389329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumebgm: 0.8
-  sCrash:
-  - {fileID: 8300000, guid: 45fc10b47087bbf4c99d4c081303ff6b, type: 3}
-  - {fileID: 8300000, guid: c9771cac84e43aa4492e529a627f4b58, type: 3}
-  - {fileID: 8300000, guid: e7228cf9ef0a2ec4c8583df2215ddd31, type: 3}
-  mCrash: {fileID: 8300000, guid: 40cd52cd36ae97246ace04fbcf253a54, type: 3}
-  lCrash: {fileID: 8300000, guid: 5b6c00abcffd6c04d92db6833ba37e95, type: 3}
-  lose: {fileID: 8300000, guid: c2e2f3d5bcbde0843abaa8f29397bc3f, type: 3}
-  passengerPop: {fileID: 8300000, guid: 1d112062fd31bc143b59ba3f8c2afc6b, type: 3}
-  passengerWee: {fileID: 8300000, guid: 502631008c555434784a1a4af81ca755, type: 3}
-  passengerScream: {fileID: 0}
-  passengerDisgust: {fileID: 8300000, guid: 36ae3e00a104eb343a2b6aa4540b582c, type: 3}
-  flush: {fileID: 8300000, guid: 9faaab59347d93d4aad5ac09de982d8c, type: 3}
-  win: {fileID: 8300000, guid: 7430b1d3b715a9940b951a63eeed2a46, type: 3}
-  DrivingSoundtrack:
-  - {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
-  - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
-  WinningSoundtrack: {fileID: 0}
-  PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
