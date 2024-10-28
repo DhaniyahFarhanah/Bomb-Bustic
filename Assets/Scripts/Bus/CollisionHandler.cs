@@ -141,7 +141,7 @@ public class CollisionHandler : MonoBehaviour
         {
             m_CanCollide = false;
             //ExecuteCollisionShit(m_ObstacleType);
-            //bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
+            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
         }
 
         //Debug.Log($"Crash with {obs.gameObject.name}");
