@@ -193,6 +193,7 @@ Transform:
   m_Children:
   - {fileID: 6996648365969318338}
   - {fileID: 7817779199514565904}
+  - {fileID: 7865316583202811159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4723766497020543901
@@ -280,12 +281,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CollisionCooldown: 0
+  minSpeedLight: 10
   m_LightDuration: 0.2
   m_LightIntensity: 0.1
+  minSpeedMedium: 15
   m_MediumDuration: 0.4
   m_MediumIntensity: 0.2
+  minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
+  nearMiss: {fileID: 5541332885932400590}
 --- !u!135 &3547083861134151980
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -337,6 +342,7 @@ MonoBehaviour:
   bombMeterSlider: {fileID: 0}
   bombMeterSliderFill: {fileID: 0}
   countdownTextUI: {fileID: 0}
+  BombImage: {fileID: 0}
 --- !u!114 &6898862302790874617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,19 +357,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passengerPrefab: {fileID: 838689364423267720, guid: 0e202b7da0347ef4398bf408e43ba153, type: 3}
   passengerTotal: 20
-  maxAmmo: 5
   exitOffset: {x: 0, y: 0, z: 0}
   passengerExitForce: 500
   fireRate: 0.5
-  angleUp: 25
   slowMotionTime: 10
   slowMotionScale: 0.5
   slowMotionTransitionSpeed: 5
-  passengerIcons: {fileID: 0}
-  passengerText: {fileID: 0}
+  passengerInfoUI: {fileID: 0}
   shootingObject: {fileID: 0}
-  ammoCountUI: {fileID: 0}
   crosshairUI: {fileID: 0}
+  ShootingInfo: {fileID: 0}
   shootingSlidingTimerUI: {fileID: 0}
   sliderFillImage: {fileID: 0}
   crosshairScaleDuration: 0.1
@@ -701,6 +704,73 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!1 &1942579968385099460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7865316583202811159}
+  - component: {fileID: 1654605263528836960}
+  - component: {fileID: 5541332885932400590}
+  m_Layer: 9
+  m_Name: NearMissArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7865316583202811159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942579968385099460}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 9, y: 1, z: 15}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1889830796186935929}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1654605263528836960
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942579968385099460}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5541332885932400590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942579968385099460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cc281f5f1d36f4fa7945e0e776119b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bus: {fileID: 582055895660397785}
 --- !u!1 &4138645960136859615
 GameObject:
   m_ObjectHideFlags: 0

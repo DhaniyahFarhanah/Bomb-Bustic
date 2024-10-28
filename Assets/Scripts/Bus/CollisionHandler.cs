@@ -24,6 +24,9 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float m_HeavyDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_HeavyIntensity;
 
+
+    [SerializeField] private NearMiss nearMiss;
+
     public enum CrashTypes
     {
         None,
@@ -139,6 +142,9 @@ public class CollisionHandler : MonoBehaviour
             m_CanCollide = false;
             //ExecuteCollisionShit(m_ObstacleType);
             bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
-        } 
+        }
+
+        //Debug.Log($"Crash with {obs.gameObject.name}");
+        nearMiss.BusCollisionWith();
     }
 }
