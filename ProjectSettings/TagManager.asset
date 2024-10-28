@@ -9,11 +9,12 @@ TagManager:
   - Passenger
   - Indestructable
   - EmpBurst
+  - MinimapIcon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - MiniMap
   - Water
   - UI
   - 
