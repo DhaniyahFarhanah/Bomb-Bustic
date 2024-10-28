@@ -6,6 +6,15 @@ namespace ArcadeVehicleController
 {
     public class DrivingCameraController: MonoBehaviour
     {
+        public enum CameraModes
+        {
+            Normal,
+            Turret,
+            PassengerEject
+        }
+        public CameraModes cameraMode;
+
+
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private float m_Distance = 10.0f;
         [SerializeField] private float m_Height = 5.0f;
@@ -47,13 +56,16 @@ namespace ArcadeVehicleController
         public Transform FollowTarget { get; set; }
         public float SpeedRatio { get; set; }
 
-        public enum CameraModes
-        {
-            Normal,
-            Turret,
-            PassengerEject
-        }
-        public CameraModes cameraMode;
+        [Header("Passenger Ejection")]
+        [SerializeField] private float m_MouseSensitivity = 100.0f;
+        [SerializeField] private float m_MaxPitchAngle = 80.0f;    // Maximum look-up angle
+        [SerializeField] private float m_MinPitchAngle = -30.0f;   // Maximum look-down angle
+        [SerializeField] private float m_MaxDistance = 20.0f;      // Max camera zoom-out distance
+        [SerializeField] private float m_MinDistance = 3.0f;       // Min camera zoom-in distance
+        [SerializeField] private float m_ScrollSensitivity = 5.0f; // Sensitivity of the scroll wheel
+        private float m_YawRotation;
+        private float m_PitchRotation;
+
 
         private void Awake()
         {
@@ -68,11 +80,7 @@ namespace ArcadeVehicleController
                 return;
             }
 
-            CameraMode(); //delete if it doesnt work
-
-            HandleCameraPosition(); 
-            HandleFOV();
-
+            CameraMode();
         }
 
         void HandleCameraPosition()
@@ -142,6 +150,8 @@ namespace ArcadeVehicleController
                     m_Height = m_HeightNorm;
                     m_Offset = m_OffsetNorm;
                     Crosshair.SetActive(false);
+                    HandleCameraPosition();
+                    HandleFOV();
                     break;
 
                 case CameraModes.Turret:
@@ -150,10 +160,17 @@ namespace ArcadeVehicleController
                     m_Offset = m_OffsetTurret;
                     Crosshair.SetActive(true);
                     CursorAim();
+                    HandleCameraPosition();
+                    HandleFOV();
                     break;
 
                 case CameraModes.PassengerEject:
-
+                    m_Distance = m_DistanceNorm;
+                    m_Height = m_HeightNorm;
+                    m_Offset = m_OffsetNorm;
+                    HandleMouseRotation2();
+                    HandleCameraPosition2();
+                    HandleCameraFOV2();
                     break;
             }
         }
@@ -184,6 +201,65 @@ namespace ArcadeVehicleController
                 }
             }
             //cooldown
+        }
+
+        private void HandleMouseRotation2()
+        {
+            float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.deltaTime;
+
+            if (mouseX != 0 || mouseY != 0)
+            {
+                m_YawRotation += mouseX;
+                m_PitchRotation -= mouseY;
+                m_PitchRotation = Mathf.Clamp(m_PitchRotation, m_MinPitchAngle, m_MaxPitchAngle);
+            }
+        }
+
+        private void HandleCameraPosition2()
+        {
+            Vector3 followPosition = FollowTarget.position;
+            Quaternion followRotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
+
+            Quaternion combinedRotation;
+
+            // Normal mouse-controlled rotation
+            combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
+            
+
+            Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
+            desiredPosition.y += m_Height;
+
+            m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
+            m_Transform.rotation = combinedRotation;
+        }
+
+        private void HandleCameraFOV2()
+        {
+            float velocityMagnitude = FollowTarget.GetComponent<Rigidbody>().velocity.magnitude;
+
+            if (velocityMagnitude > activateFovVelocity)
+            {
+                if (m_Camera.fieldOfView < m_FastFov)
+                {
+                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov, Time.deltaTime * m_FovDampingSpeeding);
+                }
+                else if (m_Camera.fieldOfView > m_FastFov)
+                {
+                    m_Camera.fieldOfView = m_FastFov;
+                }
+            }
+            else if (velocityMagnitude < activateFovVelocity)
+            {
+                if (m_Camera.fieldOfView > m_NormalFov)
+                {
+                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_NormalFov, Time.deltaTime * m_FovDampingSlowing);
+                }
+                else
+                {
+                    m_Camera.fieldOfView = m_NormalFov;
+                }
+            }
         }
     }  
 }
