@@ -14,7 +14,6 @@ namespace ArcadeVehicleController
         }
         public CameraModes cameraMode;
 
-
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private float m_Distance = 10.0f;
         [SerializeField] private float m_Height = 5.0f;
@@ -60,9 +59,6 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_MouseSensitivity = 100.0f;
         [SerializeField] private float m_MaxPitchAngle = 80.0f;    // Maximum look-up angle
         [SerializeField] private float m_MinPitchAngle = -30.0f;   // Maximum look-down angle
-        [SerializeField] private float m_MaxDistance = 20.0f;      // Max camera zoom-out distance
-        [SerializeField] private float m_MinDistance = 3.0f;       // Min camera zoom-in distance
-        [SerializeField] private float m_ScrollSensitivity = 5.0f; // Sensitivity of the scroll wheel
         private float m_YawRotation;
         private float m_PitchRotation;
 

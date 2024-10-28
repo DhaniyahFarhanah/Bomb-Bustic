@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using ArcadeVehicleController;
 
 public class BusPassengers : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private GameObject passengerPrefab;
     [Range(1, 40)]
     [SerializeField] private int passengerTotal = 20;
+    [SerializeField] private DrivingCameraController cam;
     private int passengerCurrent;
     private int passengerDelivered = 0;
     private int passengerInjured = 0;
@@ -255,6 +257,12 @@ public class BusPassengers : MonoBehaviour
             StartCoroutine(AnimateCrosshairScale());
             StartCoroutine(SpinCrosshair());
             StartCoroutine(RemoveShootingInfoAfterDelay());
+
+            cam.cameraMode = DrivingCameraController.CameraModes.PassengerEject;
+        }
+        else
+        {
+            cam.cameraMode = DrivingCameraController.CameraModes.Normal;
         }
     }
 
