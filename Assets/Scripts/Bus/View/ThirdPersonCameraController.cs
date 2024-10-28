@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ArcadeVehicleController
 {
@@ -20,6 +22,9 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_MinDistance = 3.0f;       // Min camera zoom-in distance
         [SerializeField] private float m_ScrollSensitivity = 5.0f; // Sensitivity of the scroll wheel
 
+        [SerializeField] private float idleTimeThreshold = 3.0f;   // Time in seconds before camera resets
+        [SerializeField] private float returnSpeed = 2.0f;         // Speed at which camera returns to default
+
         private Transform m_Transform;
         private Camera m_Camera;
         public Transform FollowTarget { get; set; }
@@ -27,6 +32,9 @@ namespace ArcadeVehicleController
 
         private float m_YawRotation;
         private float m_PitchRotation;
+
+        private float idleTimer = 0.0f;  // Timer to track mouse inactivity
+        private bool isReturningToDefault = false;
 
         private void Awake()
         {
@@ -53,49 +61,60 @@ namespace ArcadeVehicleController
 
         private void HandleMouseRotation()
         {
-            // Get mouse input and adjust the yaw and pitch rotation
             float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.deltaTime;
 
-            // Adjust yaw rotation (left-right rotation)
-            m_YawRotation += mouseX;
-
-            // Adjust pitch rotation (up-down rotation) and clamp it within allowed angles
-            m_PitchRotation -= mouseY;
-            m_PitchRotation = Mathf.Clamp(m_PitchRotation, m_MinPitchAngle, m_MaxPitchAngle);
+            if (mouseX != 0 || mouseY != 0)
+            {
+                // Mouse moved, reset idle timer
+                idleTimer = 0.0f;
+                isReturningToDefault = false;
+                m_YawRotation += mouseX;
+                m_PitchRotation -= mouseY;
+                m_PitchRotation = Mathf.Clamp(m_PitchRotation, m_MinPitchAngle, m_MaxPitchAngle);
+            }
+            else
+            {
+                // Mouse not moved, increment idle timer
+                idleTimer += Time.deltaTime;
+                if (idleTimer >= idleTimeThreshold)
+                {
+                    // Start returning camera to default position
+                    isReturningToDefault = true;
+                }
+            }
         }
 
         private void HandleCameraZoom()
         {
-            // Get the scroll wheel input to zoom in/out
             float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-
-            // Adjust the distance based on scroll input
             m_Distance -= scrollInput * m_ScrollSensitivity;
-
-            // Clamp the distance to the allowed min and max values
             m_Distance = Mathf.Clamp(m_Distance, m_MinDistance, m_MaxDistance);
         }
 
         private void HandleCameraPosition()
         {
-            // Use the car's position as a base for the camera position
             Vector3 followPosition = FollowTarget.position;
-
-            // Extract only the yaw (Y-axis) rotation from the car, ignoring roll (Z-axis) and pitch (X-axis)
             Quaternion followRotation = Quaternion.Euler(0, FollowTarget.eulerAngles.y, 0);
 
-            // Apply the camera's mouse-controlled yaw and pitch rotation on top of the car's yaw rotation
-            Quaternion combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
+            Quaternion combinedRotation;
+            if (isReturningToDefault)
+            {
+                // Smoothly return to default behind-the-car camera position
+                combinedRotation = Quaternion.Lerp(m_Transform.rotation, followRotation, returnSpeed * Time.deltaTime);
+                m_PitchRotation = Mathf.Lerp(m_PitchRotation, 10.0f, returnSpeed * Time.deltaTime); // Default pitch (slightly above car)
+                m_YawRotation = Mathf.Lerp(m_YawRotation, 0.0f, returnSpeed * Time.deltaTime);       // Default yaw (directly behind car)
+            }
+            else
+            {
+                // Normal mouse-controlled rotation
+                combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
+            }
 
-            // Calculate the desired position based on the car's position and the combined rotation
             Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
             desiredPosition.y += m_Height;
 
-            // Smoothly move the camera to the desired position
             m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
-
-            // Apply the combined rotation to the camera to follow the car's yaw while allowing mouse input for looking around
             m_Transform.rotation = combinedRotation;
         }
 

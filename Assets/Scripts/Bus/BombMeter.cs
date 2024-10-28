@@ -15,8 +15,8 @@ public class BombMeter : MonoBehaviour
     [Header("UI")]
     public Slider bombMeterSlider;
     public RectTransform bombMeterSliderFill;
-    public TextMeshProUGUI speedTextUI;
     public TextMeshProUGUI countdownTextUI;
+    public Image BombImage;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -46,29 +46,48 @@ public class BombMeter : MonoBehaviour
     {
         bombMeterSlider.value = currentSpeed;
         bombMeterSlider.fillRect.anchorMin = new Vector2(0f, 1 - (minSpeed / maxSpeed));
-        speedTextUI.text = "Speed: " + Mathf.FloorToInt(currentSpeed).ToString();
     }
 
     private void BombLogic()
     {
         if (currentSpeed <= minSpeed)
         {
-            countdownTimer -= Time.deltaTime; 
+            countdownTimer -= Time.deltaTime;
             countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
+
+            // If the countdown text is not active, make it active
             if (!countdownTextUI.gameObject.activeSelf)
             {
                 countdownTextUI.gameObject.SetActive(true);
             }
+
+            // Pulse the BombImage red
+            float pulseSpeed = 2f; // Adjust to make the pulse faster or slower
+            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
+            BombImage.color = Color.Lerp(Color.white, Color.red, pulseValue); // Transition from white to red
         }
-        else if (countdownTimer != bombBuffer)
+        else
         {
-            countdownTimer = bombBuffer;
-            countdownTextUI.gameObject.SetActive(false);
+            // Reset the timer when speed is above the minimum
+            if (countdownTimer != bombBuffer)
+            {
+                countdownTimer = bombBuffer;
+                countdownTextUI.gameObject.SetActive(false);
+            }
+
+            // Reset the BombImage color to its original color (white)
+            BombImage.color = Color.white;
         }
 
+        // Handle bomb explosion
         if (countdownTimer <= 0f)
         {
             countdownTextUI.text = "Countdown: BOOM!";
         }
+    }
+
+    public float GetCurrentSpeed()
+    {
+        return currentSpeed;
     }
 }
