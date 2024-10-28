@@ -304,7 +304,7 @@ public class BusPassengers : MonoBehaviour
         ShootingInfo.SetActive(false);
     }
 
-    public void CrashHandler(CollisionHandler.CrashTypes crashType)
+    public void CrashHandler(CollisionHandler.CrashTypes crashType, Vector3 crashDirection, float impactForce)
     {
         int randPassenger = Random.Range(0, passengerCurrent);
 
@@ -323,14 +323,17 @@ public class BusPassengers : MonoBehaviour
                 if (Random.Range(0f, 1f) <= injuredChance)
                 {
                     passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
-                }
+                        CrashEjectPassenger(crashDirection, impactForce);
+                    }
             }
-
-                    break;
+            break;
 
             case CollisionHandler.CrashTypes.Heavy:
                 if (Random.Range(0f, 1f) <= lostChance)
+                {
                     passengerInfoUI.passengerIcons[randPassenger].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
+                    CrashEjectPassenger(crashDirection, impactForce);
+                }
                 break;
 
             case CollisionHandler.CrashTypes.Light:
@@ -351,5 +354,23 @@ public class BusPassengers : MonoBehaviour
             return passengerInfoUI.passengerIcons[passengerCurrent - 1].GetComponent<PassengerIconStatus>().currentStatus == PassengerIconStatus.IconStatus.Lost;
         else
             return false;
+    }
+
+    private void CrashEjectPassenger(Vector3 crashDirection, float impactForce)
+    {
+        if (passengerCurrent <= 0) return; // No more passengers to eject
+
+        // Calculate the position based on the exit offset, using the bus's local orientation
+        Vector3 exitPosition = transform.TransformPoint(exitOffset);
+
+        // Instantiate the passenger at the calculated exit position
+        GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
+        passenger.GetComponentInChildren<PassengerLanding>().PassengerID = passengerCurrent;
+
+        // Apply ejection force in the crash direction, with some random variation
+        Vector3 ejectionDirection = (crashDirection.normalized + Random.insideUnitSphere * 0.2f).normalized;
+        Vector3 ejectionForce = ejectionDirection * impactForce;
+
+        ApplyPassengerPhysics(passenger, ejectionForce);
     }
 }

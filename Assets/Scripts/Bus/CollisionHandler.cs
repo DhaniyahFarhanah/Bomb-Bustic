@@ -132,18 +132,27 @@ public class CollisionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
-    
-        if(obs == null) return;
-         
+
+        if (obs == null) return;
+
         ObstacleTag m_ObstacleType = obs.obstacleTag;
         if (m_CanCollide)
         {
             m_CanCollide = false;
-            //ExecuteCollisionShit(m_ObstacleType);
-            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
+
+            // Get the relative velocity of the collision, which can be used to calculate the force and direction
+            Vector3 crashDirection = (-collision.relativeVelocity).normalized; // Direction of the crash
+            crashDirection += new Vector3(0, 2f, 0);
+            float impactForce = collision.relativeVelocity.magnitude * bus.GetComponent<Rigidbody>().mass; // Magnitude of the force based on the bus's mass and velocity
+
+            // Call the CrashHandler function with the calculated force and direction
+            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()), crashDirection, 200f);
+
+            // Trigger NearMiss behavior
+            nearMiss.BusCollisionWith();
         }
 
         //Debug.Log($"Crash with {obs.gameObject.name}");
-        nearMiss.BusCollisionWith();
     }
+
 }
