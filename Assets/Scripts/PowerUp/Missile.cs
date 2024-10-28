@@ -25,7 +25,7 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (homeIn)
+        if (homeIn && target)
         {
             rb.velocity = Vector3.zero;
             speed += Time.deltaTime * 100f;

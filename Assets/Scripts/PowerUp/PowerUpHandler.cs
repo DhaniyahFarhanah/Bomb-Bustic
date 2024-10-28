@@ -138,13 +138,11 @@ public class PowerUpHandler : MonoBehaviour
 
     void Deactivate(PickUpType type)
     {
-        Debug.Log("Deactivate");
-
         switch (type)
         {
             case PickUpType.Turret:
                 turret.SetActive(false);
-                cam.Shoot = false;
+                cam.cameraMode = DrivingCameraController.CameraModes.Normal;
                 Cursor.visible = false;
                 break;
             case PickUpType.Hack:
@@ -169,9 +167,8 @@ public class PowerUpHandler : MonoBehaviour
 
     void ActivateTurret()
     {
-        Debug.Log("Turret");
         turret.SetActive(true);
-        cam.Shoot = true;
+        cam.cameraMode = DrivingCameraController.CameraModes.Turret;
         currentTimer = turretCooldown;
         imageTimer = turretCooldown;
     }

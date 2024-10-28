@@ -22,7 +22,6 @@ namespace ArcadeVehicleController
 
         //test run. remove if idea doesn't pan out. will change to another script if it does
         [Header("Missile Test")]
-        public bool Shoot;
         RaycastHit hit;
         private Vector3 targetPos;
         [SerializeField] LayerMask drivable;
@@ -48,6 +47,14 @@ namespace ArcadeVehicleController
         public Transform FollowTarget { get; set; }
         public float SpeedRatio { get; set; }
 
+        public enum CameraModes
+        {
+            Normal,
+            Turret,
+            PassengerEject
+        }
+        public CameraModes cameraMode;
+
         private void Awake()
         {
             m_Transform = transform;
@@ -61,7 +68,7 @@ namespace ArcadeVehicleController
                 return;
             }
 
-            SwitchShoot(); //delete if it doesnt work
+            CameraMode(); //delete if it doesnt work
 
             HandleCameraPosition(); 
             HandleFOV();
@@ -126,22 +133,28 @@ namespace ArcadeVehicleController
         }
 
         //test run with turret idea. Delete if it doesn't pan out
-        void SwitchShoot()
+        void CameraMode()
         {
-            if (Shoot)
+            switch (cameraMode)
             {
-                m_Distance = m_DistanceTurret;
-                m_Height = m_HeightTurret;
-                m_Offset = m_OffsetTurret;
-                Crosshair.SetActive(true);
-                CursorAim();
-            }
-            else
-            {
-                m_Distance = m_DistanceNorm;
-                m_Height = m_HeightNorm;
-                m_Offset = m_OffsetNorm;
-                Crosshair.SetActive(false);
+                case CameraModes.Normal:
+                    m_Distance = m_DistanceNorm;
+                    m_Height = m_HeightNorm;
+                    m_Offset = m_OffsetNorm;
+                    Crosshair.SetActive(false);
+                    break;
+
+                case CameraModes.Turret:
+                    m_Distance = m_DistanceTurret;
+                    m_Height = m_HeightTurret;
+                    m_Offset = m_OffsetTurret;
+                    Crosshair.SetActive(true);
+                    CursorAim();
+                    break;
+
+                case CameraModes.PassengerEject:
+
+                    break;
             }
         }
 
