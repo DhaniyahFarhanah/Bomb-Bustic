@@ -12,8 +12,7 @@ public class PassengerInfoUI : MonoBehaviour
     [SerializeField] private GameObject currentIndicator;
     [SerializeField] private TextMeshProUGUI passengerText;
     [SerializeField] private RectTransform passengerBackground;
-    public List<GameObject> passengerIcons;
-    private int inactivePassengers;
+    [SerializeField] private List<GameObject> passengerIcons;
     private float extraPassengerRowHeight = 50f;
     private float passengerInfoHeight = 80f;
 
@@ -33,9 +32,9 @@ public class PassengerInfoUI : MonoBehaviour
         ObjectiveObject.SetActive(false);
     }
 
-    public void InitPassengers(int passengerTotal)
+    public List<PassengerStatus> InitPassengers(int passengerTotal)
     {
-        inactivePassengers = passengerIcons.Count - passengerTotal;
+        int inactivePassengers = passengerIcons.Count - passengerTotal;
         for (int i = 0; i < inactivePassengers; ++i)
         {
             passengerIcons[i + passengerTotal].SetActive(false);
@@ -54,24 +53,32 @@ public class PassengerInfoUI : MonoBehaviour
         passengerBackground.sizeDelta = size;
 
         passengerTextObject.SetActive(passengerInfoEnabled);
+
+        List<PassengerStatus> temp = new List<PassengerStatus>();
+        for(int i = 0; i < passengerTotal; ++i)
+        {
+            passengerIcons[i].GetComponent<PassengerStatus>().passengerID = i;
+            temp.Add(passengerIcons[i].GetComponent<PassengerStatus>());
+        }
+        return temp;
     }
 
-    public void DeliveredPassenger(int current)
+    public void UpdateDeliveredPassengerUI(int index)
     {
-        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Delivered);
+        passengerIcons[index].GetComponent<PassengerStatus>().SetStatus(PassengerStatus.Status.Delivered);
     }
 
-    public void InjuredPassenger(int current)
+    public void UpdateInjuredPassengerUI(int index)
     {
-        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Injured);
+        passengerIcons[index].GetComponent<PassengerStatus>().SetStatus(PassengerStatus.Status.Injured);
     }
 
-    public void LostPassenger(int current)
+    public void UpdateLostPassengerUI(int index)
     {
-        passengerIcons[current - 1].GetComponent<PassengerIconStatus>().SetStatus(PassengerIconStatus.IconStatus.Lost);
+        passengerIcons[index].GetComponent<PassengerStatus>().SetStatus(PassengerStatus.Status.Lost);
     }
 
-    public void UpdatePassengerInfoText(int current, int delivered, int injured, int lost)
+    public void UpdatePassengerInfoTextUI(int current, int delivered, int injured, int lost)
     {
         if (passengerInfoEnabled)
         {
@@ -79,9 +86,11 @@ public class PassengerInfoUI : MonoBehaviour
         }
     }
 
-    public void UpdateCurrentIndicator(int current)
+    public void UpdateCurrentIndicator(int index)
     {
-        if (current - 1 >= 0)
-            currentIndicator.transform.position = passengerIcons[current - 1].transform.position;
+        if (index >= 0)
+            currentIndicator.transform.position = passengerIcons[index].transform.position;
+        else
+            currentIndicator.SetActive(false);
     }
 }

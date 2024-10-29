@@ -4,56 +4,57 @@ using UnityEngine;
 
 public class PassengerLanding : MonoBehaviour
 {
-    public int PassengerID;
-    private enum PassengerState
-    {
-        Healthy,
-        Delivered,
-        Injured,
-        Lost,
-    }
-    private PassengerState passengerState = PassengerState.Healthy;
-    private bool collided = false;
+    public PassengerStatus passengerStatus;
+    public bool isShot = false;
     private Rigidbody[] passengerRigidbodies;
-    private bool done = false;
+    private bool collided = false;
     private bool caught = false;
 
     private void Start()
     {
         // Get all Rigidbody components in the ragdoll (the passenger object and its children)
         passengerRigidbodies = GetComponentsInChildren<Rigidbody>();
+        StartCoroutine(LostAfterDelay(5f));
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (passengerState == PassengerState.Delivered) return; // Avoid double counting
+        if (!isShot)
+            return;
 
-        if (other.gameObject.CompareTag("NearDropOff"))
+        if (!passengerStatus || passengerStatus.GetStatus() == PassengerStatus.Status.Delivered || passengerStatus.GetStatus() == PassengerStatus.Status.DeliveredInjured || passengerStatus.GetStatus() == PassengerStatus.Status.Lost)
+            return;
+         
+        if (other.gameObject.CompareTag("DropOff"))
         {
-            passengerState = PassengerState.Injured;
-        }
-        else if (other.gameObject.CompareTag("DropOff"))
-        {
-            if (other.gameObject.GetComponent<PassengerCatcher>().CheckCapacity())
+            if (other.gameObject.GetComponent<PassengerCatcher>().HasVacancy())
             {
-                // Mark as delivered and prevent further physics interactions
-                passengerState = PassengerState.Delivered;
+                caught = true;
                 StopAllCoroutines();
                 StartCoroutine(SlowAndFreezePassenger());
-                if (!done)
-                {
-                    done = true;
-                    FindAnyObjectByType<BusPassengers>().DeliveredPassenger(PassengerID);
-                    other.gameObject.GetComponent<PassengerCatcher>().CaughtPassenger();
-                }
+                FindAnyObjectByType<BusPassengers>().DeliveredPassenger(passengerStatus.passengerID);
+                other.gameObject.GetComponent<PassengerCatcher>().CaughtPassenger();
+                //Debug.Log("Caught [" + passengerStatus.passengerID + "]");
+            }
+        }
+        else if(other.gameObject.CompareTag("NearDropOff"))
+        {
+            caught = true;
+            if (passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured)
+            {
+                StopAllCoroutines();
+                StartCoroutine(InjuredAfterDelay());
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (!isShot)
+            return;
+
         // If the passenger leaves the DropOff area, freeze them immediately
-        if (other.gameObject.CompareTag("DropOff") && passengerState == PassengerState.Delivered)
+        if (other.gameObject.CompareTag("DropOff"))
         {
             FreezePassenger();
         }
@@ -61,51 +62,39 @@ public class PassengerLanding : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!collided && passengerState != PassengerState.Delivered)
+        if (!isShot)
+            return;
+
+        if (other.gameObject.CompareTag("Passenger"))
+            return;
+
+        if (!collided && !caught)
         {
+            //Debug.Log(other.gameObject.name);
             collided = true;
-            StartCoroutine(CheckIfStopped());
+            StartCoroutine(LostAfterDelay(1f));
         }
     }
 
-    private IEnumerator CheckIfStopped()
+    private IEnumerator InjuredAfterDelay()
     {
-        bool isMoving = true;
+        yield return new WaitForSeconds(1f);
 
-        // Keep checking if the passenger has stopped moving
-        while (isMoving)
+        if (passengerStatus &&passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured) 
         {
-            isMoving = false; // Assume the passenger is stopped
-
-            foreach (Rigidbody rb in passengerRigidbodies)
-            {
-                // Check if any rigidbody has a velocity or angular velocity above a threshold
-                if (rb.velocity.magnitude > 1f || rb.angularVelocity.magnitude > 1f)
-                {
-                    isMoving = true; // The passenger is still moving
-                    break;
-                }
-            }
-
-            yield return null;
+            FindAnyObjectByType<BusPassengers>().InjuredPassenger(passengerStatus.passengerID);
+            //Debug.Log("Near Caught [" + passengerStatus.passengerID + "]");
         }
+    }
 
-        // Once the passenger has stopped moving, decide the final state
-        if (passengerState == PassengerState.Injured)
+    private IEnumerator LostAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (passengerStatus && passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured)
         {
-            if (!done)
-            {
-                done = true;
-                FindAnyObjectByType<BusPassengers>().InjuredPassenger(PassengerID);
-            }
-        }
-        else if (passengerState == PassengerState.Healthy) // Ensure it's not delivered
-        {
-            if (!done)
-            {
-                done = true;
-                FindAnyObjectByType<BusPassengers>().LostPassenger(PassengerID);
-            }
+            FindAnyObjectByType<BusPassengers>().LostPassenger(passengerStatus.passengerID);
+            //Debug.Log("Not Caught [" + passengerStatus.passengerID + "]");
         }
     }
 
@@ -151,15 +140,5 @@ public class PassengerLanding : MonoBehaviour
                 rb.isKinematic = true;
             }
         }
-    }
-
-    public bool GetCaught()
-    {
-        return caught;
-    }
-
-    public void SetCaught(bool _bool)
-    {
-        caught = _bool;
     }
 }

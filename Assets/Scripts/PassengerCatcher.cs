@@ -55,7 +55,7 @@ public class PassengerCatcher : MonoBehaviour
         }
     }
 
-    public bool CheckCapacity()
+    public bool HasVacancy()
     {
         return catchCurrent < catchCapacity;
     }
