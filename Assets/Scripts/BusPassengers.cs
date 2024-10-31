@@ -207,6 +207,11 @@ public class BusPassengers : MonoBehaviour
             slowMotionElapsedTime -= Time.unscaledDeltaTime;
             shootingSlidingTimerUI.value = slowMotionElapsedTime;
         }
+        else if (!slowMoActive && slowMotionElapsedTime < slowMotionTime)
+        {
+            slowMotionElapsedTime += Time.unscaledDeltaTime;
+            shootingSlidingTimerUI.value = slowMotionElapsedTime;
+        }
     }
 
     private void UpdateCrosshairColor()
