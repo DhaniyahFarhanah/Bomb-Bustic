@@ -275,11 +275,11 @@ public class BusPassengers : MonoBehaviour
             StartCoroutine(SpinCrosshair());
             StartCoroutine(RemoveShootingInfoAfterDelay());
 
-            cam.cameraMode = DrivingCameraController.CameraModes.PassengerEject;
+            cam.SetCameraMode(DrivingCameraController.CameraModes.PassengerEject);
         }
         else
         {
-            cam.cameraMode = DrivingCameraController.CameraModes.Normal;
+            cam.SetCameraMode(DrivingCameraController.CameraModes.Normal);
         }
     }
 

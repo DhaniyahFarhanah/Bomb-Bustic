@@ -12,7 +12,7 @@ namespace ArcadeVehicleController
             Turret,
             PassengerEject
         }
-        public CameraModes cameraMode;
+        private CameraModes cameraMode;
 
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private float m_Distance = 10.0f;
@@ -148,6 +148,9 @@ namespace ArcadeVehicleController
                     Crosshair.SetActive(false);
                     HandleCameraPosition();
                     HandleFOV();
+
+                    m_YawRotation = 0f;
+                    m_PitchRotation = 0f;
                     break;
 
                 case CameraModes.Turret:
@@ -158,6 +161,9 @@ namespace ArcadeVehicleController
                     CursorAim();
                     HandleCameraPosition();
                     HandleFOV();
+
+                    m_YawRotation = 0f;
+                    m_PitchRotation = 0f;
                     break;
 
                 case CameraModes.PassengerEject:
@@ -257,6 +263,11 @@ namespace ArcadeVehicleController
                     m_Camera.fieldOfView = m_NormalFov;
                 }
             }
+        }
+
+        public void SetCameraMode(CameraModes mode)
+        {
+            cameraMode = mode;
         }
     }  
 }
