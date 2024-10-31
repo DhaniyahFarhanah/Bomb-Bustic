@@ -565,7 +565,7 @@ MonoBehaviour:
   debugLine: 0
   sensorLineColor: {r: 1, g: 0.5019608, b: 0, a: 1}
   targetLineColor: {r: 0, g: 1, b: 0, a: 1}
-  maxMotorTorque: 400
+  maxMotorTorque: 500
   maxBrakeTorque: 5000
   currentSpeed: 0
   maxSpeed: 35
