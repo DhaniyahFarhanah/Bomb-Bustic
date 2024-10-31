@@ -26,7 +26,7 @@ MonoBehaviour:
   m_SpringStrength: 3000
   m_SpringDamper: 300
   m_AcceleratePower: 1200
-  m_BrakesPower: 1
+  m_BrakesPower: 0.1
   m_MaxSpeed: 80
   m_MaxReverseSpeed: 40
   m_SteerAngle: 14
