@@ -120,15 +120,6 @@ public class UIManager : MonoBehaviour
                 Cursor.visible = false;
             }
         }
-        else
-        {
-            Time.timeScale = 1.0f;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            if (m_HideMouseOnStart)
-            {
-                Cursor.visible = false;
-            }
-        }
     }
 
     public void RestartScene()

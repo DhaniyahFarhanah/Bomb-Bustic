@@ -376,7 +376,7 @@ MonoBehaviour:
   m_TrialLeft: {fileID: 7621576803007220720}
   m_DustRight: {fileID: 2056969688643570835}
   m_DustLeft: {fileID: 4045968417158865940}
-  skidDelay: 0.025
+  skidDelay: 0.1
   m_CheckHeight: 0.6
   m_Ground:
     serializedVersion: 2
@@ -404,6 +404,7 @@ MonoBehaviour:
   minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
+  lostChance: 0.5
   minCrashSpeed: 70
   EjectionForce: 200
   verticaDirection: 1.5
@@ -436,9 +437,9 @@ MonoBehaviour:
   minSpeed: 20
   bombBuffer: 5
   bombMeterSlider: {fileID: 0}
-  bombMeterSliderFill: {fileID: 0}
   countdownTextUI: {fileID: 0}
   BombImage: {fileID: 0}
+  crashFill: {fileID: 0}
 --- !u!114 &1713831921313684075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +463,7 @@ MonoBehaviour:
   turretCooldown: 15
   hackCooldown: 5
   nitroCooldown: 5
-  addFov: 100
+  addFov: 15
   NitroProtector: {fileID: 8802528110543123542}
   empPulse: {fileID: 2708971031930406992}
   energyPulseCooldown: 10
@@ -626,7 +627,6 @@ MonoBehaviour:
   slowMotionColor: {r: 0, g: 0, b: 1, a: 1}
   normalColor: {r: 0, g: 1, b: 0, a: 1}
   InsideShootingZone: {fileID: 0}
-  lostChance: 0.5
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
@@ -21406,7 +21406,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7.4300346, y: 7.4300346, z: 7.4300346}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3122528800863868786}
@@ -21452,7 +21452,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8210417392614876788}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c1b7f840e32420749aa5b921c643a475, type: 2}
   m_CullingMode: 0

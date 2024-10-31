@@ -14,6 +14,7 @@ namespace ArcadeVehicleController
         }
         private CameraModes cameraMode;
 
+        [SerializeField] private UIManager uiManager;
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private float m_Distance = 10.0f;
         [SerializeField] private float m_Height = 5.0f;
@@ -21,23 +22,18 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_RotationDamping = 3.0f;
         [SerializeField] private float m_MoveSpeed = 1.0f;
         [SerializeField] private float m_NormalFov = 60.0f;
-        [SerializeField] private float m_FastFov = 90.0f;
-        public float fovAdd = 0f;
+        [SerializeField] private float m_Offset = 0.0f;
+
+        [Header("FOV")]
         [SerializeField] private float m_FovDampingSpeeding = 0.25f;
         [SerializeField] private float m_FovDampingSlowing = 0.25f;
-        [SerializeField] private float m_Offset = 0.0f;
-        [SerializeField] private float activateFovVelocity;
+        [SerializeField] private float m_SpeedToActivateFOV = 50.0f;    //min Speed to activate FOV change
+        [SerializeField] private float m_MaxSpeedForFOV = 90.0f;        //max Speed for max FOV
+        [SerializeField] private float m_FastFOVIncrease = 20.0f;       //amt of fov added 
+        [SerializeField] private float m_ratioFOV;
+        public float nitroFOVIncrease = 0f;
 
         //test run. remove if idea doesn't pan out. will change to another script if it does
-        [Header("Missile Test")]
-        RaycastHit hit;
-        private Vector3 targetPos;
-        [SerializeField] LayerMask drivable;
-        [SerializeField] GameObject Crosshair;
-        [SerializeField] GameObject TurretHead;
-        [SerializeField] GameObject MissilePrefab;
-        [SerializeField] float ShootCooldown;
-        float currentTimer;
 
         [Header("Norm Values")]
         [SerializeField] private float m_DistanceNorm = 10.0f;
@@ -49,6 +45,16 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_DistanceTurret = 10.0f;
         [SerializeField] private float m_HeightTurret = 5.0f;
         [SerializeField] private float m_OffsetTurret = 0.0f;
+        [SerializeField] float ShootCooldown;
+
+        [Header("Missile Test")]
+        [SerializeField] LayerMask drivable;
+        [SerializeField] GameObject Crosshair;
+        [SerializeField] GameObject TurretHead;
+        [SerializeField] GameObject MissilePrefab;
+        RaycastHit hit;
+        private Vector3 targetPos;
+        float currentTimer;
 
         private Transform m_Transform;
         private Camera m_Camera;
@@ -57,10 +63,13 @@ namespace ArcadeVehicleController
 
         [Header("Passenger Ejection")]
         [SerializeField] private float m_MouseSensitivity = 100.0f;
-        [SerializeField] private float m_MaxPitchAngle = 80.0f;    // Maximum look-up angle
-        [SerializeField] private float m_MinPitchAngle = -30.0f;   // Maximum look-down angle
+        [SerializeField] private float m_MaxPitchAngle = 80.0f;     // Maximum look-up angle
+        [SerializeField] private float m_MinPitchAngle = -30.0f;    // Maximum look-down angle
         private float m_YawRotation;
         private float m_PitchRotation;
+
+        [SerializeField] private float m_TimeDilation;              //time scale for slowmo
+        [SerializeField] private float m_slowMotionTransitionSpeed; //Time ratio
 
 
         private void Awake()
@@ -109,7 +118,7 @@ namespace ArcadeVehicleController
                 return;
         }
 
-        void HandleFOV()
+        /*void HandleFOV()
         {
             if (FollowTarget.GetComponent<Rigidbody>().velocity.magnitude > activateFovVelocity)
             {
@@ -134,7 +143,7 @@ namespace ArcadeVehicleController
                     m_Camera.fieldOfView = m_FastFov + fovAdd;
                 }
             }
-        }
+        }*/
 
         //test run with turret idea. Delete if it doesn't pan out
         void CameraMode()
@@ -147,10 +156,13 @@ namespace ArcadeVehicleController
                     m_Offset = m_OffsetNorm;
                     Crosshair.SetActive(false);
                     HandleCameraPosition();
-                    HandleFOV();
+                    HandleFov();
 
                     m_YawRotation = 0f;
                     m_PitchRotation = 0f;
+
+                    //time dilation
+                    ResetTimeDilation();
                     break;
 
                 case CameraModes.Turret:
@@ -160,10 +172,13 @@ namespace ArcadeVehicleController
                     Crosshair.SetActive(true);
                     CursorAim();
                     HandleCameraPosition();
-                    HandleFOV();
+                    HandleFov();
 
                     m_YawRotation = 0f;
                     m_PitchRotation = 0f;
+
+                    //time dilation
+                    ResetTimeDilation();
                     break;
 
                 case CameraModes.PassengerEject:
@@ -173,7 +188,10 @@ namespace ArcadeVehicleController
                     Crosshair.SetActive(false);
                     HandleMouseRotation2();
                     HandleCameraPosition2();
-                    HandleCameraFOV2();
+                    HandleFov();
+
+                    //time dilation
+                    TimeDilation();
                     break;
             }
         }
@@ -237,26 +255,34 @@ namespace ArcadeVehicleController
             m_Transform.rotation = combinedRotation;
         }
 
-        private void HandleCameraFOV2()
+        private void HandleFov()
         {
             float velocityMagnitude = FollowTarget.GetComponent<Rigidbody>().velocity.magnitude;
 
-            if (velocityMagnitude > activateFovVelocity)
+            if (velocityMagnitude > m_SpeedToActivateFOV)
             {
-                if (m_Camera.fieldOfView < m_FastFov)
+                float ratio = ((velocityMagnitude - m_SpeedToActivateFOV) / (m_MaxSpeedForFOV - m_SpeedToActivateFOV) * 1f);
+
+
+                if (ratio < 1f)
                 {
-                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_FastFov, Time.deltaTime * m_FovDampingSpeeding);
+                    m_ratioFOV = (ratio * m_FastFOVIncrease) + m_NormalFov;
                 }
-                else if (m_Camera.fieldOfView > m_FastFov)
+
+                else if (ratio > 1f)
                 {
-                    m_Camera.fieldOfView = m_FastFov;
+
+                    m_ratioFOV = m_FastFOVIncrease + m_NormalFov;
                 }
+
+                m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_ratioFOV + nitroFOVIncrease, Time.unscaledDeltaTime * m_FovDampingSpeeding);
             }
-            else if (velocityMagnitude < activateFovVelocity)
+
+            else if (velocityMagnitude < m_SpeedToActivateFOV)
             {
                 if (m_Camera.fieldOfView > m_NormalFov)
                 {
-                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_NormalFov, Time.deltaTime * m_FovDampingSlowing);
+                    m_Camera.fieldOfView = Mathf.Lerp(m_Camera.fieldOfView, m_NormalFov + nitroFOVIncrease, Time.unscaledDeltaTime * m_FovDampingSlowing);
                 }
                 else
                 {
@@ -269,5 +295,23 @@ namespace ArcadeVehicleController
         {
             cameraMode = mode;
         }
-    }  
-}
+
+        public void TimeDilation()
+        {
+            if (!uiManager.m_IsPaused)
+            {
+                Time.timeScale = Mathf.Lerp(Time.timeScale, m_TimeDilation, Time.deltaTime * m_slowMotionTransitionSpeed);
+                Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
+            }
+        }
+
+        public void ResetTimeDilation()
+        {
+            if (!uiManager.m_IsPaused)
+            {
+                Time.timeScale = Mathf.Lerp(Time.timeScale, 1.0f, Time.deltaTime * m_slowMotionTransitionSpeed);
+                Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
+            }
+        }
+    }
+}  

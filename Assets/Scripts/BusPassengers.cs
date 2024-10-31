@@ -174,22 +174,21 @@ public class BusPassengers : MonoBehaviour
     {
         if (Input.GetMouseButton(1) && activatePassengerEjectionMode) // Right mouse button held
         {
-            ApplySlowMotion();
+            //ApplySlowMotion();
             shootingSlidingTimerUI.gameObject.SetActive(true);
         }
         else
         {
-            ResetTimeScale();
+            //ResetTimeScale();
             shootingSlidingTimerUI.gameObject.SetActive(false);
         }
     }
 
-    private void ApplySlowMotion()
+
+    /*private void ApplySlowMotion()
     {
         Time.timeScale = Mathf.Lerp(Time.timeScale, slowMotionScale, Time.deltaTime * slowMotionTransitionSpeed);
         Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
-        sliderFillImage.color = slowMotionColor;
-        slowMoActive = true;
     }
 
     private void ResetTimeScale()
@@ -198,7 +197,7 @@ public class BusPassengers : MonoBehaviour
         Time.fixedDeltaTime = 0.02f; // Reset to normal fixed time step
         sliderFillImage.color = normalColor;
         slowMoActive = false;
-    }
+    } */
 
     private void UpdateSlowMotionTimer()
     {

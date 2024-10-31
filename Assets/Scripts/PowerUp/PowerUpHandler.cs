@@ -151,7 +151,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
-                cam.fovAdd = 0f;
+                cam.nitroFOVIncrease = 0f;
                 NitroProtector.SetActive(false);
                 gameObject.GetComponent<CollisionHandler>().enabled = true;
                 break;
@@ -189,7 +189,7 @@ public class PowerUpHandler : MonoBehaviour
         Debug.Log("Nitro");
         gameObject.GetComponent<CollisionHandler>().enabled = false;
         busValues.Nitro = true;
-        cam.fovAdd = addFov;
+        cam.nitroFOVIncrease = addFov;
         NitroProtector.SetActive(true);
         currentTimer = nitroCooldown;
         imageTimer = nitroCooldown;
@@ -209,4 +209,5 @@ public class PowerUpHandler : MonoBehaviour
         if (activated)
             Deactivate(currentPickUp);
     }
+
 }

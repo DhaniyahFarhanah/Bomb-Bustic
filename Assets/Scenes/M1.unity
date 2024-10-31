@@ -5414,11 +5414,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trafficLight: {fileID: 0}
---- !u!1 &213145070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1530309141869956162, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-  m_PrefabInstance: {fileID: 1260655588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &218855992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15617,34 +15612,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 7.4300346
-      objectReference: {fileID: 0}
-    - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 7.4300346
-      objectReference: {fileID: 0}
-    - target: {fileID: 162902881187447929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 7.4300346
-      objectReference: {fileID: 0}
-    - target: {fileID: 327423668309869974, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: shootingUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 327423668309869974, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: ammoCountUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 327423668309869974, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: crosshairUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 327423668309869974, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: shootingSlidingTimerUI
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 582055895660397785, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_Name
       value: Bus
@@ -15658,10 +15625,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 737208571}
     - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: speedTextUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: bombMeterSlider
       value: 
       objectReference: {fileID: 227351681}
@@ -15669,10 +15632,6 @@ PrefabInstance:
       propertyPath: countdownTextUI
       value: 
       objectReference: {fileID: 1266326215}
-    - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: bombMeterSliderFill
-      value: 
-      objectReference: {fileID: 1769606744}
     - target: {fileID: 1713831921313684075, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: cam
       value: 
@@ -15721,10 +15680,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2708971031930406992, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: cam
       value: 
@@ -15754,16 +15709,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 111512896}
     - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: activateShootingUI
-      value: 
-      objectReference: {fileID: 111512896}
-    - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: shootingSlidingTimerUI
       value: 
       objectReference: {fileID: 318816170}
-    - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: Enabled
-      value: 0
+    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: highSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: skidDelay
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: comboUI
@@ -15773,52 +15728,7 @@ PrefabInstance:
       propertyPath: comboObject
       value: 
       objectReference: {fileID: 1493410744}
-    - target: {fileID: 7398556632603938548, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: winScreen
-      value: 
-      objectReference: {fileID: 1743315062}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: fartScreen
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: loseCanvas
-      value: 
-      objectReference: {fileID: 1884233609}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: loseScreen
-      value: 
-      objectReference: {fileID: 213145070}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: poopCanvas
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: poopSlider
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: poopTextUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: speedTextUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: disgustTextUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: minCrashSpeed
-      value: 70
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -16415,9 +16325,37 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_FastFov
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 1029931931}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: TurretHead
       value: 
       objectReference: {fileID: 829531738}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_MaxSpeedForFOV
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_FastFOVIncrease
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: activateFovVelocity
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_FovDampingSpeeding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_SpeedToActivateFOV
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5064827365284208538, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -28729,6 +28667,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6630371806048261280, guid: 79641b3f29734b74cba8c2de44fb5961, type: 3}
   m_PrefabInstance: {fileID: 1029582968}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1029931931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1816694340818045184, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
+  m_PrefabInstance: {fileID: 1260655588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ffab91d96c89042ab6b13c2cf4a872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1030025770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50631,11 +50580,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleTag: 3
---- !u!1 &1743315062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3206096669722935350, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-  m_PrefabInstance: {fileID: 1260655588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1744061486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51172,11 +51116,6 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4739091435746763593, guid: ec35ad89f3f089f449407eb3e86aa294, type: 3}
   m_PrefabInstance: {fileID: 1873223662}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1769606744 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6254970079269247103, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-  m_PrefabInstance: {fileID: 1260655588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1772270165 stripped
 GameObject:
@@ -54974,11 +54913,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleTag: 3
---- !u!1 &1884233609 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4289243496998891226, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-  m_PrefabInstance: {fileID: 1260655588}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1885614062
 PrefabInstance:
   m_ObjectHideFlags: 0
