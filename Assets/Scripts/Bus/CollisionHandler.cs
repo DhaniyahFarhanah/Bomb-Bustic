@@ -54,6 +54,7 @@ public class CollisionHandler : MonoBehaviour
         m_CurrentTime = 0;
 
         bus = FindAnyObjectByType<BombMeter>().gameObject;
+        FindAnyObjectByType<BombMeter>().SetCrashSpeedUI(minCrashSpeed);
     }
 
     // Update is called once per frame

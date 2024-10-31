@@ -301,7 +301,7 @@ public class BusPassengers : MonoBehaviour
 
     public void GetPassengerResults()
     {
-        Debug.Log($"Current: {passengersCurrent} | Delivered: {passengersDelivered} | Injured: {passengersInjured} | Lost: {passengersLost}");
+        //Debug.Log($"Current: {passengersCurrent} | Delivered: {passengersDelivered} | Injured: {passengersInjured} | Lost: {passengersLost}");
     }
 
     private void UpdatePassengerText()

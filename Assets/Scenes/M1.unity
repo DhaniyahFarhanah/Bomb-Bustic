@@ -15654,6 +15654,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1169953442}
     - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: crashFill
+      value: 
+      objectReference: {fileID: 737208571}
+    - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: speedTextUI
       value: 
       objectReference: {fileID: 0}
@@ -15808,6 +15812,10 @@ PrefabInstance:
     - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: disgustTextUI
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: minCrashSpeed
+      value: 70
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
@@ -19460,6 +19468,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1958675195254625155, guid: 0d5cd0b802603094ea215b55f6f0135e, type: 3}
   m_PrefabInstance: {fileID: 1013884925}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &737208571 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7950792848059193906, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
+  m_PrefabInstance: {fileID: 1260655588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &741577133 stripped
 GameObject:
@@ -34992,6 +35005,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1151691718822974347, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1499882752668711748, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

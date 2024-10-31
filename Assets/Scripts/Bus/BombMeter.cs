@@ -14,9 +14,9 @@ public class BombMeter : MonoBehaviour
 
     [Header("UI")]
     public Slider bombMeterSlider;
-    public RectTransform bombMeterSliderFill;
     public TextMeshProUGUI countdownTextUI;
     public Image BombImage;
+    public RectTransform crashFill;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -90,4 +90,14 @@ public class BombMeter : MonoBehaviour
     {
         return currentSpeed;
     }
+
+    public void SetCrashSpeedUI(float minCrashSpeed)
+    {
+        // Calculate the height as a proportion of the slider's full height
+        float proportionalHeight = bombMeterSlider.GetComponent<RectTransform>().rect.height * (1 - (minCrashSpeed / maxSpeed));
+
+        // Set the new height to crashFill
+        crashFill.sizeDelta = new Vector2(crashFill.sizeDelta.x, proportionalHeight);
+    }
+
 }
