@@ -50,7 +50,7 @@ public class PassengerCatcher : MonoBehaviour
         {
             GetComponent<BoxCollider>().isTrigger = false;
             nearArea.SetActive(false);
-            FindAnyObjectByType<BusPassengers>().EnablePassengerEjection(false);
+            FindAnyObjectByType<BusPassengers>().InsidePassengerEjectionZone(false);
             GetComponent<Renderer>().material = materialAtCapacity;
         }
     }

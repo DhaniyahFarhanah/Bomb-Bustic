@@ -27,7 +27,8 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private float slowMotionTime = 10f;
     [SerializeField] private float slowMotionScale = 0.2f;
     [SerializeField] private float slowMotionTransitionSpeed = 3f;
-    private bool passengerEjectionActive = false;
+    private bool insidePassengerEjectionZone = false;
+    private bool activatePassengerEjectionMode = false;
     private bool slowMoActive = false;
     private float slowMotionElapsedTime;
     private float elapsedTime;
@@ -44,6 +45,7 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private float crosshairSpinDuration = 0.5f;
     [SerializeField] private Color slowMotionColor = Color.blue;
     [SerializeField] private Color normalColor = Color.green;
+    [SerializeField] private GameObject InsideShootingZone;
     private Vector3 originalCrosshairScale;
 
     [Header("Crash Settings")]
@@ -68,7 +70,7 @@ public class BusPassengers : MonoBehaviour
     {
         if (other.gameObject.tag == "ShootZone")
         {
-            EnablePassengerEjection(true);
+            InsidePassengerEjectionZone(true);
         }
     }
 
@@ -76,7 +78,7 @@ public class BusPassengers : MonoBehaviour
     {
         if (other.gameObject.tag == "ShootZone")
         {
-            EnablePassengerEjection(false);
+            InsidePassengerEjectionZone(false);
         }
     }
 
@@ -87,7 +89,8 @@ public class BusPassengers : MonoBehaviour
         passengerList = passengerInfoUI.InitPassengers(passengerTotal);
         UpdatePassengerText();
 
-        EnablePassengerEjection(false);
+        InsidePassengerEjectionZone(false);
+        ActivatePassengerEjectionMode(false);
         originalCrosshairScale = crosshairUI.transform.localScale;
         shootingSlidingTimerUI.maxValue = slowMotionTime;
         sliderFillImage.color = normalColor;
@@ -95,7 +98,15 @@ public class BusPassengers : MonoBehaviour
 
     private void HandleInput()
     {
-        if (passengerCurrentIndex >= 0 && elapsedTime <= 0f && passengerEjectionActive)
+        if (passengerCurrentIndex >= 0 && insidePassengerEjectionZone)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ActivatePassengerEjectionMode(!activatePassengerEjectionMode);
+            }
+        }
+
+        if (passengerCurrentIndex >= 0 && elapsedTime <= 0f && insidePassengerEjectionZone && activatePassengerEjectionMode)
         {
             if (Input.GetMouseButtonDown(0)) // Left mouse button
             {
@@ -104,6 +115,7 @@ public class BusPassengers : MonoBehaviour
                 StartCoroutine(AnimateCrosshairScale());
             }
         }
+
     }
 
     private void ShootPassenger()
@@ -171,7 +183,7 @@ public class BusPassengers : MonoBehaviour
 
     private void HandleSlowMotion()
     {
-        if (Input.GetMouseButton(1) && passengerEjectionActive) // Right mouse button held
+        if (Input.GetMouseButton(1) && activatePassengerEjectionMode) // Right mouse button held
         {
             ApplySlowMotion();
             shootingSlidingTimerUI.gameObject.SetActive(true);
@@ -253,11 +265,19 @@ public class BusPassengers : MonoBehaviour
         crosshairUI.transform.rotation = Quaternion.identity;
     }
 
-    public void EnablePassengerEjection(bool enabled)
+    public void InsidePassengerEjectionZone(bool enabled)
     {
-        passengerEjectionActive = enabled;
-        shootingObject.SetActive(passengerEjectionActive);
-        if (passengerEjectionActive)
+        insidePassengerEjectionZone = enabled;
+        InsideShootingZone.SetActive(enabled);
+        if (!enabled)
+            ActivatePassengerEjectionMode(false);
+    }
+
+    private void ActivatePassengerEjectionMode(bool enabled)
+    {
+        activatePassengerEjectionMode = enabled;
+        shootingObject.SetActive(activatePassengerEjectionMode);
+        if (activatePassengerEjectionMode)
         {
             slowMotionElapsedTime = slowMotionTime;
             StartCoroutine(AnimateCrosshairScale());
