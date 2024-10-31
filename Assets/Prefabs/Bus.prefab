@@ -404,6 +404,8 @@ MonoBehaviour:
   minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
+  EjectionForce: 200
+  verticaDirection: 1.5
   nearMiss: {fileID: 5625231821553790463}
 --- !u!114 &1331975426342428464
 MonoBehaviour:
@@ -604,11 +606,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passengerPrefab: {fileID: 838689364423267720, guid: 0e202b7da0347ef4398bf408e43ba153, type: 3}
   passengerTotal: 20
+  cam: {fileID: 0}
   exitOffset: {x: 0, y: 0, z: 0}
   passengerExitForce: 500
-  fireRate: 0.5
+  fireRate: 0.25
   slowMotionTime: 10
-  slowMotionScale: 0.3
+  slowMotionScale: 0.2
   slowMotionTransitionSpeed: 5
   passengerInfoUI: {fileID: 0}
   shootingObject: {fileID: 0}
@@ -621,6 +624,8 @@ MonoBehaviour:
   crosshairSpinDuration: 0.5
   slowMotionColor: {r: 0, g: 0, b: 1, a: 1}
   normalColor: {r: 0, g: 1, b: 0, a: 1}
+  InsideShootingZone: {fileID: 0}
+  lostChance: 0.5
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4157178286751870843
 Transform:
   m_ObjectHideFlags: 0

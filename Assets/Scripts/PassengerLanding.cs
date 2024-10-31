@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PassengerLanding : MonoBehaviour
 {
-    public PassengerStatus passengerStatus;
-    public bool isShot = false;
     private Rigidbody[] passengerRigidbodies;
     private bool collided = false;
     private bool caught = false;
@@ -18,41 +16,28 @@ public class PassengerLanding : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if (!isShot)
-            return;
-
-        if (!passengerStatus || passengerStatus.GetStatus() == PassengerStatus.Status.Delivered || passengerStatus.GetStatus() == PassengerStatus.Status.DeliveredInjured || passengerStatus.GetStatus() == PassengerStatus.Status.Lost)
-            return;
-         
+    {         
         if (other.gameObject.CompareTag("DropOff"))
         {
-            if (other.gameObject.GetComponent<PassengerCatcher>().HasVacancy())
+            if (other.gameObject.GetComponent<PassengerCatcher>().HasVacancy() && !caught)
             {
                 caught = true;
                 StopAllCoroutines();
                 StartCoroutine(SlowAndFreezePassenger());
-                FindAnyObjectByType<BusPassengers>().DeliveredPassenger(passengerStatus.passengerID);
+                FindAnyObjectByType<BusPassengers>().DeliveredPassenger();
                 other.gameObject.GetComponent<PassengerCatcher>().CaughtPassenger();
-                //Debug.Log("Caught [" + passengerStatus.passengerID + "]");
             }
         }
-        else if(other.gameObject.CompareTag("NearDropOff"))
+        
+        if(other.gameObject.CompareTag("NearDropOff") && !caught)
         {
-            caught = true;
-            if (passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured)
-            {
-                StopAllCoroutines();
-                StartCoroutine(InjuredAfterDelay());
-            }
+            StopAllCoroutines();
+            StartCoroutine(InjuredAfterDelay(1f));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!isShot)
-            return;
-
         // If the passenger leaves the DropOff area, freeze them immediately
         if (other.gameObject.CompareTag("DropOff"))
         {
@@ -62,39 +47,33 @@ public class PassengerLanding : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!isShot)
-            return;
-
         if (other.gameObject.CompareTag("Passenger"))
             return;
 
         if (!collided && !caught)
         {
-            //Debug.Log(other.gameObject.name);
             collided = true;
             StartCoroutine(LostAfterDelay(1f));
         }
     }
 
-    private IEnumerator InjuredAfterDelay()
+    private IEnumerator InjuredAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(1f);
-
-        if (passengerStatus &&passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured) 
+        yield return new WaitForSeconds(delay);
+        if (!caught)
         {
-            FindAnyObjectByType<BusPassengers>().InjuredPassenger(passengerStatus.passengerID);
-            //Debug.Log("Near Caught [" + passengerStatus.passengerID + "]");
+            caught = true;
+            FindAnyObjectByType<BusPassengers>().InjuredPassenger();
         }
     }
 
     private IEnumerator LostAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
-        if (passengerStatus && passengerStatus.GetStatus() != PassengerStatus.Status.Delivered && passengerStatus.GetStatus() != PassengerStatus.Status.DeliveredInjured)
+        if (!caught)
         {
-            FindAnyObjectByType<BusPassengers>().LostPassenger(passengerStatus.passengerID);
-            //Debug.Log("Not Caught [" + passengerStatus.passengerID + "]");
+            caught = true;
+            FindAnyObjectByType<BusPassengers>().LostPassenger();
         }
     }
 

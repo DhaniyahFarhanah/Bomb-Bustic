@@ -12,12 +12,10 @@ public class BusPassengers : MonoBehaviour
     [Range(1, 40)]
     [SerializeField] private int passengerTotal = 20;
     [SerializeField] private DrivingCameraController cam;
-    private int passengerCurrentIndex;
-    private int passengerHealthy = 0;
-    private int passengerDelivered = 0;
-    private int passengerInjured = 0;
-    private int passengerLost = 0;
-    public List<PassengerStatus> passengerList = new List<PassengerStatus>();
+    private int passengersCurrent = 0;
+    private int passengersDelivered = 0;
+    private int passengersInjured = 0;
+    private int passengersLost = 0;
 
 
     [Header("Turret Settings")]
@@ -49,7 +47,6 @@ public class BusPassengers : MonoBehaviour
     private Vector3 originalCrosshairScale;
 
     [Header("Crash Settings")]
-    [Range(0f, 1f)] [SerializeField] private float injuredChance = 0.5f;
     [Range(0f, 1f)] [SerializeField] private float lostChance = 0.3f;
 
     // Start is called before the first frame update
@@ -84,9 +81,7 @@ public class BusPassengers : MonoBehaviour
 
     private void InitializeSettings()
     {
-        passengerCurrentIndex = passengerTotal - 1;
-        passengerHealthy = passengerTotal;
-        passengerList = passengerInfoUI.InitPassengers(passengerTotal);
+        passengersCurrent = passengerTotal;
         UpdatePassengerText();
 
         InsidePassengerEjectionZone(false);
@@ -98,7 +93,7 @@ public class BusPassengers : MonoBehaviour
 
     private void HandleInput()
     {
-        if (passengerCurrentIndex >= 0 && insidePassengerEjectionZone)
+        if (passengersCurrent >= 0 && insidePassengerEjectionZone)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -106,7 +101,7 @@ public class BusPassengers : MonoBehaviour
             }
         }
 
-        if (passengerCurrentIndex >= 0 && elapsedTime <= 0f && insidePassengerEjectionZone && activatePassengerEjectionMode)
+        if (passengersCurrent >= 0 && elapsedTime <= 0f && insidePassengerEjectionZone && activatePassengerEjectionMode)
         {
             if (Input.GetMouseButtonDown(0)) // Left mouse button
             {
@@ -128,8 +123,6 @@ public class BusPassengers : MonoBehaviour
 
         // Instantiate the passenger at the calculated exit position
         GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
-        passenger.GetComponentInChildren<PassengerLanding>().passengerStatus = passengerList[passengerCurrentIndex];
-        passenger.GetComponentInChildren<PassengerLanding>().isShot = true;
 
         // Apply horizontal shooting direction force and add vertical force
         Vector3 shootingDirection = ray.direction * passengerExitForce;
@@ -143,8 +136,7 @@ public class BusPassengers : MonoBehaviour
         //Debug.Log("Shot out passenger[" + passenger.GetComponentInChildren<PassengerLanding>().passengerStatus.passengerID + "]");
 
         // Decrease the number of current passengers
-        --passengerCurrentIndex;
-        IsCurrentPassengerLost();
+        --passengersCurrent;
         UpdatePassengerText();
     }
 
@@ -292,34 +284,32 @@ public class BusPassengers : MonoBehaviour
         }
     }
 
-    public void DeliveredPassenger(int ID)
+    public void DeliveredPassenger()
     {
-        ++passengerDelivered;
-        passengerInfoUI.UpdateDeliveredPassengerUI(ID);
-        UpdatePassengerText();
-        //Debug.Log("Delivered [" + ID + "]");
+        ++passengersDelivered;
+        GetPassengerResults();
     }
 
-    public void InjuredPassenger(int ID)
+    public void InjuredPassenger()
     {
-        ++passengerInjured;
-        passengerInfoUI.UpdateInjuredPassengerUI(ID);
-        UpdatePassengerText();
-        //Debug.Log("Injured [" + ID + "]");
+        ++passengersInjured;
+        GetPassengerResults();
     }
 
-    public void LostPassenger(int ID)
+    public void LostPassenger()
     {
-        ++passengerLost;
-        passengerInfoUI.UpdateLostPassengerUI(ID);
-        UpdatePassengerText();
-        //Debug.Log("Lost [" + ID + "]");
+        ++passengersLost;
+        GetPassengerResults();
+    }
+
+    public void GetPassengerResults()
+    {
+        Debug.Log($"Current: {passengersCurrent} | Delivered: {passengersDelivered} | Injured: {passengersInjured} | Lost: {passengersLost}");
     }
 
     private void UpdatePassengerText()
     {
-        //passengerInfoUI.UpdatePassengerInfoTextUI(passengerCurrent, passengerDelivered, passengerInjured, passengerLost);
-        passengerInfoUI.UpdateCurrentIndicator(passengerCurrentIndex);
+        passengerInfoUI.SetPassengersCountText(passengersCurrent);
     }
 
     private IEnumerator RemoveShootingInfoAfterDelay()
@@ -331,37 +321,15 @@ public class BusPassengers : MonoBehaviour
 
     public void CrashHandler(CollisionHandler.CrashTypes crashType, Vector3 crashDirection, float impactForce)
     {
-        int rand = Random.Range(0, passengerCurrentIndex);
-        PassengerStatus randPassenger = passengerList[rand];
-
         switch (crashType)
         {
             case CollisionHandler.CrashTypes.Medium:
-            if (randPassenger.GetStatus() == PassengerStatus.Status.Injured)
-            {
-                if (Random.Range(0f, 1f) <= lostChance)
-                {
-                    randPassenger.SetStatus(PassengerStatus.Status.Lost);
-                    //Debug.Log("Crash lost passenger[" + randPassenger.passengerID + "]");
-                }
-            }
-            else
-            {
-                if (Random.Range(0f, 1f) <= injuredChance)
-                {
-                    randPassenger.SetStatus(PassengerStatus.Status.Injured);
-                    //CrashEjectPassenger(crashDirection, impactForce);
-                    //Debug.Log("Crash injured passenger[" + randPassenger.passengerID + "]");
-                }
-            }
-            break;
-
             case CollisionHandler.CrashTypes.Heavy:
                 if (Random.Range(0f, 1f) <= lostChance)
                 {
-                    randPassenger.SetStatus(PassengerStatus.Status.Lost);
+                    --passengersCurrent;
+                    UpdatePassengerText();
                     CrashEjectPassenger(crashDirection, impactForce);
-                    //Debug.Log("Crash lost passenger[" + randPassenger.passengerID + "]");
                 }
                 break;
 
@@ -369,18 +337,6 @@ public class BusPassengers : MonoBehaviour
             case CollisionHandler.CrashTypes.None:
             default:
                 break;
-        }
-    }
-
-    private void IsCurrentPassengerLost()
-    {
-        if (passengerCurrentIndex < 0)
-            return;
-
-        if (passengerList[passengerCurrentIndex].GetComponent<PassengerStatus>().GetStatus() == PassengerStatus.Status.Lost)
-        {
-            --passengerCurrentIndex;
-            IsCurrentPassengerLost();
         }
     }
 

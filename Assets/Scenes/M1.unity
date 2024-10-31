@@ -2744,6 +2744,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5745776462356933444, guid: 6d13f26a17c3dae46b781a20abbe9ac4, type: 3}
   m_PrefabInstance: {fileID: 752767754}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &111512896 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8450324444333959445, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
+  m_PrefabInstance: {fileID: 1260655588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &112092536
 GameObject:
   m_ObjectHideFlags: 0
@@ -15741,9 +15746,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1537320329}
     - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: InsideShootingZone
+      value: 
+      objectReference: {fileID: 111512896}
+    - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: activateShootingUI
+      value: 
+      objectReference: {fileID: 111512896}
+    - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: shootingSlidingTimerUI
       value: 
       objectReference: {fileID: 318816170}
+    - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: comboUI
       value: 
@@ -15791,6 +15808,14 @@ PrefabInstance:
     - target: {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: disgustTextUI
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: minSpeedHeavy
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: minSpeedMedium
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
