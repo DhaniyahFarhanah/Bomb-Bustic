@@ -15734,14 +15734,6 @@ PrefabInstance:
       propertyPath: shootingSlidingTimerUI
       value: 
       objectReference: {fileID: 318816170}
-    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: highSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: skidDelay
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: comboUI
       value: 
@@ -16335,21 +16327,9 @@ PrefabInstance:
       value: Player Camera
       objectReference: {fileID: 0}
     - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: Shoot
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: Crosshair
       value: 
       objectReference: {fileID: 1772321319}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_FastFov
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: uiManager
       value: 
@@ -16358,30 +16338,6 @@ PrefabInstance:
       propertyPath: TurretHead
       value: 
       objectReference: {fileID: 829531738}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_MaxSpeedForFOV
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_FastFOVIncrease
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: activateFovVelocity
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_FovDampingSpeeding
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_SpeedToActivateFOV
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5064827365284208538, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7100947807018220616, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 73.6
@@ -26750,7 +26706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Vehicle: {fileID: 555780955}
-  jeepvisuals: {fileID: 0}
+  jeepvisuals: {fileID: 555780954}
 --- !u!4 &979348244
 Transform:
   m_ObjectHideFlags: 0

@@ -22,12 +22,9 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private Vector3 exitOffset;
     [SerializeField] private float passengerExitForce = 500f;
     [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float slowMotionTime = 10f;
-    [SerializeField] private float slowMotionScale = 0.2f;
-    [SerializeField] private float slowMotionTransitionSpeed = 3f;
     private bool insidePassengerEjectionZone = false;
     private bool activatePassengerEjectionMode = false;
-    private bool slowMoActive = false;
+    //private bool slowMoActive = false;
     private float slowMotionElapsedTime;
     private float elapsedTime;
 
@@ -57,7 +54,7 @@ public class BusPassengers : MonoBehaviour
         HandleInput();
         UpdateCrosshairColor();
         HandleSlowMotion();
-        UpdateSlowMotionTimer();
+        //UpdateSlowMotionTimer();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -84,7 +81,7 @@ public class BusPassengers : MonoBehaviour
         InsidePassengerEjectionZone(false);
         ActivatePassengerEjectionMode(false);
         originalCrosshairScale = crosshairUI.transform.localScale;
-        shootingSlidingTimerUI.maxValue = slowMotionTime;
+        //shootingSlidingTimerUI.maxValue = slowMotionTime;
         sliderFillImage.color = normalColor;
     }
 
@@ -199,7 +196,7 @@ public class BusPassengers : MonoBehaviour
         slowMoActive = false;
     } */
 
-    private void UpdateSlowMotionTimer()
+    /*private void UpdateSlowMotionTimer()
     {
         if (slowMotionElapsedTime > 0 && slowMoActive)
         {
@@ -211,7 +208,7 @@ public class BusPassengers : MonoBehaviour
             slowMotionElapsedTime += Time.unscaledDeltaTime;
             shootingSlidingTimerUI.value = slowMotionElapsedTime;
         }
-    }
+    }*/
 
     private void UpdateCrosshairColor()
     {
@@ -274,16 +271,16 @@ public class BusPassengers : MonoBehaviour
         {
             GetComponent<PowerUpHandler>().DeactivateCurrent();
 
-            slowMotionElapsedTime = slowMotionTime;
+            //slowMotionElapsedTime = slowMotionTime;
             StartCoroutine(AnimateCrosshairScale());
             StartCoroutine(SpinCrosshair());
             StartCoroutine(RemoveShootingInfoAfterDelay());
 
-            cam.SetCameraMode(DrivingCameraController.CameraModes.PassengerEject);
+            cam.SetCameraMode(CameraModes.PassengerEject);
         }
         else
         {
-            cam.SetCameraMode(DrivingCameraController.CameraModes.Normal);
+            cam.SetCameraMode(CameraModes.Normal);
         }
     }
 

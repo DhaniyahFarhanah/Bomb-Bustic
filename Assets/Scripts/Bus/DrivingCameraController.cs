@@ -4,18 +4,20 @@ using UnityEngine;
 
 namespace ArcadeVehicleController
 {
+    public enum CameraModes
+    {
+        Normal,
+        Turret,
+        PassengerEject
+    }
+
     public class DrivingCameraController: MonoBehaviour
     {
-        public enum CameraModes
-        {
-            Normal,
-            Turret,
-            PassengerEject
-        }
         private CameraModes cameraMode;
 
         [SerializeField] private UIManager uiManager;
         [SerializeField] private GameObject m_CameraHolder;
+        [SerializeField] private BusAudioHandler m_BusAudioHandler;
         [SerializeField] private float m_Distance = 10.0f;
         [SerializeField] private float m_Height = 5.0f;
         [SerializeField] private float m_HeightDamping = 2.0f;
@@ -68,8 +70,8 @@ namespace ArcadeVehicleController
         private float m_YawRotation;
         private float m_PitchRotation;
 
-        [SerializeField] private float m_TimeDilation;              //time scale for slowmo
-        [SerializeField] private float m_slowMotionTransitionSpeed; //Time ratio
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_TimeDilation;              //time scale for slowmo
+        [SerializeField] private float m_slowMotionTransitionSpeed;                     //Time ratio
 
 
         private void Awake()
@@ -104,7 +106,7 @@ namespace ArcadeVehicleController
             Vector3 desiredPosition = FollowTarget.position;
             desiredPosition -= currentRotation * Vector3.forward * m_Distance;
             desiredPosition.y = currentHeight;
-            m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.unscaledDeltaTime * m_MoveSpeed);
+            m_Transform.position = Vector3.Lerp(m_Transform.position, desiredPosition, Time.unscaledDeltaTime * m_MoveSpeed);
 
             Vector3 targetWithOffset = new Vector3(FollowTarget.position.x, FollowTarget.position.y + m_Offset, FollowTarget.position.z);
 
@@ -251,7 +253,7 @@ namespace ArcadeVehicleController
             Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
             desiredPosition.y += m_Height;
 
-            m_Transform.position = Vector3.MoveTowards(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
+            m_Transform.position = Vector3.Lerp(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
             m_Transform.rotation = combinedRotation;
         }
 
@@ -302,6 +304,10 @@ namespace ArcadeVehicleController
             {
                 Time.timeScale = Mathf.Lerp(Time.timeScale, m_TimeDilation, Time.deltaTime * m_slowMotionTransitionSpeed);
                 Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
+
+                //maybe slow down music
+                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.deltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.deltaTime * m_slowMotionTransitionSpeed);
             }
         }
 
@@ -311,6 +317,9 @@ namespace ArcadeVehicleController
             {
                 Time.timeScale = Mathf.Lerp(Time.timeScale, 1.0f, Time.deltaTime * m_slowMotionTransitionSpeed);
                 Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
+
+                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.deltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.deltaTime * m_slowMotionTransitionSpeed);
             }
         }
     }

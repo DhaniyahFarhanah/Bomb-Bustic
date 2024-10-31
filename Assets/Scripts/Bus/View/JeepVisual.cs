@@ -10,6 +10,7 @@ namespace ArcadeVehicleController
     public class JeepVisual : MonoBehaviour
     {
         public bool debugLines = false;
+        public bool isDrift = false;
 
         [Header("Wheel Visuals")]
         [SerializeField] private Transform m_WheelFrontLeft;
@@ -24,19 +25,21 @@ namespace ArcadeVehicleController
         [SerializeField] private float m_CheckHeight;
         [SerializeField] private LayerMask m_Ground;
         [SerializeField] private float highSpeed;
-        [SerializeField] private bool smoke = false;
-        [SerializeField] private bool trail = false;
         [SerializeField] private float skidDelay;
 
         [Header("Right Wheel")]
         [SerializeField] private Transform m_RightWheelGround;
         [SerializeField] private TrailRenderer m_TrialRight;
         [SerializeField] private ParticleSystem m_DustRight;
+        [SerializeField] private ParticleSystem m_DriftDustRight;
+        [SerializeField] private TrailRenderer m_DriftTrialRight;
 
         [Header("Left Wheel")]
         [SerializeField] private Transform m_LeftWheelGround;
         [SerializeField] private TrailRenderer m_TrialLeft;
         [SerializeField] private ParticleSystem m_DustLeft;
+        [SerializeField] private ParticleSystem m_DriftDustLeft;
+        [SerializeField] private TrailRenderer m_DriftTrailLeft;
 
         private float currentTime;
         private Quaternion m_WheelFrontLeftRoll;
@@ -131,9 +134,6 @@ namespace ArcadeVehicleController
             //Particle Visuals
             HandleParticles();
 
-            TrailEffect(trail);
-            SpeedSmoke(smoke);
-
         }
 
         void HandleParticles()
@@ -141,7 +141,7 @@ namespace ArcadeVehicleController
             //high speed smoke
             if(ForwardSpeed > highSpeed)
             {
-                smoke = true;
+                SpeedSmoke(true);
             }
 
             //Turning at mid speed
@@ -154,8 +154,8 @@ namespace ArcadeVehicleController
 
                 if(currentTime < 0.0f)
                 {
-                    smoke = true;
-                    trail = true;
+                    SpeedSmoke(true);
+                    TrailEffect(true);
                     
                 }
             }
@@ -163,22 +163,30 @@ namespace ArcadeVehicleController
             //Reversing
             else if(ForwardSpeed < 0.0f || BrakeInput < 0.0f)
             {
-                trail = true;
+                TrailEffect(true);
             }
             else if(ForwardSpeed > -5.0f && ForwardSpeed < 0.0f)
             {
-                smoke = true;
+                SpeedSmoke(true);
             }
+
+            //drifting
+            else if (isDrift)
+            {
+                TrailEffect(true);
+                DriftSmoke(true);
+            }
+
+            //on sand
 
             //revert
             else
             {
-                smoke = false;
-                trail = false;
+                SpeedSmoke(false); 
+                TrailEffect(false);
+                DriftSmoke(false);
                 currentTime = skidDelay;
             }
-
-            //drifting
         }
 
         void TrailEffect(bool activate)
@@ -225,5 +233,54 @@ namespace ArcadeVehicleController
             }
         }
 
+        void DriftSmoke(bool activate)
+        {
+            if(SteerInput > 0f && activate)
+            {
+                m_DriftTrialRight.emitting = IsRightGrounded;
+            }
+            else if(SteerInput < 0f && activate)
+            {
+                m_DriftTrailLeft.emitting = IsLeftGrounded;
+            }
+
+            else if (!activate)
+            {
+                m_DriftTrailLeft.emitting = false;
+                m_DriftTrialRight.emitting = false;
+            }
+
+            else
+            {
+                m_DriftTrailLeft.emitting = IsLeftGrounded;
+                m_DriftTrialRight.emitting = IsRightGrounded;
+            }
+
+            if (activate)
+            {
+                if (IsLeftGrounded)
+                {
+                    m_DriftDustLeft.Play(true);
+                }
+                else
+                {
+                    m_DriftDustLeft.Stop(true);
+                }
+
+                if (IsRightGrounded)
+                {
+                    m_DriftDustRight.Play(true);
+                }
+                else
+                {
+                    m_DriftDustRight.Stop(true);
+                }
+            }
+            else
+            {
+                m_DriftDustLeft.Stop();
+                m_DriftDustRight.Stop();
+            }
+        }
     }
 }
