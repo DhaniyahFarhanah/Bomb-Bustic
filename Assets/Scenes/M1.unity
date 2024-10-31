@@ -15742,6 +15742,10 @@ PrefabInstance:
       propertyPath: comboObject
       value: 
       objectReference: {fileID: 1493410744}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: camControl
+      value: 
+      objectReference: {fileID: 2976827039248419619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16338,6 +16342,10 @@ PrefabInstance:
       propertyPath: TurretHead
       value: 
       objectReference: {fileID: 829531738}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_BusAudioHandler
+      value: 
+      objectReference: {fileID: 1871412243}
     - target: {fileID: 7100947807018220616, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 73.6
@@ -54256,6 +54264,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2799858501509906751, guid: b06cde1fe34112244a623997760d6375, type: 3}
   m_PrefabInstance: {fileID: 1870496995}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1871412243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+  m_PrefabInstance: {fileID: 597558198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1872186177
 PrefabInstance:
   m_ObjectHideFlags: 0
