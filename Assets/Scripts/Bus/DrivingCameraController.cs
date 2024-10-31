@@ -164,6 +164,7 @@ namespace ArcadeVehicleController
                     m_Distance = m_DistanceNorm;
                     m_Height = m_HeightNorm;
                     m_Offset = m_OffsetNorm;
+                    Crosshair.SetActive(false);
                     HandleMouseRotation2();
                     HandleCameraPosition2();
                     HandleCameraFOV2();

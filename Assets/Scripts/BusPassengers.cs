@@ -262,12 +262,14 @@ public class BusPassengers : MonoBehaviour
             ActivatePassengerEjectionMode(false);
     }
 
-    private void ActivatePassengerEjectionMode(bool enabled)
+    public void ActivatePassengerEjectionMode(bool enabled)
     {
         activatePassengerEjectionMode = enabled;
         shootingObject.SetActive(activatePassengerEjectionMode);
-        if (activatePassengerEjectionMode)
+        if (enabled)
         {
+            GetComponent<PowerUpHandler>().DeactivateCurrent();
+
             slowMotionElapsedTime = slowMotionTime;
             StartCoroutine(AnimateCrosshairScale());
             StartCoroutine(SpinCrosshair());

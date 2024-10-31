@@ -96,6 +96,7 @@ public class PowerUpHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                GetComponent<BusPassengers>().ActivatePassengerEjectionMode(false);
                 //activate pickup
                 activated = true;
                 ActivatePickup(currentPickUp);
@@ -201,5 +202,11 @@ public class PowerUpHandler : MonoBehaviour
         currentTimer = energyPulseCooldown;
         imageTimer = energyPulseCooldown;
         //For this powerup, it sends out a "pulse" through particle that stops the speed of all cars within a range for a certain amount of time
+    }
+
+    public void DeactivateCurrent()
+    {
+        if (activated)
+            Deactivate(currentPickUp);
     }
 }
