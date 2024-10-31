@@ -202,8 +202,8 @@ namespace ArcadeVehicleController
 
         private void HandleMouseRotation2()
         {
-            float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.unscaledDeltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.unscaledDeltaTime;
 
             if (mouseX != 0 || mouseY != 0)
             {
