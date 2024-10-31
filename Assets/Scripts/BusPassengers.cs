@@ -46,9 +46,6 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private GameObject InsideShootingZone;
     private Vector3 originalCrosshairScale;
 
-    [Header("Crash Settings")]
-    [Range(0f, 1f)] [SerializeField] private float lostChance = 0.3f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -319,29 +316,11 @@ public class BusPassengers : MonoBehaviour
         ShootingInfo.SetActive(false);
     }
 
-    public void CrashHandler(CollisionHandler.CrashTypes crashType, Vector3 crashDirection, float impactForce)
+    public void CrashEjectPassenger(Vector3 crashDirection, float impactForce)
     {
-        switch (crashType)
-        {
-            case CollisionHandler.CrashTypes.Medium:
-            case CollisionHandler.CrashTypes.Heavy:
-                if (Random.Range(0f, 1f) <= lostChance)
-                {
-                    --passengersCurrent;
-                    UpdatePassengerText();
-                    CrashEjectPassenger(crashDirection, impactForce);
-                }
-                break;
+        --passengersCurrent;
+        UpdatePassengerText();
 
-            case CollisionHandler.CrashTypes.Light:
-            case CollisionHandler.CrashTypes.None:
-            default:
-                break;
-        }
-    }
-
-    private void CrashEjectPassenger(Vector3 crashDirection, float impactForce)
-    {
         // Calculate the position based on the exit offset, using the bus's local orientation
         Vector3 exitPosition = transform.TransformPoint(exitOffset);
 

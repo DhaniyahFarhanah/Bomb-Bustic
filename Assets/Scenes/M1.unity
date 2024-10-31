@@ -15809,14 +15809,6 @@ PrefabInstance:
       propertyPath: disgustTextUI
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: minSpeedHeavy
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: minSpeedMedium
-      value: 60
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7979273278392798622, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
     m_RemovedGameObjects: []

@@ -404,6 +404,7 @@ MonoBehaviour:
   minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
+  minCrashSpeed: 70
   EjectionForce: 200
   verticaDirection: 1.5
   nearMiss: {fileID: 5625231821553790463}
