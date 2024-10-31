@@ -23,7 +23,8 @@ namespace ArcadeVehicleController
 
             if (Input.GetKey(KeyCode.Space))
             {
-                m_Vehicle.Braking();
+                //m_Vehicle.Braking();
+                m_Vehicle.isDrift = true;
                 m_Vehicle.SetAccelerateInput(0.0f); // Stop acceleration while braking
                 if (jeepvisuals && jeepvisuals.brakeLights && !brakeLight)
                 {
@@ -33,6 +34,7 @@ namespace ArcadeVehicleController
             }
             else
             {
+                m_Vehicle.isDrift = false;
                 float input = Input.GetAxis("Vertical");
                 m_Vehicle.SetAccelerateInput(Input.GetAxis("Vertical"));
 

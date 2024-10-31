@@ -456,7 +456,7 @@ public class PoopMeter : MonoBehaviour
             playingEffect = true;
             float elapsedTime = 0f;
             Color fartScreenColor = fartScreen.color;
-            GetComponent<ArcadeVehicleController.Vehicle>().ThrowPassengers(false);
+            //GetComponent<ArcadeVehicleController.Vehicle>().ThrowPassengers(false);
             BusStopPickUp[] allStops = FindObjectsOfType<BusStopPickUp>();
             foreach (BusStopPickUp stop in allStops)
             {
