@@ -20,7 +20,7 @@ public class PowerUpHandler : MonoBehaviour
     [SerializeField] GameObject Bus;
     [SerializeField] float currentTimer;
     [SerializeField] float imageTimer;
-    [SerializeField] bool activated;
+    public bool activated;
     [SerializeField] Image powerUpImage;
 
     //Turret activates Turret powerup

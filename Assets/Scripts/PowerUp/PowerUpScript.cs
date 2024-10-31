@@ -17,64 +17,72 @@ public class PowerUpScript : MonoBehaviour
     {
         GameObject hit = other.gameObject;
 
-        if (!setType)
+        if(hit.GetComponent<PowerUpHandler>() != null)
         {
-            if (hit.CompareTag("Player"))
+            if (!hit.GetComponent<PowerUpHandler>().activated)
             {
-                PickUpType powerUp = (PickUpType)Random.Range(1, 5);
-
-                switch (powerUp)
+                if (!setType)
                 {
-                    case PickUpType.Turret:
-                        givenImage = TurretImage;
-                        break;
-                    case PickUpType.Hack:
-                        givenImage = HackImage;
-                        break;
-                    case PickUpType.Nitro:
-                        givenImage = NitroImage;
-                        break;
-                    case PickUpType.EnergyPulse:
-                        givenImage = EnergyPulseImage;
-                        break;
-                    default:
-                        Debug.Log("error!");
-                        break;
+                    if (hit.CompareTag("Player"))
+                    {
+                        PickUpType powerUp = (PickUpType)Random.Range(1, 5);
+
+                        switch (powerUp)
+                        {
+                            case PickUpType.Turret:
+                                givenImage = TurretImage;
+                                break;
+                            case PickUpType.Hack:
+                                givenImage = HackImage;
+                                break;
+                            case PickUpType.Nitro:
+                                givenImage = NitroImage;
+                                break;
+                            case PickUpType.EnergyPulse:
+                                givenImage = EnergyPulseImage;
+                                break;
+                            default:
+                                Debug.Log("error!");
+                                break;
+                        }
+
+                        hit.GetComponent<PowerUpHandler>().ReceivePickup(givenImage, powerUp);
+                        Destroy(this.gameObject);
+                    }
                 }
 
-                hit.GetComponent<PowerUpHandler>().ReceivePickup(givenImage, powerUp);
-                Destroy(this.gameObject);
-            }
-        }
-
-        else if(setType)
-        {
-            if (hit.CompareTag("Player"))
-            {
-                switch (type)
+                else if (setType)
                 {
-                    case PickUpType.Turret:
-                        givenImage = TurretImage;
-                        break;
-                    case PickUpType.Hack:
-                        givenImage = HackImage;
-                        break;
-                    case PickUpType.Nitro:
-                        givenImage = NitroImage;
-                        break;
-                    case PickUpType.EnergyPulse:
-                        givenImage = EnergyPulseImage;
-                        break;
-                    default:
-                        Debug.Log("error!");
-                        break;
-                }
+                    if (hit.CompareTag("Player"))
+                    {
+                        switch (type)
+                        {
+                            case PickUpType.Turret:
+                                givenImage = TurretImage;
+                                break;
+                            case PickUpType.Hack:
+                                givenImage = HackImage;
+                                break;
+                            case PickUpType.Nitro:
+                                givenImage = NitroImage;
+                                break;
+                            case PickUpType.EnergyPulse:
+                                givenImage = EnergyPulseImage;
+                                break;
+                            default:
+                                Debug.Log("error!");
+                                break;
+                        }
 
-                hit.GetComponent<PowerUpHandler>().ReceivePickup(givenImage, type);
-                Destroy(this.gameObject);
+                        hit.GetComponent<PowerUpHandler>().ReceivePickup(givenImage, type);
+                        Destroy(this.gameObject);
+                    }
+
+                }
             }
-            
         }
+        
+        
         
     }
 }
