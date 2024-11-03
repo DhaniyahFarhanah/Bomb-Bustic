@@ -132,7 +132,7 @@ public class BombMeter : MonoBehaviour
             {
                 countdownTextUI.gameObject.SetActive(true);
             }
-            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
+            countdownTextUI.text = "Countdown: " + countdownTimer.ToString("F1") + "s\nToo Slow!";
 
             // Pulse expand the BombImage 
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
