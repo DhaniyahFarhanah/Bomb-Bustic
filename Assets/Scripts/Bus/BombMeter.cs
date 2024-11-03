@@ -16,11 +16,14 @@ public class BombMeter : MonoBehaviour
     public Slider bombMeterSlider;
     public TextMeshProUGUI countdownTextUI;
     public Image BombImage;
+    public Image BombPointer;
     public RectTransform crashFill;
     public float pulseSpeed = 2f;
     public float bombExpand;
     private Vector3 bombExpandScale;
     private Vector3 bombOrginalScale;
+    public float BombPointerMinAngle = 20f;
+    public float BombPointerMaxAngle = -80f;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -47,6 +50,7 @@ public class BombMeter : MonoBehaviour
 
         UIUpdate();
         BombLogic();
+        BombPointerAngle();
     }
 
     private void UIUpdate()
@@ -91,6 +95,7 @@ public class BombMeter : MonoBehaviour
         if (countdownTimer <= 0f)
         {
             countdownTextUI.text = "Countdown: BOOM!";
+            countdownTimer = 0f;
         }
     }
 
@@ -107,5 +112,40 @@ public class BombMeter : MonoBehaviour
         // Set the new height to crashFill
         crashFill.sizeDelta = new Vector2(crashFill.sizeDelta.x, proportionalHeight);
     }
+
+    private void BombPointerAngle()
+    {
+        float maxDiff = BombPointerMaxAngle - BombPointerMinAngle;
+
+        if (currentSpeed > minSpeed)
+        {
+            // Smoothly transition the bomb pointer back to the maximum angle when speed is above minSpeed
+            float currentZAngle = BombPointer.transform.localEulerAngles.z;
+
+            // Ensure the angle wraps correctly by adjusting values within 0-360 range
+            if (currentZAngle > 180) currentZAngle -= 360;
+
+            float bombPointerAngle = Mathf.Lerp(currentZAngle, BombPointerMaxAngle, Time.deltaTime * pulseSpeed);
+
+            BombPointer.transform.localEulerAngles = new Vector3(
+                BombPointer.transform.localEulerAngles.x,
+                BombPointer.transform.localEulerAngles.y,
+                bombPointerAngle
+            );
+        }
+        else
+        {
+            // Interpolate angle based on the countdown timer for the "too slow" warning
+            float bombPointerAngle = Mathf.Lerp(BombPointerMaxAngle, BombPointerMinAngle, 1 - countdownTimer / bombBuffer);
+
+            BombPointer.transform.localEulerAngles = new Vector3(
+                BombPointer.transform.localEulerAngles.x,
+                BombPointer.transform.localEulerAngles.y,
+                bombPointerAngle
+            );
+        }
+    }
+
+
 
 }

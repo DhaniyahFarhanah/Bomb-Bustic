@@ -435,13 +435,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 20
-  bombBuffer: 5
+  bombBuffer: 7
   bombMeterSlider: {fileID: 0}
   countdownTextUI: {fileID: 0}
   BombImage: {fileID: 0}
+  BombPointer: {fileID: 0}
   crashFill: {fileID: 0}
   pulseSpeed: 5
   bombExpand: 1.2
+  BombPointerMinAngle: 20
+  BombPointerMaxAngle: -80
 --- !u!114 &1713831921313684075
 MonoBehaviour:
   m_ObjectHideFlags: 0
