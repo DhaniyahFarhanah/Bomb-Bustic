@@ -63,33 +63,11 @@ public class BombMeter : MonoBehaviour
     {
         if (currentSpeed <= minSpeed)
         {
-            countdownTimer -= Time.deltaTime;
-            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
-
-            // If the countdown text is not active, make it active
-            if (!countdownTextUI.gameObject.activeSelf)
-            {
-                countdownTextUI.gameObject.SetActive(true);
-            }
-
-            // Pulse the BombImage red and expand
-            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
-            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
+            BombCountdown();
         }
         else
         {
-            // Smoothly return the BombImage scale to the original scale when speed is above minSpeed
-            countdownTimer = bombBuffer;
-            countdownTextUI.gameObject.SetActive(false);
-
-            BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
-        }
-
-        // Handle bomb explosion
-        if (countdownTimer <= 0f)
-        {
-            countdownTextUI.text = "Countdown: BOOM!";
-            countdownTimer = 0f;
+            BombReset();
         }
     }
 
@@ -109,8 +87,6 @@ public class BombMeter : MonoBehaviour
 
     private void BombPointerAngle()
     {
-        float maxDiff = BombPointerMaxAngle - BombPointerMinAngle;
-
         if (currentSpeed > minSpeed)
         {
             // Smoothly transition the bomb pointer back to the maximum angle when speed is above minSpeed
@@ -138,5 +114,41 @@ public class BombMeter : MonoBehaviour
                 bombPointerAngle
             );
         }
+    }
+
+    private void BombCountdown()
+    {
+        if (countdownTimer <= 0f)
+        {
+            countdownTextUI.text = "Countdown: BOOM!";
+            countdownTimer = 0f;
+        }
+        else
+        {
+            countdownTimer -= Time.deltaTime;
+
+            // If the countdown text is not active, make it active
+            if (!countdownTextUI.gameObject.activeSelf)
+            {
+                countdownTextUI.gameObject.SetActive(true);
+            }
+            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
+
+            // Pulse expand the BombImage 
+            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
+            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
+        }
+    }
+
+    private void BombReset()
+    {
+        // Smoothly return the BombImage scale to the original scale when speed is above minSpeed
+        countdownTimer = bombBuffer;
+        if (!countdownTextUI.gameObject.activeSelf)
+        {
+            countdownTextUI.gameObject.SetActive(false);
+        }
+
+        BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
     }
 }
