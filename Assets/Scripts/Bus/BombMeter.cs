@@ -17,6 +17,10 @@ public class BombMeter : MonoBehaviour
     public TextMeshProUGUI countdownTextUI;
     public Image BombImage;
     public RectTransform crashFill;
+    public float pulseSpeed = 2f;
+    public float bombExpand;
+    private Vector3 bombExpandScale;
+    private Vector3 bombOrginalScale;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -27,6 +31,9 @@ public class BombMeter : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         bus = GetComponent<Vehicle>();
+
+        bombOrginalScale = transform.localScale;
+        bombExpandScale = bombOrginalScale * bombExpand;
 
         countdownTimer = bombBuffer;
         maxSpeed = bus.Settings.MaxSpeed;
@@ -62,9 +69,9 @@ public class BombMeter : MonoBehaviour
             }
 
             // Pulse the BombImage red
-            float pulseSpeed = 2f; // Adjust to make the pulse faster or slower
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
-            BombImage.color = Color.Lerp(Color.white, Color.red, pulseValue); // Transition from white to red
+            //BombImage.color = Color.Lerp(Color.white, Color.red, pulseValue); // Transition from white to red
+            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue); // Transition from white to red
         }
         else
         {
@@ -76,7 +83,8 @@ public class BombMeter : MonoBehaviour
             }
 
             // Reset the BombImage color to its original color (white)
-            BombImage.color = Color.white;
+            //BombImage.color = Color.white;
+            BombImage.transform.localScale = bombOrginalScale;
         }
 
         // Handle bomb explosion

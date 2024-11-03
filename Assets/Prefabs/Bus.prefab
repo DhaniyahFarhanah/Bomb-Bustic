@@ -404,6 +404,7 @@ MonoBehaviour:
   minSpeedHeavy: 40
   m_HeavyDuration: 0.6
   m_HeavyIntensity: 0.35
+  lostChance: 0.5
   minCrashSpeed: 70
   EjectionForce: 200
   verticaDirection: 1.5
@@ -436,9 +437,11 @@ MonoBehaviour:
   minSpeed: 20
   bombBuffer: 5
   bombMeterSlider: {fileID: 0}
-  bombMeterSliderFill: {fileID: 0}
   countdownTextUI: {fileID: 0}
   BombImage: {fileID: 0}
+  crashFill: {fileID: 0}
+  pulseSpeed: 5
+  bombExpand: 1.2
 --- !u!114 &1713831921313684075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,7 +629,6 @@ MonoBehaviour:
   slowMotionColor: {r: 0, g: 0, b: 1, a: 1}
   normalColor: {r: 0, g: 1, b: 0, a: 1}
   InsideShootingZone: {fileID: 0}
-  lostChance: 0.5
 --- !u!1 &743069921660595091
 GameObject:
   m_ObjectHideFlags: 0
