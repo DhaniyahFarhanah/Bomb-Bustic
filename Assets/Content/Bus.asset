@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c36432a0b48584d947b27579a7ab13, type: 3}
   m_Name: Bus
   m_EditorClassIdentifier: 
-  m_Width: 2.45
-  m_Height: 2
-  m_Length: 6.15
+  m_Width: 2.33
+  m_Height: 1.25
+  m_Length: 5.45
   m_Weight: 300
   m_Drag: 0.1
   m_AirDrag: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   m_WheelsPaddingZ: 0.218
   m_ChassiMass: 60
   m_TireMass: 4
-  m_SpringRestLength: 1.2
+  m_SpringRestLength: 1.54
   m_SpringStrength: 3000
   m_SpringDamper: 300
   m_AcceleratePower: 1200
@@ -32,9 +32,9 @@ MonoBehaviour:
   m_SteerAngle: 14
   m_FrontWheelsGripFactor: 0.904
   m_RearWheelsGripFactor: 1
-  m_DriftBrakesPower: 0.4
+  m_DriftBrakesPower: 3
   m_DriftReverseSpeed: 0
-  m_DriftSteerAngle: 30.2
-  m_DriftFrontWheelsGripFactor: 0.503
-  m_DriftRearWheelsGripFactor: 0.503
+  m_DriftSteerAngle: 19.7
+  m_DriftFrontWheelsGripFactor: 0.392
+  m_DriftRearWheelsGripFactor: 0.587
   m_AirResistance: 0.2

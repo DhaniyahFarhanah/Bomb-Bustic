@@ -23,6 +23,11 @@ public class BombMeter : MonoBehaviour
     private float currentSpeed;
     private float maxSpeed;
 
+    [Header("Bomb")]
+    public TextMeshProUGUI bombTimerText;
+    public ParticleSystem sparks;
+    public Animator bombAnim;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -61,6 +66,11 @@ public class BombMeter : MonoBehaviour
                 countdownTextUI.gameObject.SetActive(true);
             }
 
+            bombTimerText.text = countdownTimer.ToString("00.00");
+            bombTimerText.color = Color.red;
+            bombAnim.SetBool("Pulse", true);
+            sparks.Play(true);
+
             // Pulse the BombImage red
             float pulseSpeed = 2f; // Adjust to make the pulse faster or slower
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
@@ -74,6 +84,12 @@ public class BombMeter : MonoBehaviour
                 countdownTimer = bombBuffer;
                 countdownTextUI.gameObject.SetActive(false);
             }
+
+            bombTimerText.text = "SAFE";
+            bombTimerText.color = Color.green;
+            bombAnim.SetBool("Pulse", false);
+            sparks.Stop(true);
+
 
             // Reset the BombImage color to its original color (white)
             BombImage.color = Color.white;
@@ -98,6 +114,11 @@ public class BombMeter : MonoBehaviour
 
         // Set the new height to crashFill
         crashFill.sizeDelta = new Vector2(crashFill.sizeDelta.x, proportionalHeight);
+    }
+
+    public void BombPhysical()
+    {
+
     }
 
 }

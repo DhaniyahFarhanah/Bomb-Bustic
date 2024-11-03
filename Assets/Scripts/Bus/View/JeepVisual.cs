@@ -16,7 +16,9 @@ namespace ArcadeVehicleController
         [SerializeField] private Transform m_WheelFrontLeft;
         [SerializeField] private Transform m_WheelFrontRight;
         [SerializeField] private Transform m_WheelBackLeft;
+        [SerializeField] private Transform m_WheelBackLeft2;
         [SerializeField] private Transform m_WheelBackRight;
+        [SerializeField] private Transform m_WheelBackRight2;
         [SerializeField] private float m_WheelsSpinSpeed;
         [SerializeField] private float m_WheelYWhenSpringMin;
         [SerializeField] private float m_WheelYWhenSpringMax;
@@ -100,11 +102,13 @@ namespace ArcadeVehicleController
             if (SpringsCurrentLength[Wheel.BackLeft] < SpringsRestLength)
             {
                 m_WheelBackLeft.localRotation *= Quaternion.AngleAxis(ForwardSpeed * m_WheelsSpinSpeed * Time.deltaTime, Vector3.right);
+                m_WheelBackLeft2.localRotation *= Quaternion.AngleAxis(ForwardSpeed * m_WheelsSpinSpeed * Time.deltaTime, Vector3.right);
             }
 
             if (SpringsCurrentLength[Wheel.BackRight] < SpringsRestLength)
             {
                 m_WheelBackRight.localRotation *= Quaternion.AngleAxis(ForwardSpeed * m_WheelsSpinSpeed * Time.deltaTime, Vector3.right);
+                m_WheelBackRight2.localRotation *= Quaternion.AngleAxis(ForwardSpeed * m_WheelsSpinSpeed * Time.deltaTime, Vector3.right);
             }
 
             m_WheelFrontLeft.localRotation = Quaternion.AngleAxis(SteerInput * SteerAngle, Vector3.up) * m_WheelFrontLeftRoll;
@@ -127,9 +131,17 @@ namespace ArcadeVehicleController
                 m_WheelYWhenSpringMin + (m_WheelYWhenSpringMax - m_WheelYWhenSpringMin) * springBackRightRatio,
                 m_WheelBackRight.localPosition.z);
 
+            m_WheelBackRight2.localPosition = new Vector3(m_WheelBackRight2.localPosition.x,
+                m_WheelYWhenSpringMin + (m_WheelYWhenSpringMax - m_WheelYWhenSpringMin) * springBackRightRatio,
+                m_WheelBackRight2.localPosition.z);
+
             m_WheelBackLeft.localPosition = new Vector3(m_WheelBackLeft.localPosition.x,
                 m_WheelYWhenSpringMin + (m_WheelYWhenSpringMax - m_WheelYWhenSpringMin) * springBackLeftRatio,
                 m_WheelBackLeft.localPosition.z);
+
+            m_WheelBackLeft2.localPosition = new Vector3(m_WheelBackLeft2.localPosition.x,
+                m_WheelYWhenSpringMin + (m_WheelYWhenSpringMax - m_WheelYWhenSpringMin) * springBackLeftRatio,
+                m_WheelBackLeft2.localPosition.z);
 
             //Particle Visuals
             HandleParticles();

@@ -15634,6 +15634,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 49701878227924395, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 582055895660397785, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_Name
       value: Bus
@@ -15662,6 +15666,14 @@ PrefabInstance:
       propertyPath: powerUpImage
       value: 
       objectReference: {fileID: 684435892}
+    - target: {fileID: 1718017085666284365, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1853792233060532878, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1889830796186935929, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_LocalPosition.x
       value: 64
@@ -15702,6 +15714,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2584761794279137469, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2962379419639768851, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: cam
       value: 
@@ -15734,6 +15750,18 @@ PrefabInstance:
       propertyPath: shootingSlidingTimerUI
       value: 
       objectReference: {fileID: 318816170}
+    - target: {fileID: 4435621100581971468, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749881120166464467, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321177084873864880, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: comboUI
       value: 
@@ -15742,10 +15770,22 @@ PrefabInstance:
       propertyPath: comboObject
       value: 
       objectReference: {fileID: 1493410744}
+    - target: {fileID: 5982066243959034941, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178525900505453174, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: camControl
       value: 
       objectReference: {fileID: 2976827039248419619}
+    - target: {fileID: 8415885675720746228, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
