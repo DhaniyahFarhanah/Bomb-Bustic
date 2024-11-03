@@ -59519,42 +59519,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleTag: 3
---- !u!1 &2077042587
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2077042588}
-  m_Layer: 3
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2077042588
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077042587}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 506399833113487660}
-  m_Father: {fileID: 5477970567340195669}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00039672852, y: 0.0012283325}
-  m_SizeDelta: {x: 154, y: 186.9}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2080807060 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1690876850266982043, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
@@ -61515,16 +61479,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5609673746828346387}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2077042588}
+  m_Father: {fileID: 5477970567340195669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00010250084, y: -0.00005688239}
+  m_AnchoredPosition: {x: -0.00039482, y: 0.0012302}
   m_SizeDelta: {x: 154, y: 186.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &596247934926184156
@@ -62008,7 +61972,7 @@ RectTransform:
   m_LocalScale: {x: 0.20879628, y: 0.23710665, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2077042588}
+  - {fileID: 506399833113487660}
   m_Father: {fileID: 5897890259759598477}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -62149,7 +62113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c14fbfa21490282479a609b067ca6f45, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f548116106e1024098a86b337e9e13a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
