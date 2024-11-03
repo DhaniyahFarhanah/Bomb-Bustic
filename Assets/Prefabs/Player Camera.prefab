@@ -83,7 +83,6 @@ MonoBehaviour:
   m_FovDampingSlowing: 2.04
   m_Offset: 7.2
   activateFovVelocity: 30
-  Shoot: 0
   drivable:
     serializedVersion: 2
     m_Bits: 128
@@ -97,6 +96,11 @@ MonoBehaviour:
   m_DistanceTurret: 36.5
   m_HeightTurret: 27.3
   m_OffsetTurret: 7.2
+  m_DistanceEject: 10.25
+  m_TransitionDuration: 1
+  m_MouseSensitivity: 100
+  m_MaxPitchAngle: 80
+  m_MinPitchAngle: -30
 --- !u!114 &5064827365284208538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +128,8 @@ MonoBehaviour:
   m_MaxDistance: 20
   m_MinDistance: 3
   m_ScrollSensitivity: 5
+  idleTimeThreshold: 3
+  returnSpeed: 2
 --- !u!81 &4292020426855298465
 AudioListener:
   m_ObjectHideFlags: 0
