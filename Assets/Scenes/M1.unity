@@ -16383,6 +16383,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 829531738}
     - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_HeightTurret
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_OffsetTurret
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
+      propertyPath: m_DistanceTurret
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976827039857887788, guid: 15ccfb1d669243f43a6238e05d0bd79f, type: 3}
       propertyPath: m_BusAudioHandler
       value: 
       objectReference: {fileID: 1871412243}

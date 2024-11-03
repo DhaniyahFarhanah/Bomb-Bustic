@@ -378,10 +378,10 @@ MonoBehaviour:
   m_WheelBackLeft2: {fileID: 2708936003051937793}
   m_WheelBackRight: {fileID: 8942800012282875811}
   m_WheelBackRight2: {fileID: 7855337602509591653}
-  m_WheelsSpinSpeed: 62
+  m_WheelsSpinSpeed: 70
   m_WheelYWhenSpringMin: 1.02
   m_WheelYWhenSpringMax: 0.18
-  m_CheckHeight: 0.6
+  m_CheckHeight: 1.2
   m_Ground:
     serializedVersion: 2
     m_Bits: 128

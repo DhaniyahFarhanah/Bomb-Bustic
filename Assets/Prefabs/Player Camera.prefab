@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 0}
   m_CameraHolder: {fileID: 8468319474737891205}
+  m_BusAudioHandler: {fileID: 0}
   m_Distance: 36.5
   m_Height: 27.3
   m_HeightDamping: 2.02
