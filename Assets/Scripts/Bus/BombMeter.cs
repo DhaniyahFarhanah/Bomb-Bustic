@@ -10,7 +10,7 @@ public class BombMeter : MonoBehaviour
     [Header("BombSettings")]
     public float minSpeed = 5f;
     public float bombBuffer = 5f;
-    private float countdownTimer; 
+    private float countdownTimer;
 
     [Header("UI")]
     public Slider bombMeterSlider;
@@ -72,23 +72,17 @@ public class BombMeter : MonoBehaviour
                 countdownTextUI.gameObject.SetActive(true);
             }
 
-            // Pulse the BombImage red
+            // Pulse the BombImage red and expand
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
-            //BombImage.color = Color.Lerp(Color.white, Color.red, pulseValue); // Transition from white to red
-            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue); // Transition from white to red
+            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
         }
         else
         {
-            // Reset the timer when speed is above the minimum
-            if (countdownTimer != bombBuffer)
-            {
-                countdownTimer = bombBuffer;
-                countdownTextUI.gameObject.SetActive(false);
-            }
+            // Smoothly return the BombImage scale to the original scale when speed is above minSpeed
+            countdownTimer = bombBuffer;
+            countdownTextUI.gameObject.SetActive(false);
 
-            // Reset the BombImage color to its original color (white)
-            //BombImage.color = Color.white;
-            BombImage.transform.localScale = bombOrginalScale;
+            BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
         }
 
         // Handle bomb explosion
@@ -145,7 +139,4 @@ public class BombMeter : MonoBehaviour
             );
         }
     }
-
-
-
 }
