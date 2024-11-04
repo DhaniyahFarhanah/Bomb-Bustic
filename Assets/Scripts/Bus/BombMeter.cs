@@ -169,9 +169,4 @@ public class BombMeter : MonoBehaviour
         BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
     }
 
-    public void BombPhysical()
-    {
-
-    }
-
 }
