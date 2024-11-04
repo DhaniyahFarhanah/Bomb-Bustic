@@ -19,7 +19,7 @@ public class Minimap : MonoBehaviour
         transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         Quaternion targetRot = target.transform.rotation;
         //transform.rotation = Quaternion.Euler(90f, targetRot.eulerAngles.y, targetRot.eulerAngles.z);
-        icon.transform.rotation = Quaternion.Euler(icon.transform.eulerAngles.x , transform.eulerAngles.y -90f, targetRot.eulerAngles.y);
+        icon.transform.rotation = Quaternion.Euler(icon.transform.eulerAngles.x , icon.transform.eulerAngles.y -90f, icon.transform.eulerAngles.y);
     }
     
     void LateUpdate() {
