@@ -4887,10 +4887,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f515ed22144a43875d40fce0d304c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurretImage: {fileID: 21300000, guid: d02e18c0d9cef3947b0c0e37eb2ad358, type: 3}
-  HackImage: {fileID: 21300000, guid: fa516a1977abf6641a591d1c0efa814d, type: 3}
-  NitroImage: {fileID: 21300000, guid: 5938564c45484674f80d8e638cd883b4, type: 3}
-  EnergyPulseImage: {fileID: 21300000, guid: 006746bdd9240fc41a19a1d7b28f1ea7, type: 3}
+  setType: 0
+  type: 0
+  TurretImage: {fileID: 21300000, guid: bf539a9201bd6294195b1f7799d9f3fc, type: 3}
+  HackImage: {fileID: 21300000, guid: d6b835905beaf804aa42845fd94ca063, type: 3}
+  NitroImage: {fileID: 21300000, guid: 48e0e2a3414083c4195c37a44be2f79d, type: 3}
+  EnergyPulseImage: {fileID: 21300000, guid: 21b4ffb358198294781826cb646e4e63, type: 3}
 --- !u!65 &450467771265679626
 BoxCollider:
   m_ObjectHideFlags: 0

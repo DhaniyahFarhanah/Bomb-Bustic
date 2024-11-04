@@ -1,5 +1,7 @@
 ﻿using TMPro;
 using Unity.VisualScripting;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ArcadeVehicleController
@@ -64,11 +66,14 @@ namespace ArcadeVehicleController
         public float SpeedRatio { get; set; }
 
         [Header("Passenger Ejection")]
+        [SerializeField] private float m_TransitionDuration = 1.0f;
         [SerializeField] private float m_MouseSensitivity = 100.0f;
         [SerializeField] private float m_MaxPitchAngle = 80.0f;     // Maximum look-up angle
         [SerializeField] private float m_MinPitchAngle = -30.0f;    // Maximum look-down angle
         private float m_YawRotation;
         private float m_PitchRotation;
+        private float cameraDiff;
+        private float cameraDiffStart;
 
         [SerializeField] [Range(0.0f, 1.0f)] private float m_TimeDilation;              //time scale for slowmo
         [SerializeField] private float m_slowMotionTransitionSpeed;                     //Time ratio
@@ -249,12 +254,14 @@ namespace ArcadeVehicleController
             // Normal mouse-controlled rotation
             combinedRotation = followRotation * Quaternion.Euler(m_PitchRotation, m_YawRotation, 0);
             
-
-            Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_Distance;
+            Vector3 desiredPosition = followPosition - combinedRotation * Vector3.forward * m_DistanceNorm;
             desiredPosition.y += m_Height;
 
             m_Transform.position = Vector3.Lerp(m_Transform.position, desiredPosition, Time.deltaTime * m_MoveSpeed);
             m_Transform.rotation = combinedRotation;
+
+            Quaternion temp = Quaternion.Euler(transform.eulerAngles.x + cameraDiff, transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.eulerAngles = temp.eulerAngles;
         }
 
         private void HandleFov()
@@ -292,10 +299,57 @@ namespace ArcadeVehicleController
                 }
             }
         }
-
         public void SetCameraMode(CameraModes mode)
         {
-            cameraMode = mode;
+
+            if (mode == CameraModes.PassengerEject)
+            {
+                cameraDiff = transform.eulerAngles.x;
+                cameraDiffStart = cameraDiff;
+                cameraMode = mode;
+                StartCoroutine(TransistionCamera(true));
+            }
+            else if (cameraMode == CameraModes.PassengerEject && mode == CameraModes.Normal)
+            {
+                StartCoroutine(TransistionCamera(false));
+            }
+            else
+            {
+                cameraMode = mode;
+            }
+        }
+
+        private IEnumerator TransistionCamera(bool toggle)
+        {
+            float elapsedTime = m_TransitionDuration; // Total time for the transition
+            float duration = elapsedTime; // Store the original duration
+
+            while (elapsedTime > 0f)
+            {
+                elapsedTime -= Time.unscaledDeltaTime;
+
+                // Interpolate funnyVar from startValue to 0 over the duration
+                if (toggle)
+                {
+                    cameraDiff = Mathf.Lerp(0, cameraDiffStart, elapsedTime / duration);
+                }
+                else
+                {
+                    cameraDiff = Mathf.Lerp(cameraDiffStart, 0, elapsedTime / duration);
+                }
+
+                yield return null;
+            }
+
+            if (toggle)
+            {
+                cameraDiff = 0f;
+            }
+            else
+            {
+                cameraDiff = cameraDiffStart;
+                cameraMode = CameraModes.Normal;
+            }
         }
 
         public void TimeDilation()
