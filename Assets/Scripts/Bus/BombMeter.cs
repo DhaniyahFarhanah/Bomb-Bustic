@@ -16,7 +16,14 @@ public class BombMeter : MonoBehaviour
     public Slider bombMeterSlider;
     public TextMeshProUGUI countdownTextUI;
     public Image BombImage;
+    public Image BombPointer;
     public RectTransform crashFill;
+    public float pulseSpeed = 2f;
+    public float bombExpand;
+    private Vector3 bombExpandScale;
+    private Vector3 bombOrginalScale;
+    public float BombPointerMinAngle = 20f;
+    public float BombPointerMaxAngle = -80f;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -33,6 +40,9 @@ public class BombMeter : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         bus = GetComponent<Vehicle>();
 
+        bombOrginalScale = transform.localScale;
+        bombExpandScale = bombOrginalScale * bombExpand;
+
         countdownTimer = bombBuffer;
         maxSpeed = bus.Settings.MaxSpeed;
         bombMeterSlider.maxValue = maxSpeed;
@@ -45,6 +55,7 @@ public class BombMeter : MonoBehaviour
 
         UIUpdate();
         BombLogic();
+        BombPointerAngle();
     }
 
     private void UIUpdate()
@@ -57,48 +68,11 @@ public class BombMeter : MonoBehaviour
     {
         if (currentSpeed <= minSpeed)
         {
-            countdownTimer -= Time.deltaTime;
-            countdownTextUI.text = "Countdown: " + Mathf.FloorToInt(countdownTimer).ToString() + "s\nToo Slow!";
-
-            // If the countdown text is not active, make it active
-            if (!countdownTextUI.gameObject.activeSelf)
-            {
-                countdownTextUI.gameObject.SetActive(true);
-            }
-
-            bombTimerText.text = countdownTimer.ToString("00.00");
-            bombTimerText.color = Color.red;
-            bombAnim.SetBool("Pulse", true);
-            sparks.Play(true);
-
-            // Pulse the BombImage red
-            float pulseSpeed = 2f; // Adjust to make the pulse faster or slower
-            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
-            BombImage.color = Color.Lerp(Color.white, Color.red, pulseValue); // Transition from white to red
+            BombCountdown();
         }
         else
         {
-            // Reset the timer when speed is above the minimum
-            if (countdownTimer != bombBuffer)
-            {
-                countdownTimer = bombBuffer;
-                countdownTextUI.gameObject.SetActive(false);
-            }
-
-            bombTimerText.text = "SAFE";
-            bombTimerText.color = Color.green;
-            bombAnim.SetBool("Pulse", false);
-            sparks.Stop(true);
-
-
-            // Reset the BombImage color to its original color (white)
-            BombImage.color = Color.white;
-        }
-
-        // Handle bomb explosion
-        if (countdownTimer <= 0f)
-        {
-            countdownTextUI.text = "Countdown: BOOM!";
+            BombReset();
         }
     }
 
@@ -114,6 +88,85 @@ public class BombMeter : MonoBehaviour
 
         // Set the new height to crashFill
         crashFill.sizeDelta = new Vector2(crashFill.sizeDelta.x, proportionalHeight);
+    }
+
+    private void BombPointerAngle()
+    {
+        if (currentSpeed > minSpeed)
+        {
+            // Smoothly transition the bomb pointer back to the maximum angle when speed is above minSpeed
+            float currentZAngle = BombPointer.transform.localEulerAngles.z;
+
+            // Ensure the angle wraps correctly by adjusting values within 0-360 range
+            if (currentZAngle > 180) currentZAngle -= 360;
+
+            float bombPointerAngle = Mathf.Lerp(currentZAngle, BombPointerMaxAngle, Time.deltaTime * pulseSpeed);
+
+            BombPointer.transform.localEulerAngles = new Vector3(
+                BombPointer.transform.localEulerAngles.x,
+                BombPointer.transform.localEulerAngles.y,
+                bombPointerAngle
+            );
+        }
+        else
+        {
+            // Interpolate angle based on the countdown timer for the "too slow" warning
+            float bombPointerAngle = Mathf.Lerp(BombPointerMaxAngle, BombPointerMinAngle, 1 - countdownTimer / bombBuffer);
+
+            BombPointer.transform.localEulerAngles = new Vector3(
+                BombPointer.transform.localEulerAngles.x,
+                BombPointer.transform.localEulerAngles.y,
+                bombPointerAngle
+            );
+        }
+    }
+
+    private void BombCountdown()
+    {
+        if (countdownTimer <= 0f)
+        {
+            countdownTextUI.text = "Countdown: BOOM!";
+            bombTimerText.text = "BOOM!";
+            countdownTimer = 0f;
+        }
+        else
+        {
+            countdownTimer -= Time.deltaTime;
+
+            // If the countdown text is not active, make it active
+            if (!countdownTextUI.gameObject.activeSelf)
+            {
+                countdownTextUI.gameObject.SetActive(true);
+            }
+            countdownTextUI.text = "Countdown: " + countdownTimer.ToString("F1") + "s\nToo Slow!";
+
+            bombTimerText.text = countdownTimer.ToString("00.00");
+            bombTimerText.color = Color.red;
+            bombAnim.SetBool("Pulse", true);
+            sparks.Play(true);
+
+            // Pulse expand the BombImage 
+            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
+            BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
+        }
+    }
+
+    private void BombReset()
+    {
+        // Smoothly return the BombImage scale to the original scale when speed is above minSpeed
+        countdownTimer = bombBuffer;
+        if (!countdownTextUI.gameObject.activeSelf)
+        {
+            countdownTextUI.gameObject.SetActive(false);
+        }
+
+        bombTimerText.text = "SAFE";
+        bombTimerText.color = Color.green;
+        bombAnim.SetBool("Pulse", false);
+        sparks.Stop(true);
+
+        BombImage.color = Color.white;
+        BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
     }
 
     public void BombPhysical()

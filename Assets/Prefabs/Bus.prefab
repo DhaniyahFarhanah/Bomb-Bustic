@@ -451,11 +451,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 20
-  bombBuffer: 5
+  bombBuffer: 7
   bombMeterSlider: {fileID: 0}
   countdownTextUI: {fileID: 0}
   BombImage: {fileID: 0}
+  BombPointer: {fileID: 0}
   crashFill: {fileID: 0}
+  pulseSpeed: 2
+  bombExpand: 1.2
+  BombPointerMinAngle: 20
+  BombPointerMaxAngle: -80
   bombTimerText: {fileID: 9005159845452743055}
   sparks: {fileID: 5871458045194853003}
   bombAnim: {fileID: 6272554985306395962}
