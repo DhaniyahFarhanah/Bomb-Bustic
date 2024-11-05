@@ -125,6 +125,13 @@ public class BombMeter : MonoBehaviour
     {
         if (countdownTimer <= 0f)
         {
+            if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
+            {
+                GetComponent<BusAudioHandler>().StopSFXLoop();
+            }
+            GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().BombExplosion);
+            GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().BombDeadZone);
+
             countdownTextUI.text = "Countdown: BOOM!";
             bombTimerText.text = "BOOM!";
             countdownTimer = 0f;
@@ -148,6 +155,11 @@ public class BombMeter : MonoBehaviour
             // Pulse expand the BombImage 
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
             BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
+
+            if(GetComponent<BusAudioHandler>().sfxIsLooping == false)
+            {
+                GetComponent<BusAudioHandler>().PlaySFXLoop(GetComponent<BusAudioHandler>().BombRedZone);
+            }
         }
     }
 
@@ -167,6 +179,11 @@ public class BombMeter : MonoBehaviour
 
         BombImage.color = Color.white;
         BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
+
+        if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
+        {
+            GetComponent<BusAudioHandler>().StopSFXLoop();
+        }
     }
 
     public void BombPhysical()

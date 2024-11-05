@@ -9,13 +9,15 @@ public class BusAudioHandler : MonoBehaviour
     private AudioSource b_AudioSource;
     public AudioSource bgm_AudioSource1;
     public AudioSource bgm_AudioSource2;
-    [SerializeField] float volumebgm = 1.0f;
+    private AudioSource extraAudioSource;
+    [SerializeField] float volumebgm = 0.5f;
+    [SerializeField] float volumeSFX = 1.0f;
     //[SerializeField] float fadeTime = 2.0f;
     [SerializeField] public AudioClip[] sCrash;
     [SerializeField] public AudioClip mCrash;
     [SerializeField] public AudioClip lCrash;
     [SerializeField] public AudioClip lose;
-    [SerializeField] public AudioClip passengerPop;
+    [SerializeField] public AudioClip pickUp;
     [SerializeField] public AudioClip passengerWee;
     [SerializeField] public AudioClip passengerScream; 
     [SerializeField] public AudioClip passengerDisgust;
@@ -25,16 +27,30 @@ public class BusAudioHandler : MonoBehaviour
     //[SerializeField] public AudioClip MenuSoundtrack;
     [SerializeField] public AudioClip WinningSoundtrack;
     [SerializeField] public AudioClip PoliceAlert;
+    [SerializeField] public AudioClip ShootPassenger;
+    [SerializeField] public AudioClip TurretShot;
+    [SerializeField] public AudioClip Shockwave;
+    [SerializeField] public AudioClip Emp;
+    [SerializeField] public AudioClip Boost;
+    [SerializeField] public AudioClip BombRedZone;
+    [SerializeField] public AudioClip BombDeadZone;
+    [SerializeField] public AudioClip BombExplosion;
+    [SerializeField] public AudioClip Splat;
+    [SerializeField] public AudioClip engineHum;
 
     [SerializeField] public DrivingCameraController camControl;
     //private bool isFading = false;
     private bool ActiveAudioSource = true;
+    [HideInInspector]public bool sfxIsLooping = false;
     
     // Start is called before the first frame update
     void Start()
     {
         b_AudioSource = GetComponent<AudioSource>();
-        
+        b_AudioSource.volume = volumeSFX;
+
+        extraAudioSource = gameObject.AddComponent<AudioSource>();
+        extraAudioSource.volume = volumeSFX;
         
         GameObject PlayerCamera = GameObject.Find("Player Camera");
         bgm_AudioSource1 = PlayerCamera.GetComponent<AudioSource>();
@@ -91,5 +107,27 @@ public class BusAudioHandler : MonoBehaviour
 
     public void ResumeGameBGM() {
         bgm_AudioSource2.Play();
+    }
+
+    public void PlaySFXLoop(AudioClip clip)
+    {
+        b_AudioSource.clip = clip;
+        b_AudioSource.loop = true;
+        b_AudioSource.Play();
+        sfxIsLooping = true;
+    }
+
+    public void StopSFXLoop()
+    {
+        b_AudioSource.loop = false;
+        b_AudioSource.Stop();
+        sfxIsLooping = false;
+    }
+
+    public void PlayOneShotSFX(AudioClip clip)
+    {
+        extraAudioSource.volume = volumeSFX;
+        extraAudioSource.clip = clip;
+        extraAudioSource.Play();
     }
 }
