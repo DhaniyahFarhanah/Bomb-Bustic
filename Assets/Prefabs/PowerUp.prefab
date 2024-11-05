@@ -4887,8 +4887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f515ed22144a43875d40fce0d304c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setType: 1
-  type: 3
+  setType: 0
+  type: 0
   TurretImage: {fileID: 21300000, guid: bf539a9201bd6294195b1f7799d9f3fc, type: 3}
   HackImage: {fileID: 21300000, guid: c2a4a9aa3f5d5554cb7ab460ba7e58f3, type: 3}
   NitroImage: {fileID: 21300000, guid: 48e0e2a3414083c4195c37a44be2f79d, type: 3}
