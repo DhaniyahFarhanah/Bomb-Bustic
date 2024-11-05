@@ -15634,6 +15634,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: road_crossroadPath (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1621432884}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1905725962}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2128813802}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 2042598053}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15723,6 +15747,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2799858501509906751, guid: b06cde1fe34112244a623997760d6375, type: 3}
   m_PrefabInstance: {fileID: 288431164}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &290190822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 157213245425078421, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 286077769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &290752513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21698,6 +21733,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6e9b9c8324b03943b8746dca23c74e1, type: 3}
+--- !u!114 &423558866 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1295961262738383228, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 1755086639}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &426303624
 GameObject:
   m_ObjectHideFlags: 0
@@ -39927,7 +39973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 423558866}
 --- !u!1001 &790653727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46635,7 +46681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 1108812472}
 --- !u!1 &939153993
 GameObject:
   m_ObjectHideFlags: 0
@@ -55232,6 +55278,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2907997686639681805, guid: a6347d8379ec77b4584c8a8b80b3a877, type: 3}
   m_PrefabInstance: {fileID: 1108784729}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1108812472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6578878152486406464, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 1755086639}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1109256995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70527,6 +70584,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trafficLight: {fileID: 0}
+--- !u!114 &1407296756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6578878152486406464, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 286077769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1407590438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82617,7 +82685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 1407296756}
 --- !u!1 &1621693485
 GameObject:
   m_ObjectHideFlags: 0
@@ -83585,6 +83653,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trafficLight: {fileID: 0}
+--- !u!114 &1654706031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6981779407146383842, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 286077769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1655957460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88982,6 +89061,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: road_crossroadPath (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 790228403}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1181047013}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane1Waypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 938541646}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1824301058}
+    - target: {fileID: 2960202524533026332, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+      propertyPath: lane2Waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 938541646}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -91990,7 +92097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 2033086055}
 --- !u!1 &1824480059
 GameObject:
   m_ObjectHideFlags: 0
@@ -102325,6 +102432,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2415416038145537686, guid: 08ea4bdff8d47b041a09d14a6e494b89, type: 3}
   m_PrefabInstance: {fileID: 2032405532}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2033086055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 157213245425078421, guid: c39802cb4df72a74d9e017767335f134, type: 3}
+  m_PrefabInstance: {fileID: 1755086639}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708b76c6335ccbf42b77d2565cc00748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2033989741
 GameObject:
   m_ObjectHideFlags: 0
@@ -102914,7 +103032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 290190822}
 --- !u!1001 &2042820384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107773,7 +107891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bde578af8aba2f49be4cca0735f9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficLight: {fileID: 0}
+  trafficLight: {fileID: 1654706031}
 --- !u!1001 &2130042097
 PrefabInstance:
   m_ObjectHideFlags: 0
