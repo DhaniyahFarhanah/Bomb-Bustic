@@ -2576,15 +2576,12 @@ MonoBehaviour:
 
     S - Reverse
 
-    Space - Brake
+    Space - Drift
 
     R
     - Reset Bus Positon
 
-    Esc - Pause Menu
-
-    There are toilets if you can find
-    them.'
+    Esc - Pause Menu'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 837d028d518978e47add9d58624a884e, type: 2}
   m_sharedMaterial: {fileID: 6940540379784741553, guid: 837d028d518978e47add9d58624a884e, type: 2}
