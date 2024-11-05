@@ -246,20 +246,20 @@ public class UIManager : MonoBehaviour
     public IEnumerator TranSwipeOut()
     {
         transitioner.Play(TranOut.name);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSecondsRealtime(1.5f);
     }
 
     public IEnumerator TranSwipeInByNum(int sceneIndex)
     {
         transitioner.Play(TranIn.name);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSecondsRealtime(1.5f);
         SceneManager.LoadScene(sceneIndex);
     }
 
     public IEnumerator TranSwipeInByName(string sceneName)
     {
         transitioner.Play(TranIn.name);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSecondsRealtime(1.5f);
         SceneManager.LoadScene(sceneName);
     }
 
