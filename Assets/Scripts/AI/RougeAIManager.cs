@@ -86,7 +86,6 @@ public class RougeAIManager : MonoBehaviour
 
     private void StartChase()
     {
-        FindAnyObjectByType<PoliceUI>().activatePoliceUI();
         foreach (RougeAI ai in rougeAIs)
         {
             StartCoroutine(ai.ActiveAI());

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +49,12 @@ namespace ArcadeVehicleController
             }
         }
 
+        [Header("Drifting")]
+        public bool isDrift;
+        public float driftSteering;
+        public float driftFrontWheelFriction;
+        public float driftBackWheelFriction;
+
         [Header("PowerUpStats")]
         public bool Nitro;
         [SerializeField] float nitroAcceleration;
@@ -79,7 +86,7 @@ namespace ArcadeVehicleController
 
         }
 
-        public void ThrowPassengers(bool delivered)
+       /* public void ThrowPassengers(bool delivered)
         {
             for (int i = m_Passengers; i > 0; i--) 
             {
@@ -90,7 +97,7 @@ namespace ArcadeVehicleController
                 if (delivered)
                     m_DeliveredPassengers++;
             }
-        }
+        }*/
         public void CountdownPickUp(float time, float maxTime, Color color)
         {
             Timer.fillAmount = (time / maxTime) * 1.0f;
@@ -114,7 +121,7 @@ namespace ArcadeVehicleController
 
         public void Braking()
         {
-            // Get the current forward speed of the vehicle
+            /*// Get the current forward speed of the vehicle
             float forwardSpeed = Vector3.Dot(m_Transform.forward, m_Rigidbody.velocity);
             float speed = Mathf.Abs(forwardSpeed);
 
@@ -156,7 +163,7 @@ namespace ArcadeVehicleController
             {
                 m_Rigidbody.velocity = Vector3.zero; // Force the vehicle to stop
                 m_Rigidbody.angularVelocity = Vector3.zero; // Stop any rotation
-            }
+            }*/
         }
 
 
@@ -268,8 +275,18 @@ namespace ArcadeVehicleController
                 }
                 else
                 {
-                    var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
-                    return steerQuaternion * m_Transform.forward;
+                    if (isDrift)
+                    {
+                        var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.DriftSteerAngle, Vector3.up);
+                        return steerQuaternion * m_Transform.forward;
+                    }
+
+                    else
+                    {
+                        var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
+                        return steerQuaternion * m_Transform.forward;
+                    }
+                    
                 }
             }
             else
@@ -313,8 +330,17 @@ namespace ArcadeVehicleController
 
         private float GetWheelGripFactor(Wheel wheel)
         {
-            bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
-            return frontWheel ? m_Settings.FrontWheelsGripFactor : m_Settings.RearWheelsGripFactor;
+            if (isDrift)
+            {
+                bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
+                return frontWheel ? m_Settings.DriftFrontWheelsGripFactor : m_Settings.DriftRearWheelsGripFactor;
+            }
+            else
+            {
+                bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
+                return frontWheel ? m_Settings.FrontWheelsGripFactor : m_Settings.RearWheelsGripFactor;
+            }
+            
         }
 
         private bool IsGrounded(Wheel wheel)
@@ -375,7 +401,11 @@ namespace ArcadeVehicleController
             {
                 return;
             }
-            else if (!movingForward && speed > m_Settings.MaxReverseSpeed)
+            else if (!movingForward && speed > m_Settings.MaxReverseSpeed && !isDrift)
+            {
+                return;
+            }
+            else if(!movingForward && speed > m_Settings.DriftReverseSpeed && isDrift)
             {
                 return;
             }
@@ -394,6 +424,7 @@ namespace ArcadeVehicleController
                 {
                     m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower * nitroAcceleration) * wheelForward, position);
                 }
+
                 else
                 {
                     m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower) * wheelForward, position);
@@ -409,7 +440,7 @@ namespace ArcadeVehicleController
 
             float brakesRatio;
 
-            const float ALMOST_STOPPING_SPEED = 2.0f;
+            const float ALMOST_STOPPING_SPEED = 0.0f;
             bool almostStopping = speed < ALMOST_STOPPING_SPEED;
             if (almostStopping)
             {
@@ -445,8 +476,17 @@ namespace ArcadeVehicleController
                 Vector3 springPosition = GetSpringPosition(wheel);
                 Vector3 rollDirection = GetWheelRollDirection(wheel);
                 float rollVelocity = Vector3.Dot(rollDirection, m_Rigidbody.GetPointVelocity(springPosition));
+                float desiredVelocityChange;
 
-                float desiredVelocityChange = -rollVelocity * m_Settings.BrakesPower * brakesRatio;
+                if (isDrift)
+                {
+                    desiredVelocityChange = -rollVelocity * m_Settings.DriftBrakesPower * brakesRatio;
+                }
+                else
+                {
+                    desiredVelocityChange = -rollVelocity * m_Settings.BrakesPower * brakesRatio;
+                }
+                
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
                 Vector3 force = desiredAcceleration * m_Settings.TireMass * rollDirection;

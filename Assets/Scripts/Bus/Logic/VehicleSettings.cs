@@ -39,6 +39,13 @@ namespace ArcadeVehicleController
         [SerializeField][Range(0.0f, 1.0f)] private float m_FrontWheelsGripFactor = 0.5f;
         [SerializeField][Range(0.0f, 1.0f)] private float m_RearWheelsGripFactor = 0.5f;
 
+        [Header("Drifting")]
+        [SerializeField] private float m_DriftBrakesPower;
+        [SerializeField] private float m_DriftReverseSpeed;
+        [SerializeField][Range(0.0f, 60.0f)] private float m_DriftSteerAngle = 45.0f;
+        [SerializeField][Range(0.0f, 1.0f)] private float m_DriftFrontWheelsGripFactor = 0.5f;
+        [SerializeField][Range(0.0f, 1.0f)] private float m_DriftRearWheelsGripFactor = 0.5f;
+
         [Header("Other")]
         [SerializeField] private float m_AirResistance;
 
@@ -69,7 +76,13 @@ namespace ArcadeVehicleController
         public float SteerAngle => m_SteerAngle;
         public float FrontWheelsGripFactor => m_FrontWheelsGripFactor;
         public float RearWheelsGripFactor => m_RearWheelsGripFactor;
-        
+
+        public float DriftBrakesPower => m_DriftBrakesPower;
+        public float DriftReverseSpeed => m_DriftReverseSpeed;
+        public float DriftSteerAngle => m_DriftSteerAngle;
+        public float DriftFrontWheelsGripFactor => m_DriftFrontWheelsGripFactor;
+        public float DriftRearWheelsGripFactor => m_DriftRearWheelsGripFactor;
+
         public float AirResistance => m_AirResistance;
     }
 }

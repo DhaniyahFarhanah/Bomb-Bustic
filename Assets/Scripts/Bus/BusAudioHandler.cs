@@ -1,3 +1,4 @@
+using ArcadeVehicleController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine.UIElements;
 public class BusAudioHandler : MonoBehaviour
 {
     private AudioSource b_AudioSource;
-    private AudioSource bgm_AudioSource1;
-    private AudioSource bgm_AudioSource2;
+    public AudioSource bgm_AudioSource1;
+    public AudioSource bgm_AudioSource2;
     [SerializeField] float volumebgm = 1.0f;
     //[SerializeField] float fadeTime = 2.0f;
     [SerializeField] public AudioClip[] sCrash;
@@ -25,6 +26,7 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip WinningSoundtrack;
     [SerializeField] public AudioClip PoliceAlert;
 
+    [SerializeField] public DrivingCameraController camControl;
     //private bool isFading = false;
     private bool ActiveAudioSource = true;
     
@@ -51,7 +53,6 @@ public class BusAudioHandler : MonoBehaviour
             bgm_AudioSource2.loop = true;
             bgm_AudioSource2.Play();
         }
-
     }
     public void Play(AudioClip clip)
     {

@@ -20,7 +20,7 @@ public class PowerUpHandler : MonoBehaviour
     [SerializeField] GameObject Bus;
     [SerializeField] float currentTimer;
     [SerializeField] float imageTimer;
-    [SerializeField] bool activated;
+    public bool activated;
     [SerializeField] Image powerUpImage;
 
     //Turret activates Turret powerup
@@ -96,6 +96,7 @@ public class PowerUpHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                GetComponent<BusPassengers>().ActivatePassengerEjectionMode(false);
                 //activate pickup
                 activated = true;
                 ActivatePickup(currentPickUp);
@@ -142,7 +143,7 @@ public class PowerUpHandler : MonoBehaviour
         {
             case PickUpType.Turret:
                 turret.SetActive(false);
-                cam.cameraMode = DrivingCameraController.CameraModes.Normal;
+                cam.SetCameraMode(CameraModes.Normal);
                 Cursor.visible = false;
                 break;
             case PickUpType.Hack:
@@ -150,7 +151,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
-                cam.fovAdd = 0f;
+                cam.nitroFOVIncrease = 0f;
                 NitroProtector.SetActive(false);
                 gameObject.GetComponent<CollisionHandler>().enabled = true;
                 break;
@@ -168,7 +169,7 @@ public class PowerUpHandler : MonoBehaviour
     void ActivateTurret()
     {
         turret.SetActive(true);
-        cam.cameraMode = DrivingCameraController.CameraModes.Turret;
+        cam.SetCameraMode(CameraModes.Turret);
         currentTimer = turretCooldown;
         imageTimer = turretCooldown;
     }
@@ -188,7 +189,7 @@ public class PowerUpHandler : MonoBehaviour
         Debug.Log("Nitro");
         gameObject.GetComponent<CollisionHandler>().enabled = false;
         busValues.Nitro = true;
-        cam.fovAdd = addFov;
+        cam.nitroFOVIncrease = addFov;
         NitroProtector.SetActive(true);
         currentTimer = nitroCooldown;
         imageTimer = nitroCooldown;
@@ -202,4 +203,11 @@ public class PowerUpHandler : MonoBehaviour
         imageTimer = energyPulseCooldown;
         //For this powerup, it sends out a "pulse" through particle that stops the speed of all cars within a range for a certain amount of time
     }
+
+    public void DeactivateCurrent()
+    {
+        if (activated)
+            Deactivate(currentPickUp);
+    }
+
 }

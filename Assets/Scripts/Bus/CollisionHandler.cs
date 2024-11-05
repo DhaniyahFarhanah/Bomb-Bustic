@@ -24,6 +24,12 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float m_HeavyDuration;
     [Range(0.00f, 1.00f)] [SerializeField] private float m_HeavyIntensity;
 
+    [Header("Lost Ejection Settings")]
+    [Range(0f, 1f)] [SerializeField] private float lostChance = 0.5f;
+    [SerializeField] private float minCrashSpeed = 65f;
+    [SerializeField] private float EjectionForce = 200f;
+    [SerializeField] private float verticaDirection = 1.5f;
+
     [SerializeField] private NearMiss nearMiss;
 
     public enum CrashTypes
@@ -45,9 +51,10 @@ public class CollisionHandler : MonoBehaviour
             return;
 
         m_CanCollide = true;
-        m_CurrentTime = m_CollisionCooldown;
+        m_CurrentTime = 0;
 
         bus = FindAnyObjectByType<BombMeter>().gameObject;
+        FindAnyObjectByType<BombMeter>().SetCrashSpeedUI(minCrashSpeed);
     }
 
     // Update is called once per frame
@@ -94,6 +101,7 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
+    
     private CrashTypes CollisionManager(ObstacleTag obstacleType, float speed)
     {
         switch (obstacleType)
@@ -128,22 +136,57 @@ public class CollisionHandler : MonoBehaviour
 
         return CrashTypes.None; // Default return if no conditions are met
     }
+    
+
+    private bool CheckCrash(ObstacleTag obstacleType, float speed)
+    {
+        switch (obstacleType)
+        {
+            case ObstacleTag.Medium:
+            case ObstacleTag.CarAI:
+            case ObstacleTag.Heavy:
+                if (speed >= minCrashSpeed)
+                    return true;
+                else
+                    return false;
+
+            case ObstacleTag.Light:
+            case ObstacleTag.Pedestrian:
+            case ObstacleTag.None:
+            default:
+                return false;
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
-    
-        if(obs == null) return;
-         
+
+        if (obs == null) return;
+
         ObstacleTag m_ObstacleType = obs.obstacleTag;
         if (m_CanCollide)
         {
             m_CanCollide = false;
-            //ExecuteCollisionShit(m_ObstacleType);
-            bus.GetComponent<BusPassengers>().CrashHandler(CollisionManager(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()));
-        }
 
-        //Debug.Log($"Crash with {obs.gameObject.name}");
-        nearMiss.BusCollisionWith();
+            ExecuteCollisionShit(obs.obstacleTag);
+
+            // Get the relative velocity of the collision, which can be used to calculate the force and direction
+            Vector3 crashDirection = (-collision.relativeVelocity).normalized; // Direction of the crash
+            crashDirection += new Vector3(0, verticaDirection, 0);
+
+            // Call the CrashHandler function with the calculated force and direction
+            if (CheckCrash(m_ObstacleType, bus.GetComponent<BombMeter>().GetCurrentSpeed()))
+            {
+                if (Random.Range(0f, 1f) <= lostChance)
+                {
+                    bus.GetComponent<BusPassengers>().CrashEjectPassenger(crashDirection, EjectionForce);
+                }
+            }
+
+            // Trigger NearMiss behavior
+            nearMiss.BusCollisionWith();
+        }
     }
+
 }
