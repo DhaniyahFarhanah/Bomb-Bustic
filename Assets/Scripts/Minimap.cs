@@ -7,6 +7,7 @@ public class Minimap : MonoBehaviour
 {
     public LayerMask miniMask;
     public GameObject icon;
+    public float iconOffset = 25f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class Minimap : MonoBehaviour
         Quaternion targetRot = target.transform.rotation;
         //transform.rotation = Quaternion.Euler(90f, targetRot.eulerAngles.y, targetRot.eulerAngles.z);
         icon.transform.rotation = Quaternion.Euler(icon.transform.eulerAngles.x , icon.transform.eulerAngles.y -90f, icon.transform.eulerAngles.y);
+        icon.transform.position = new Vector3(target.transform.position.x, target.transform.position.y + iconOffset, target.transform.position.z);
     }
     
     void LateUpdate() {
