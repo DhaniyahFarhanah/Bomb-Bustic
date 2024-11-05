@@ -15,9 +15,15 @@ public class NitroProtector : MonoBehaviour
             return;
         }
 
+        if (hitObject.GetComponentInParent<BasicAI>())
+        {
+            Destroy(hitObject.GetComponentInParent<BasicAI>().gameObject);
+            return;
+        }
+
         if (hitObject.GetComponent<ObstacleType>() != null && !hitObject.CompareTag("Player") && !hitObject.CompareTag("Indestructable") && !hitObject.CompareTag("DropOff"))
         {
-            Destroy(hitObject);
+            Destroy(hitObject.transform.parent.gameObject);
         }
     }
 }

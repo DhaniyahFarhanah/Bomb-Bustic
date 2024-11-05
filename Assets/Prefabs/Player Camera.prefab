@@ -90,9 +90,9 @@ MonoBehaviour:
   m_DistanceNorm: 10.25
   m_HeightNorm: 3.65
   m_OffsetNorm: 1.32
-  m_DistanceTurret: 36.5
-  m_HeightTurret: 27.3
-  m_OffsetTurret: 7.2
+  m_DistanceTurret: 20
+  m_HeightTurret: 10
+  m_OffsetTurret: 2
   ShootCooldown: 0.3
   drivable:
     serializedVersion: 2
@@ -100,11 +100,12 @@ MonoBehaviour:
   Crosshair: {fileID: 0}
   TurretHead: {fileID: 0}
   MissilePrefab: {fileID: 2484465873928644165, guid: 11951a78c64eaab4d9cc07ff2ce10a31, type: 3}
+  m_TransitionDuration: 1
   m_MouseSensitivity: 100
   m_MaxPitchAngle: 80
   m_MinPitchAngle: -30
-  m_TimeDilation: 0.251
-  m_slowMotionTransitionSpeed: 2
+  m_TimeDilation: 0.356
+  m_slowMotionTransitionSpeed: 5
 --- !u!114 &5064827365284208538
 MonoBehaviour:
   m_ObjectHideFlags: 0

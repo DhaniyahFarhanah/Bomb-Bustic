@@ -224,7 +224,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3726415, g: 1, b: 0.4691581, a: 0.5372549}
+      maxColor: {r: 0.8037735, g: 0.10160909, b: 0.10160909, a: 0.5372549}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4887,12 +4887,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f515ed22144a43875d40fce0d304c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setType: 0
-  type: 0
+  setType: 1
+  type: 3
   TurretImage: {fileID: 21300000, guid: bf539a9201bd6294195b1f7799d9f3fc, type: 3}
-  HackImage: {fileID: 21300000, guid: d6b835905beaf804aa42845fd94ca063, type: 3}
+  HackImage: {fileID: 21300000, guid: c2a4a9aa3f5d5554cb7ab460ba7e58f3, type: 3}
   NitroImage: {fileID: 21300000, guid: 48e0e2a3414083c4195c37a44be2f79d, type: 3}
-  EnergyPulseImage: {fileID: 21300000, guid: 21b4ffb358198294781826cb646e4e63, type: 3}
+  EnergyPulseImage: {fileID: 21300000, guid: d6b835905beaf804aa42845fd94ca063, type: 3}
 --- !u!65 &450467771265679626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5137,7 +5137,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7122642, g: 1, b: 0.72640747, a: 1}
+      maxColor: {r: 1, g: 0.27735847, b: 0.37969977, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -8929,8 +8929,8 @@ ParticleSystem:
     colorOverLifetime:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.33490568, g: 1, b: 0.798779, a: 1}
-      maxColor: {r: 0.4198113, g: 1, b: 0.45471334, a: 1}
+      minColor: {r: 1, g: 0.33333337, b: 0.7878742, a: 1}
+      maxColor: {r: 1, g: 0.41960788, b: 0.45150775, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

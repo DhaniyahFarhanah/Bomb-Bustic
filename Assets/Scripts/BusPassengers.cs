@@ -5,18 +5,30 @@ using UnityEngine.UI;
 using TMPro;
 using ArcadeVehicleController;
 
+public enum PassengerState
+{
+    undefined,
+    saved,
+    injured,
+    lost
+
+}
+
 public class BusPassengers : MonoBehaviour
 {
+    [SerializeField] UIManager UIhandler;
+
     [Header("Passengers Settings")]
     [SerializeField] private GameObject passengerPrefab;
     [Range(1, 40)]
-    [SerializeField] private int passengerTotal = 20;
+    [SerializeField] public int passengerTotal = 20;
     [SerializeField] private DrivingCameraController cam;
-    private int passengersCurrent = 0;
-    private int passengersDelivered = 0;
-    private int passengersInjured = 0;
-    private int passengersLost = 0;
-
+    public int passengersCurrent = 0;
+    public int passengersDelivered = 0;
+    public int passengersInjured = 0;
+    public int passengersLost = 0;
+    private int passengerListLocation = 0;
+    public List<PassengerState> PassengerStateList = new List<PassengerState>();
 
     [Header("Turret Settings")]
     [SerializeField] private Vector3 exitOffset;
@@ -47,6 +59,10 @@ public class BusPassengers : MonoBehaviour
     void Start()
     {
         InitializeSettings();
+        for(int i = 0; i < passengersCurrent; i++)
+        {
+            PassengerStateList.Add(PassengerState.undefined);
+        }
     }
 
     void Update()
@@ -105,33 +121,46 @@ public class BusPassengers : MonoBehaviour
             }
         }
 
+        if(passengersCurrent == 0)
+        {
+            cam.SetCameraMode(CameraModes.Normal);
+            UIhandler.end = true;
+            if (PassengerStateList[PassengerStateList.Count - 1] != PassengerState.undefined)
+            {
+                UIhandler.Win();
+            }
+        }
+
     }
 
     private void ShootPassenger()
     {
-        // Create a ray from the center of the camera's viewport
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
+        if(passengersCurrent != 0)
+        {
+            // Create a ray from the center of the camera's viewport
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Center of the screen (viewport coordinates)
 
-        // Calculate the position based on the exit offset, using the bus's local orientation
-        Vector3 exitPosition = transform.TransformPoint(exitOffset);
+            // Calculate the position based on the exit offset, using the bus's local orientation
+            Vector3 exitPosition = transform.TransformPoint(exitOffset);
 
-        // Instantiate the passenger at the calculated exit position
-        GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
+            // Instantiate the passenger at the calculated exit position
+            GameObject passenger = Instantiate(passengerPrefab, exitPosition, Quaternion.identity);
 
-        // Apply horizontal shooting direction force and add vertical force
-        Vector3 shootingDirection = ray.direction * passengerExitForce;
-        Vector3 verticalForce = Vector3.up * passengerExitForce * 0.5f; // Add vertical force (0.5 multiplier for balance)
+            // Apply horizontal shooting direction force and add vertical force
+            Vector3 shootingDirection = ray.direction * passengerExitForce;
+            Vector3 verticalForce = Vector3.up * passengerExitForce * 0.5f; // Add vertical force (0.5 multiplier for balance)
 
-        // Combine both forces (forward and upward)
-        Vector3 totalForce = shootingDirection + verticalForce;
+            // Combine both forces (forward and upward)
+            Vector3 totalForce = shootingDirection + verticalForce;
 
-        ApplyPassengerPhysics(passenger, totalForce);
+            ApplyPassengerPhysics(passenger, totalForce);
 
-        //Debug.Log("Shot out passenger[" + passenger.GetComponentInChildren<PassengerLanding>().passengerStatus.passengerID + "]");
+            //Debug.Log("Shot out passenger[" + passenger.GetComponentInChildren<PassengerLanding>().passengerStatus.passengerID + "]");
 
-        // Decrease the number of current passengers
-        --passengersCurrent;
-        UpdatePassengerText();
+            // Decrease the number of current passengers
+            --passengersCurrent;
+            UpdatePassengerText();
+        }
     }
 
     private void ApplyPassengerPhysics(GameObject passenger, Vector3 totalForce)
@@ -287,18 +316,24 @@ public class BusPassengers : MonoBehaviour
     public void DeliveredPassenger()
     {
         ++passengersDelivered;
+        PassengerStateList[passengerListLocation] = PassengerState.saved;
+        passengerListLocation++;
         GetPassengerResults();
     }
 
     public void InjuredPassenger()
     {
         ++passengersInjured;
+        PassengerStateList[passengerListLocation] = PassengerState.injured;
+        passengerListLocation++;
         GetPassengerResults();
     }
 
     public void LostPassenger()
     {
         ++passengersLost;
+        PassengerStateList[passengerListLocation] = PassengerState.lost;
+        passengerListLocation++;
         GetPassengerResults();
     }
 

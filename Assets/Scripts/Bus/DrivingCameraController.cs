@@ -360,8 +360,8 @@ namespace ArcadeVehicleController
                 Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
 
                 //maybe slow down music
-                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.deltaTime * m_slowMotionTransitionSpeed);
-                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.deltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.unscaledDeltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 0.7f, Time.unscaledDeltaTime * m_slowMotionTransitionSpeed);
             }
         }
 
@@ -372,8 +372,8 @@ namespace ArcadeVehicleController
                 Time.timeScale = Mathf.Lerp(Time.timeScale, 1.0f, Time.deltaTime * m_slowMotionTransitionSpeed);
                 Time.fixedDeltaTime = 0.02f * Time.timeScale; // Maintain consistent fixed time step during slow motion
 
-                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.deltaTime * m_slowMotionTransitionSpeed);
-                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.deltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource1.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.unscaledDeltaTime * m_slowMotionTransitionSpeed);
+                m_BusAudioHandler.bgm_AudioSource2.pitch = Mathf.Lerp(m_BusAudioHandler.bgm_AudioSource1.pitch, 1f, Time.unscaledDeltaTime * m_slowMotionTransitionSpeed);
             }
         }
     }

@@ -98,8 +98,13 @@ public class RougeAIManager : MonoBehaviour
     {
         foreach (RougeAI ai in rougeAIs)
         {
-            Destroy(ai.gameObject);
+            if(ai != null)
+            {
+                Destroy(ai.gameObject);
+            }
+            
         }
+
         rougeAIs.Clear();  // Clear list after destroying AIs
         rougeAIState = RougeAIStates.CountDownStart;
     }

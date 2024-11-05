@@ -10,9 +10,10 @@ public class BombMeter : MonoBehaviour
     [Header("BombSettings")]
     public float minSpeed = 5f;
     public float bombBuffer = 5f;
-    private float countdownTimer; 
+    private float countdownTimer;
 
     [Header("UI")]
+    public Image vignette;
     public Slider bombMeterSlider;
     public TextMeshProUGUI countdownTextUI;
     public Image BombImage;
@@ -24,6 +25,7 @@ public class BombMeter : MonoBehaviour
     private Vector3 bombOrginalScale;
     public float BombPointerMinAngle = 20f;
     public float BombPointerMaxAngle = -80f;
+    public UIManager UI;
 
     private Vehicle bus;
     private Rigidbody rb;
@@ -62,6 +64,26 @@ public class BombMeter : MonoBehaviour
     {
         bombMeterSlider.value = currentSpeed;
         bombMeterSlider.fillRect.anchorMin = new Vector2(0f, 1 - (minSpeed / maxSpeed));
+
+        Color invis = new Color(vignette.color.r, vignette.color.g, vignette.color.b, 0f);
+
+        if (countdownTimer < bombBuffer)
+        {
+            vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, ((bombBuffer - countdownTimer) / bombBuffer));
+        }
+        else
+        {
+            if(vignette.color != invis)
+            {
+                vignette.color = new Color(vignette.color.r, vignette.color.g, vignette.color.b, Mathf.Lerp(vignette.color.a, 0f, Time.deltaTime * 5f));
+            }
+            else
+            {
+                vignette.color = invis;
+            }
+            
+        }
+        
     }
 
     private void BombLogic()
@@ -128,6 +150,12 @@ public class BombMeter : MonoBehaviour
             countdownTextUI.text = "Countdown: BOOM!";
             bombTimerText.text = "BOOM!";
             countdownTimer = 0f;
+
+            if (!UI.end)
+            {
+                UI.Lose();
+            }
+            
         }
         else
         {
@@ -167,11 +195,6 @@ public class BombMeter : MonoBehaviour
 
         BombImage.color = Color.white;
         BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
-    }
-
-    public void BombPhysical()
-    {
-
     }
 
 }

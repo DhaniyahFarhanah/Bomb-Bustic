@@ -17,11 +17,14 @@ public enum PickUpType
 public class PowerUpHandler : MonoBehaviour
 {
     public PickUpType currentPickUp;
+    [SerializeField] Animator PickUpAnimator;
     [SerializeField] GameObject Bus;
     [SerializeField] float currentTimer;
     [SerializeField] float imageTimer;
     public bool activated;
     [SerializeField] Image powerUpImage;
+    public Image backingImage;
+    [SerializeField] Sprite emptyImage;
 
     //Turret activates Turret powerup
     [Header("Turret PowerUp")]
@@ -51,6 +54,8 @@ public class PowerUpHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        backingImage.color = Color.grey;
+
         //Default empty on start up
         busValues = Bus.GetComponent<Vehicle>();
         bombMeter = Bus.GetComponent<BombMeter>();
@@ -69,12 +74,37 @@ public class PowerUpHandler : MonoBehaviour
         {
             currentTimer -= Time.deltaTime;
 
-            powerUpImage.fillAmount = (currentTimer / imageTimer) * 1f;
+            backingImage.fillAmount = backingImage.fillAmount = (currentTimer / imageTimer) * 1f;
+
+            if(backingImage.fillAmount < 0.6 && backingImage.fillAmount > 0.2)
+            {
+                backingImage.color = Color.yellow;
+            }
+            else if(backingImage.fillAmount < 0.2)
+            {
+                backingImage.color = Color.red;
+            }
+            else
+            {
+                backingImage.color= Color.green;
+            }
         }
 
         else if(currentTimer <= 0 && activated)
         {
             Deactivate(currentPickUp);
+            backingImage.color = Color.white;
+            backingImage.fillAmount = 1f;
+        }
+
+        if(currentPickUp == PickUpType.Empty)
+        {
+            backingImage.color = Color.grey;
+            PickUpAnimator.SetBool("Empty", true);
+        }
+        else
+        {
+            PickUpAnimator.SetBool("Empty", false);
         }
     }
 
@@ -91,7 +121,7 @@ public class PowerUpHandler : MonoBehaviour
             {
                 //drop pickup
                 currentPickUp = PickUpType.Empty;
-                powerUpImage.sprite = null;
+                powerUpImage.sprite = emptyImage;
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -107,6 +137,7 @@ public class PowerUpHandler : MonoBehaviour
     void ActivatePickup(PickUpType type)
     {
         activated = true;
+        PickUpAnimator.SetBool("Activate", true);
 
         switch (type)
         {
@@ -134,11 +165,13 @@ public class PowerUpHandler : MonoBehaviour
         currentPickUp = type;
         powerUpImage.gameObject.SetActive(true);
         powerUpImage.sprite = img;
-        powerUpImage.fillAmount = 1f;
+        backingImage.fillAmount = 1f;
     }
 
     void Deactivate(PickUpType type)
     {
+        PickUpAnimator.SetBool("Activate", false);
+
         switch (type)
         {
             case PickUpType.Turret:
@@ -162,8 +195,8 @@ public class PowerUpHandler : MonoBehaviour
 
         activated = false;
         currentPickUp = PickUpType.Empty;
-        powerUpImage.sprite = null;
-        powerUpImage.fillAmount = 1f;
+        powerUpImage.sprite = emptyImage;
+        backingImage.fillAmount = 1f;
     }
 
     void ActivateTurret()
