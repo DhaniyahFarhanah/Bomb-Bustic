@@ -42,7 +42,7 @@ public class BusAudioHandler : MonoBehaviour
     //private bool isFading = false;
     private bool ActiveAudioSource = true;
     [HideInInspector]public bool sfxIsLooping = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,17 +51,34 @@ public class BusAudioHandler : MonoBehaviour
 
         extraAudioSource = gameObject.AddComponent<AudioSource>();
         extraAudioSource.volume = volumeSFX;
-        
+
         GameObject PlayerCamera = GameObject.Find("Player Camera");
         bgm_AudioSource1 = PlayerCamera.GetComponent<AudioSource>();
         bgm_AudioSource2 = PlayerCamera.AddComponent<AudioSource>();
-        bgm_AudioSource1.clip = DrivingSoundtrack[0];
-        bgm_AudioSource1.volume = volumebgm;
-        bgm_AudioSource1.Play();
-        bgm_AudioSource2.volume = volumebgm;
-        bgm_AudioSource2.clip = DrivingSoundtrack[1];
-        
+
+        // Check if DrivingSoundtrack has enough elements
+        if (DrivingSoundtrack.Length > 0)
+        {
+            bgm_AudioSource1.clip = DrivingSoundtrack[0];
+            bgm_AudioSource1.volume = volumebgm;
+            bgm_AudioSource1.Play();
+        }
+        else
+        {
+            Debug.LogWarning("DrivingSoundtrack array is empty. Please assign audio clips.");
+        }
+
+        if (DrivingSoundtrack.Length > 1)
+        {
+            bgm_AudioSource2.volume = volumebgm;
+            bgm_AudioSource2.clip = DrivingSoundtrack[1];
+        }
+        else
+        {
+            Debug.LogWarning("DrivingSoundtrack array has fewer than 2 elements. Please assign additional audio clips.");
+        }
     }
+
 
     void Update() {
         if(ActiveAudioSource && !bgm_AudioSource1.isPlaying) {

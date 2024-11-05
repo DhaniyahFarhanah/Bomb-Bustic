@@ -4466,9 +4466,41 @@ PrefabInstance:
       value: -1.37
       objectReference: {fileID: 0}
     - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: camControl
       value: 
-      objectReference: {fileID: 1580483473}
+      objectReference: {fileID: 0}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: sCrash.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e7228cf9ef0a2ec4c8583df2215ddd31, type: 3}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: sCrash.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 45fc10b47087bbf4c99d4c081303ff6b, type: 3}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: sCrash.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: c9771cac84e43aa4492e529a627f4b58, type: 3}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: DrivingSoundtrack.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: DrivingSoundtrack.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: DrivingSoundtrack.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
+    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: DrivingSoundtrack.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: f93298bcfbdd2034299a6289a35ca0da, type: 3}
     - target: {fileID: 8415885675720746228, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: m_IsActive
       value: 1
