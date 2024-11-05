@@ -100,6 +100,7 @@ MonoBehaviour:
   Crosshair: {fileID: 0}
   TurretHead: {fileID: 0}
   MissilePrefab: {fileID: 2484465873928644165, guid: 11951a78c64eaab4d9cc07ff2ce10a31, type: 3}
+  m_TransitionDuration: 1
   m_MouseSensitivity: 100
   m_MaxPitchAngle: 80
   m_MinPitchAngle: -30
@@ -311,7 +312,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 695
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
