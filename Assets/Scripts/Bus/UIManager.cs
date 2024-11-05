@@ -50,6 +50,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject loseHolder;
     private int savedPassengers;
 
+    [Header("Transition")]
+    [SerializeField] Animator transitioner;
+    [SerializeField] AnimationClip TranOut;
+    [SerializeField] AnimationClip TranIn;
+
     private AudioSource _AudioSource;
     private bool winOnce = false;
     // Start is called before the first frame update
@@ -213,7 +218,7 @@ public class UIManager : MonoBehaviour
     {
         int currentScenIndex = SceneManager.GetActiveScene().buildIndex;
 
-        SceneManager.LoadScene(currentScenIndex);
+        StartCoroutine(TranSwipeInByNum(currentScenIndex));
     }
 
     public void CloseGame()
@@ -223,17 +228,39 @@ public class UIManager : MonoBehaviour
 
     public void LoadNextScene()
     {
-        int currentScenIndex = SceneManager.GetActiveScene().buildIndex;
+        int currentScenIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        StartCoroutine(TranSwipeInByNum(currentScenIndex));
     }
 
     public void LoadChosenSceneByName(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(TranSwipeInByName(sceneName));
     }
 
     public void LoadChosenSceneByNumber(int sceneIndex)
     {
+        StartCoroutine(TranSwipeInByNum(sceneIndex));
+    }
+
+    public IEnumerator TranSwipeOut()
+    {
+        transitioner.Play(TranOut.name);
+        yield return new WaitForSeconds(1.5f);
+    }
+
+    public IEnumerator TranSwipeInByNum(int sceneIndex)
+    {
+        transitioner.Play(TranIn.name);
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(sceneIndex);
+    }
+
+    public IEnumerator TranSwipeInByName(string sceneName)
+    {
+        transitioner.Play(TranIn.name);
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void Play(AudioClip clip) {
@@ -331,6 +358,8 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(timeper / m_PassengerInfo.PassengerStateList.Count);
         }
     }
+
+
 
     public IEnumerator InstantiatePassengersLose(float timeper)
     {
