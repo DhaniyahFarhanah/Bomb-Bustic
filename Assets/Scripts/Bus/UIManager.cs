@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Color m_DeliveredColor;
     [SerializeField] Color m_InjuredColor;
     [SerializeField] Color m_LostColor;
+    [SerializeField] Color m_unsavedColor;
     [SerializeField] private Animator m_WinCanvasAnim;
     [SerializeField] private float score;
     [SerializeField] private TMP_Text timeTextBox;
@@ -44,6 +45,10 @@ public class UIManager : MonoBehaviour
 
     [Header("Lose Canvas")]
     [SerializeField] GameObject m_LoseCanvas;
+    [SerializeField] private TMP_Text timeTextBoxLose;
+    [SerializeField] private TMP_Text passengersSavedText;
+    [SerializeField] private GameObject loseHolder;
+    private int savedPassengers;
 
     private AudioSource _AudioSource;
     private bool winOnce = false;
@@ -61,7 +66,10 @@ public class UIManager : MonoBehaviour
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         if (m_FindBus)
+        {
             m_Bus = GameObject.FindWithTag("Player").GetComponent<Vehicle>();
+            m_PassengerInfo = m_Bus.GetComponent<BusPassengers>();
+        }
 
         if (m_HideMouseOnStart)
         {
@@ -69,7 +77,7 @@ public class UIManager : MonoBehaviour
         }
         
         _AudioSource = gameObject.AddComponent<AudioSource>();
-        m_PassengerInfo = m_Bus.GetComponent<BusPassengers>();
+        
     }
 
     // Update is called once per frame
@@ -91,6 +99,11 @@ public class UIManager : MonoBehaviour
         if (!end)
         {
             m_Time += Time.deltaTime;
+        }
+
+        if(end && !win && Input.GetKeyDown(KeyCode.R))
+        {
+            RestartScene();
         }
     }
 
@@ -168,28 +181,30 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
-
-        if(m_PauseCanvas == null)
+        if (!end)
         {
-            return;
-        }
-
-        m_IsPaused = !m_IsPaused;
-        m_PauseCanvas.SetActive(m_IsPaused);
-
-        if (m_IsPaused)
-        {
-            Time.timeScale = 0.0f;
-            Cursor.visible = true;
-            
-        }
-        else if (!m_IsPaused)
-        {
-            Time.timeScale = 1.0f;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            if (m_HideMouseOnStart)
+            if (m_PauseCanvas == null)
             {
-                Cursor.visible = false;
+                return;
+            }
+
+            m_IsPaused = !m_IsPaused;
+            m_PauseCanvas.SetActive(m_IsPaused);
+
+            if (m_IsPaused)
+            {
+                Time.timeScale = 0.0f;
+                Cursor.visible = true;
+
+            }
+            else if (!m_IsPaused)
+            {
+                Time.timeScale = 1.0f;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
+                if (m_HideMouseOnStart)
+                {
+                    Cursor.visible = false;
+                }
             }
         }
     }
@@ -231,11 +246,40 @@ public class UIManager : MonoBehaviour
         win = true;
         end = true;
         m_WinCanvas.SetActive(true);
+        Cursor.visible = true;
 
         Time.timeScale = 0.3f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         CalculateScore();
+    }
+
+    public void Lose()
+    {
+        win = false;
+        end = true;
+        m_LoseCanvas.SetActive(true);
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        timeTextBoxLose.text = m_Time.ToString("00:00");
+
+        for (int i = 0; i < m_PassengerInfo.PassengerStateList.Count; i++)
+        {
+            Image icon = Instantiate(m_PassengerIconPrefab, m_PassengerShowcase.transform).GetComponent<Image>();
+
+            switch (m_PassengerInfo.PassengerStateList[i])
+            {
+                case PassengerState.saved: savedPassengers++; break;
+                case PassengerState.injured: savedPassengers++; break;
+            }
+        }
+
+        passengersSavedText.text = savedPassengers.ToString() + "/" + m_PassengerInfo.PassengerStateList.Count;
+
+
     }
 
     public void ShowPassengers()
@@ -254,6 +298,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowPassengersLose()
+    {
+        for (int i = 0; i < m_PassengerInfo.PassengerStateList.Count; i++)
+        {
+            Image icon = Instantiate(m_PassengerIconPrefab, loseHolder.transform).GetComponent<Image>();
+
+            switch (m_PassengerInfo.PassengerStateList[i])
+            {
+                case PassengerState.injured: icon.color = m_InjuredColor; break;
+                case PassengerState.saved: icon.color = m_DeliveredColor; break;
+                case PassengerState.lost: icon.color = m_LostColor; break;
+                default: icon.color = Color.grey; break;
+            }
+        }
+    }
+
     public IEnumerator InstantiatePassengers(float timeper)
     {
         for (int i = 0; i < m_PassengerInfo.PassengerStateList.Count; i++)
@@ -268,7 +328,26 @@ public class UIManager : MonoBehaviour
                 default: icon.color = Color.grey; break;
             }
 
-            yield return new WaitForSeconds(timeper / m_PassengerInfo.PassengerStateList.Count);
+            yield return new WaitForSecondsRealtime(timeper / m_PassengerInfo.PassengerStateList.Count);
+        }
+    }
+
+    public IEnumerator InstantiatePassengersLose(float timeper)
+    {
+        for (int i = 0; i < m_PassengerInfo.PassengerStateList.Count; i++)
+        {
+            Image icon = Instantiate(m_PassengerIconPrefab, loseHolder.transform).GetComponent<Image>();
+
+            switch (m_PassengerInfo.PassengerStateList[i])
+            {
+                case PassengerState.injured: icon.color = m_InjuredColor; break;
+                case PassengerState.saved: icon.color = m_DeliveredColor; break;
+                case PassengerState.lost: icon.color = m_LostColor; break;
+                case PassengerState.undefined: icon.color = m_unsavedColor; break;
+                default: icon.color = Color.grey; break;
+            }
+
+            yield return new WaitForSecondsRealtime(timeper / m_PassengerInfo.PassengerStateList.Count);
         }
     }
 }

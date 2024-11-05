@@ -21,6 +21,8 @@ public class PowerUpScript : MonoBehaviour
         {
             if (!hit.GetComponent<PowerUpHandler>().activated)
             {
+                hit.GetComponent<PowerUpHandler>().backingImage.color = Color.white;
+
                 if (!setType)
                 {
                     if (hit.CompareTag("Player"))

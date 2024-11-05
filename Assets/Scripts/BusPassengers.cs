@@ -124,6 +124,7 @@ public class BusPassengers : MonoBehaviour
         if(passengersCurrent == 0)
         {
             cam.SetCameraMode(CameraModes.Normal);
+            UIhandler.end = true;
             if (PassengerStateList[PassengerStateList.Count - 1] != PassengerState.undefined)
             {
                 UIhandler.Win();
