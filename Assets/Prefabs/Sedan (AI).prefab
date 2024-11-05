@@ -378,7 +378,7 @@ MonoBehaviour:
   isBraking: 0
   centerOfMass: {x: 0, y: 0.3, z: 0}
   maxSteerAngle: 45
-  turnSpeed: 5
+  turnSpeed: 2
   wheelFL: {fileID: 3872878966220915883}
   wheelFR: {fileID: 2642551600633017214}
   wheelRL: {fileID: 2434755553153092842}
