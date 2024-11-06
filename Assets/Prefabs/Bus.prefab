@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpeed: 20
-  bombBuffer: 7
+  bombBuffer: 10
   vignette: {fileID: 0}
   bombMeterSlider: {fileID: 0}
   countdownTextUI: {fileID: 0}
