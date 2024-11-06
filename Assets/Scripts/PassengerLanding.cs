@@ -93,8 +93,8 @@ public class PassengerLanding : MonoBehaviour
                     stillMoving = true; // At least one rigidbody is still moving
 
                     // Gradually reduce the velocity of each Rigidbody
-                    rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * 10f);
-                    rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime * 10f);
+                    rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.unscaledDeltaTime * 10f);
+                    rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.unscaledDeltaTime * 10f);
                 }
             }
 

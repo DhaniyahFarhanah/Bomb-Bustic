@@ -160,6 +160,10 @@ public class BusPassengers : MonoBehaviour
             // Decrease the number of current passengers
             --passengersCurrent;
             UpdatePassengerText();
+
+            // Play the shooting sound effect
+            GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().ShootPassenger);
+            GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().passengerWee);
         }
     }
 
