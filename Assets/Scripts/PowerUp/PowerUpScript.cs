@@ -10,6 +10,7 @@ public class PowerUpScript : MonoBehaviour
     [SerializeField] Sprite HackImage;
     [SerializeField] Sprite NitroImage;
     [SerializeField] Sprite EnergyPulseImage;
+    [SerializeField] GameObject Sparkle;
     Sprite givenImage;
     // Start is called before the first frame update
 
@@ -21,6 +22,8 @@ public class PowerUpScript : MonoBehaviour
         {
             if (!hit.GetComponent<PowerUpHandler>().activated)
             {
+                Instantiate(Sparkle, this.transform.position, Quaternion.identity);
+
                 hit.GetComponent<PowerUpHandler>().backingImage.color = Color.white;
 
                 if (!setType)

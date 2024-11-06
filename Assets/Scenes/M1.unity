@@ -3550,6 +3550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad960011734219f4cb334cd8510d327d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawGizmos: 0
   lineColor: {r: 1, g: 0.7954385, b: 0, a: 1}
   sphereSize: 0.5
   waypoints:
@@ -4370,6 +4371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad960011734219f4cb334cd8510d327d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawGizmos: 0
   lineColor: {r: 1, g: 0.016129056, b: 0, a: 1}
   sphereSize: 0.5
   waypoints:
@@ -15655,6 +15657,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 737208571}
     - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: bombBuffer
+      value: 700000
+      objectReference: {fileID: 0}
+    - target: {fileID: 930155380597902409, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: BombPointer
       value: 
       objectReference: {fileID: 1244728935}
@@ -15758,6 +15764,14 @@ PrefabInstance:
       propertyPath: shootingSlidingTimerUI
       value: 
       objectReference: {fileID: 318816170}
+    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: skidDelay
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3548545743966341369, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_CheckHeight
+      value: 18.88
+      objectReference: {fileID: 0}
     - target: {fileID: 5625231821553790463, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: comboUI
       value: 
@@ -15770,6 +15784,18 @@ PrefabInstance:
       propertyPath: camControl
       value: 
       objectReference: {fileID: 2976827039248419619}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_LightDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_LightIntensity
+      value: 0.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434654239452625271, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
+      propertyPath: m_MediumIntensity
+      value: 0.128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24747,6 +24773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad960011734219f4cb334cd8510d327d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawGizmos: 0
   lineColor: {r: 1, g: 0, b: 0.88487864, a: 1}
   sphereSize: 0.5
   waypoints:
@@ -34939,22 +34966,6 @@ PrefabInstance:
       propertyPath: m_PassengerInfo
       value: 
       objectReference: {fileID: 597558199}
-    - target: {fileID: 1816694340818045184, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-      propertyPath: m_unsavedColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1816694340818045184, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-      propertyPath: m_unsavedColor.b
-      value: 0.1509434
-      objectReference: {fileID: 0}
-    - target: {fileID: 1816694340818045184, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-      propertyPath: m_unsavedColor.g
-      value: 0.1509434
-      objectReference: {fileID: 0}
-    - target: {fileID: 1816694340818045184, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
-      propertyPath: m_unsavedColor.r
-      value: 0.1509434
-      objectReference: {fileID: 0}
     - target: {fileID: 6254970079269247103, guid: 752a76fe7de62824bb4090b9bad52a4c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -45477,6 +45488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad960011734219f4cb334cd8510d327d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawGizmos: 0
   lineColor: {r: 0.60183, g: 0, b: 1, a: 1}
   sphereSize: 0.5
   waypoints:
