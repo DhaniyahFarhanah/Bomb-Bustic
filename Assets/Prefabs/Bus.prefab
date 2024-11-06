@@ -564,7 +564,7 @@ MonoBehaviour:
   passengersLost: 0
   PassengerStateList: 
   exitOffset: {x: 0, y: 0, z: 0}
-  passengerExitForce: 500
+  passengerExitForce: 750
   fireRate: 0.25
   passengerInfoUI: {fileID: 0}
   shootingObject: {fileID: 0}
