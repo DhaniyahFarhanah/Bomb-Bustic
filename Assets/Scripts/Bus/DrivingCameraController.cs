@@ -226,7 +226,7 @@ namespace ArcadeVehicleController
                 {
                     GameObject Missile = Instantiate(MissilePrefab, TurretHead.transform.position, TurretHead.transform.rotation);
                     //Missile.GetComponent<Missile>().target = hit.point;
-                    GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().TurretShot);
+                    m_BusAudioHandler.PlayPriority(m_BusAudioHandler.TurretShot);
                 }
             }
             //cooldown
