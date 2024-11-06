@@ -23,13 +23,13 @@ MonoBehaviour:
   m_ChassiMass: 60
   m_TireMass: 10
   m_SpringRestLength: 1.4
-  m_SpringStrength: 4000
-  m_SpringDamper: 200
+  m_SpringStrength: 4366
+  m_SpringDamper: 600
   m_AcceleratePower: 1200
   m_BrakesPower: 0.2
   m_MaxSpeed: 80
   m_MaxReverseSpeed: 40
-  m_SteerAngle: 8
+  m_SteerAngle: 13
   m_FrontWheelsGripFactor: 0.7
   m_RearWheelsGripFactor: 0.7
   m_DriftBrakesPower: 1
