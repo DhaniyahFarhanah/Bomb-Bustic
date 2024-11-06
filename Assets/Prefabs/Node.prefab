@@ -97,4 +97,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbours: []
-  drawLine: 0
+  drawLine: 1
