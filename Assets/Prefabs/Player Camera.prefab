@@ -105,7 +105,7 @@ MonoBehaviour:
   m_MaxPitchAngle: 80
   m_MinPitchAngle: -30
   m_TimeDilation: 0.356
-  m_slowMotionTransitionSpeed: 5
+  m_slowMotionTransitionSpeed: 1
 --- !u!114 &5064827365284208538
 MonoBehaviour:
   m_ObjectHideFlags: 0
