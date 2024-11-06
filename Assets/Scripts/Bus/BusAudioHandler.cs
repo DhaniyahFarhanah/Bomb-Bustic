@@ -93,6 +93,7 @@ public class BusAudioHandler : MonoBehaviour
         {
             return;
         }
+        b_AudioSource.loop = false;
         b_AudioSource.clip = clip;
         b_AudioSource.Play();
     }
