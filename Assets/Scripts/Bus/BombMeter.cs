@@ -155,11 +155,12 @@ public class BombMeter : MonoBehaviour
             {
                 GetComponent<BusAudioHandler>().StopSFXLoop();
             }
-            GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().BombExplosion);
-            GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().BombDeadZone);
+
 
             if (!UI.end)
             {
+                GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().BombExplosion);
+                GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().BombDeadZone);
                 UI.Lose();
             }
             
