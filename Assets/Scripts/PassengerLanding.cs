@@ -12,7 +12,7 @@ public class PassengerLanding : MonoBehaviour
     {
         // Get all Rigidbody components in the ragdoll (the passenger object and its children)
         passengerRigidbodies = GetComponentsInChildren<Rigidbody>();
-        StartCoroutine(LostAfterDelay(5f));
+        StartCoroutine(LostAfterDelay(10f));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,7 +53,7 @@ public class PassengerLanding : MonoBehaviour
         if (!collided && !caught)
         {
             collided = true;
-            StartCoroutine(LostAfterDelay(1f));
+            StartCoroutine(LostAfterDelay(2f));
         }
     }
 
