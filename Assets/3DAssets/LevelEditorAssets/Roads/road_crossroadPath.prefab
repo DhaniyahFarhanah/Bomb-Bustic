@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4198628488456213459}
   - component: {fileID: 3863263425446467291}
   - component: {fileID: 805929486103997719}
+  - component: {fileID: 2960202524533026332}
   m_Layer: 0
   m_Name: road_crossroadPath
   m_TagString: Indestructable
@@ -137,6 +138,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2634167684899967581, guid: 2186b2ea0de281143a890de80442205c, type: 3}
+--- !u!114 &2960202524533026332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178943928410064512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3999de3e9677ed945bfdad4b5658d3eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenDuration: 10
+  yellowDuration: 3
+  yellowEarlyThreshold: 0.6
+  redDuration: 10
+  allRedDuration: 2
+  lane1Waypoints: []
+  lane2Waypoints: []
 --- !u!1001 &998659020332529553
 PrefabInstance:
   m_ObjectHideFlags: 0
