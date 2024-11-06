@@ -258,7 +258,6 @@ GameObject:
   - component: {fileID: 8009369760897389329}
   - component: {fileID: 2962379419639768851}
   - component: {fileID: 2091703669680996654}
-  - component: {fileID: 8906960022045629220}
   m_Layer: 9
   m_Name: Bus
   m_TagString: Player
@@ -463,6 +462,7 @@ MonoBehaviour:
   bombExpand: 1.2
   BombPointerMinAngle: 20
   BombPointerMaxAngle: -80
+  UI: {fileID: 0}
   bombTimerText: {fileID: 9005159845452743055}
   sparks: {fileID: 5871458045194853003}
   bombAnim: {fileID: 6272554985306395962}
@@ -530,7 +530,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
   WinningSoundtrack: {fileID: 0}
   PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
-  camControl: {fileID: 0}
   ShootPassenger: {fileID: 8300000, guid: d41fffc7b73054147ac13444ff15ba35, type: 3}
   TurretShot: {fileID: 8300000, guid: 799bb1e1516df604baa99c06e8502f1e, type: 3}
   Shockwave: {fileID: 8300000, guid: ead366faeb2678e49a6b2ba189c1f578, type: 3}
@@ -675,47 +674,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8906960022045629220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgm_AudioSource1: {fileID: 0}
-  bgm_AudioSource2: {fileID: 0}
-  volumebgm: 0.5
-  volumeSFX: 1
-  sCrash: []
-  mCrash: {fileID: 0}
-  lCrash: {fileID: 0}
-  lose: {fileID: 0}
-  pickUp: {fileID: 0}
-  passengerWee: {fileID: 0}
-  passengerScream: {fileID: 0}
-  passengerDisgust: {fileID: 0}
-  flush: {fileID: 0}
-  win: {fileID: 0}
-  DrivingSoundtrack: []
-  WinningSoundtrack: {fileID: 0}
-  PoliceAlert: {fileID: 0}
-  ShootPassenger: {fileID: 0}
-  TurretShot: {fileID: 0}
-  Shockwave: {fileID: 0}
-  Emp: {fileID: 0}
-  Boost: {fileID: 0}
-  BombRedZone: {fileID: 0}
-  BombDeadZone: {fileID: 0}
-  BombExplosion: {fileID: 0}
-  Splat: {fileID: 0}
-  engineHum: {fileID: 0}
-  camControl: {fileID: 0}
-  sfxIsLooping: 0
 --- !u!1 &833171547090100891
 GameObject:
   m_ObjectHideFlags: 0
