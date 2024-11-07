@@ -64,7 +64,7 @@ public class BusStopSpawn : MonoBehaviour
         {
             passenger.GetComponent<Passenger>().m_PickedUp = true;
             passenger.GetComponent<Passenger>().m_target = bus;
-            //bus.GetComponent<BusAudioHandler>().Play(bus.GetComponent<BusAudioHandler>().pickUp); 
+            bus.GetComponent<BusAudioHandler>().Play(bus.GetComponent<BusAudioHandler>().pickUp); 
             yield return new WaitForSeconds(0.2f);
         }
     }

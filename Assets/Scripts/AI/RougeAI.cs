@@ -48,7 +48,7 @@ public class RougeAI : AICarEngine
     {
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(FlashLights());
-        //GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().Play();
         StartCoroutine(DelayedAudio());
         PathfindToPlayer();
         stop = false;
@@ -57,7 +57,7 @@ public class RougeAI : AICarEngine
     private IEnumerator DelayedAudio()
     {
         yield return new WaitForSeconds(Random.Range(0f, 2f));
-        //GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().Play();
     }
 
     private void PathfindToPlayer()
