@@ -25,6 +25,7 @@ public class PowerUpHandler : MonoBehaviour
     [SerializeField] Image powerUpImage;
     public Image backingImage;
     [SerializeField] Sprite emptyImage;
+    private BusAudioHandler busAudioHandler;
 
     //Turret activates Turret powerup
     [Header("Turret PowerUp")]
@@ -63,6 +64,8 @@ public class PowerUpHandler : MonoBehaviour
         bombMeterNorm = bombMeter.minSpeed;
         activated = false;
         currentPickUp = PickUpType.Empty;
+
+        busAudioHandler = GetComponent<BusAudioHandler>();
     }
 
     // Update is called once per frame
@@ -149,15 +152,15 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Hack:
                 ActivateHack();
-                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Emp);
+                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Emp);
                 break;
             case PickUpType.Nitro:
                 ActivateNitro();
-                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Boost);
+                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Boost);
                 break;
             case PickUpType.EnergyPulse:
                 ActivateEnergyPulse();
-                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
+                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
                 break;
         }
         //navigate to correct mechanic

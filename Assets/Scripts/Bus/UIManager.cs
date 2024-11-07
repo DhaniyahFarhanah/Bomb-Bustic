@@ -168,7 +168,7 @@ public class UIManager : MonoBehaviour
         {
             if(!winOnce)
             {
-                Play(m_Bus.GetComponent<BusAudioHandler>().win);
+                //Play(m_Bus.GetComponent<BusAudioHandler>().win);
                 winOnce = true;
             }
             

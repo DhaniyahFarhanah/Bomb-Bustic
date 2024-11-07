@@ -54,6 +54,7 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private Color normalColor = Color.green;
     [SerializeField] private GameObject InsideShootingZone;
     private Vector3 originalCrosshairScale;
+    private BusAudioHandler busAudioHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -162,8 +163,8 @@ public class BusPassengers : MonoBehaviour
             UpdatePassengerText();
 
             // Play the shooting sound effect
-            GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().ShootPassenger);
-            GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().passengerWee);
+            busAudioHandler.PlayOneShotSFX(GetComponent<BusAudioHandler>().ShootPassenger);
+            busAudioHandler.Play(GetComponent<BusAudioHandler>().passengerWee);
         }
     }
 
