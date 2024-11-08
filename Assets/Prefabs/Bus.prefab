@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 4723766497020543901}
   - component: {fileID: 4310510902827167036}
   - component: {fileID: 3548545743966341369}
+  - component: {fileID: 4477426340839077211}
   - component: {fileID: 8434654239452625271}
   - component: {fileID: 5570456706914859266}
   - component: {fileID: 1331975426342428464}
@@ -399,6 +400,46 @@ MonoBehaviour:
   m_DriftDustLeft: {fileID: 7042175172785165824}
   m_DriftTrailLeft: {fileID: 6182181687358179780}
   brakeLights: {fileID: 2100000, guid: 28818b83232f21a4fabd24342fdc56fa, type: 2}
+--- !u!114 &4477426340839077211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0776b079bb9a21d428de30d18d721d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveShowcase: {fileID: 0}
+  objectiveText: {fileID: 0}
+  requirementText: {fileID: 0}
+  rewardAmtText: {fileID: 0}
+  timerTime: {fileID: 0}
+  chaosType: 0
+  active: 0
+  duration: 20
+  maxSecsTilNew: 10
+  minSecsTilNew: 15
+  newTimer: 0
+  randomTimer: 0
+  durationTimer: 0
+  backwardsObjectiveText: Drive Backwards
+  amtOfSeconds: 3
+  backwardReward: 100
+  carCrashObjectiveText: Crash into cars
+  numOfCars: 5
+  carCrashReward: 50
+  collisionObjectiveText: Crash into anything!
+  numTimesToCollide: 10
+  collideReward: 30
+  destructionObjectiveText: Use powerups to destroy objects
+  numToDestroy: 5
+  destroyReward: 70
+  nearMissObjectiveText: Nearly miss cars
+  nearMiss: 3
+  nearMissReward: 50
 --- !u!114 &8434654239452625271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +481,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombTextOnBus: {fileID: 9005159845452743055}
   digitalDisplay: {fileID: 8287319588906499170}
+  freeze: 0
+  freezeNeedle: {fileID: 0}
+  freezeSpeedometer: {fileID: 0}
+  UIManger: {fileID: 0}
+  speedometerSlowImg: {fileID: 0}
+  speedometerFastImg: {fileID: 0}
+  speedometerSlowBackingImg: {fileID: 0}
+  speedometerFastBackingImg: {fileID: 0}
+  speedometerSlowRateText: {fileID: 0}
+  speedometerMidRateText: {fileID: 0}
+  speedometerFastRateText: {fileID: 0}
+  speedMaxText: {fileID: 0}
+  needle: {fileID: 0}
   startBombTime: 300
   slowSpeedRange: 20
   midSpeedRange: 50
