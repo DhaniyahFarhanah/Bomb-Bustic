@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 4723766497020543901}
   - component: {fileID: 4310510902827167036}
   - component: {fileID: 3548545743966341369}
-  - component: {fileID: 4477426340839077211}
+  - component: {fileID: 6305582121347749629}
   - component: {fileID: 8434654239452625271}
   - component: {fileID: 5570456706914859266}
   - component: {fileID: 1331975426342428464}
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_DriftDustLeft: {fileID: 7042175172785165824}
   m_DriftTrailLeft: {fileID: 6182181687358179780}
   brakeLights: {fileID: 2100000, guid: 28818b83232f21a4fabd24342fdc56fa, type: 2}
---- !u!114 &4477426340839077211
+--- !u!114 &6305582121347749629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
