@@ -31,11 +31,7 @@ public class Missile : MonoBehaviour
             speed += Time.deltaTime * 100f;
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
         }
-        /*else
-        {
-            speed += Time.deltaTime * 100f;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
-        }*/
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -44,6 +40,7 @@ public class Missile : MonoBehaviour
 
         if (hitObject.GetComponentInParent<RougeAI>())
         {
+            Debug.Log("Destroy car");
             hitObject.GetComponentInParent<RougeAI>().SelfDestruct();
             Destroy(gameObject);
             return;
@@ -51,6 +48,7 @@ public class Missile : MonoBehaviour
 
         if (hitObject.GetComponentInParent<BasicAI>())
         {
+            Debug.Log("Destroy car");
             Destroy(hitObject.GetComponentInParent<BasicAI>().gameObject);
             Destroy(gameObject);
             return;
@@ -58,6 +56,7 @@ public class Missile : MonoBehaviour
 
         if (hitObject.GetComponent<ObstacleType>() != null && !hitObject.CompareTag("Player") && !hitObject.CompareTag("Indestructable") && !hitObject.CompareTag("DropOff"))
         {
+            Debug.Log("Destroy anyhting else");
             Destroy(hitObject.GetComponentInParent<ObstacleType>());
             Destroy(gameObject);
         }

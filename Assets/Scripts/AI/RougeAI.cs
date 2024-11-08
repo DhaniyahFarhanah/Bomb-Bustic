@@ -21,10 +21,10 @@ public class RougeAI : AICarEngine
     public AIState State = AIState.enroute;
     private bool avoiding = false;
 
-    [Header("Visuals")]
-    [SerializeField] private GameObject light1;
-    [SerializeField] private GameObject light2;
-    [SerializeField] private float lightFlashInterval = 0.5f;  // Interval between flashes
+    //[Header("Visuals")]
+    //[SerializeField] private GameObject light1;
+    //[SerializeField] private GameObject light2;
+    //[SerializeField] private float lightFlashInterval = 0.5f;  // Interval between flashes
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,7 @@ public class RougeAI : AICarEngine
     public IEnumerator ActiveAI()
     {
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(FlashLights());
+        //StartCoroutine(FlashLights());
         GetComponent<AudioSource>().Play();
         StartCoroutine(DelayedAudio());
         PathfindToPlayer();
@@ -180,7 +180,7 @@ public class RougeAI : AICarEngine
     #endregion DrivingLogic
 
     #region Visual Effects
-    private IEnumerator FlashLights()
+    /*private IEnumerator FlashLights()
     {
         bool isRed = true;
 
@@ -208,7 +208,7 @@ public class RougeAI : AICarEngine
             // Wait for the interval before switching colors again
             yield return new WaitForSeconds(lightFlashInterval);
         }
-    }
+    }*/
     #endregion
 
     public void SelfDestruct()
