@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 3548545743966341369}
   - component: {fileID: 8434654239452625271}
   - component: {fileID: 5570456706914859266}
-  - component: {fileID: 8217714648340446580}
   - component: {fileID: 1331975426342428464}
   - component: {fileID: 930155380597902409}
   - component: {fileID: 1713831921313684075}
@@ -277,7 +276,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.93814, y: 0.93814, z: 0.93814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3137043953784391039}
@@ -441,19 +440,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombTextOnBus: {fileID: 9005159845452743055}
   digitalDisplay: {fileID: 8287319588906499170}
-  freeze: 0
-  freezeNeedle: {fileID: 0}
-  freezeSpeedometer: {fileID: 0}
-  UIManger: {fileID: 0}
-  speedometerSlowImg: {fileID: 0}
-  speedometerFastImg: {fileID: 0}
-  speedometerSlowBackingImg: {fileID: 0}
-  speedometerFastBackingImg: {fileID: 0}
-  speedometerSlowRateText: {fileID: 0}
-  speedometerMidRateText: {fileID: 0}
-  speedometerFastRateText: {fileID: 0}
-  speedMaxText: {fileID: 0}
-  needle: {fileID: 0}
   startBombTime: 300
   slowSpeedRange: 20
   midSpeedRange: 50
@@ -466,46 +452,6 @@ MonoBehaviour:
   midShakeIntensity: 0.0181
   fastShakeIntensity: 0.0112
   currentTimer: 0
---- !u!114 &8217714648340446580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0776b079bb9a21d428de30d18d721d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveShowcase: {fileID: 0}
-  objectiveText: {fileID: 0}
-  requirementText: {fileID: 0}
-  rewardAmtText: {fileID: 0}
-  timerTime: {fileID: 0}
-  chaosType: 0
-  active: 0
-  duration: 20
-  maxSecsTilNew: 10
-  minSecsTilNew: 20
-  newTimer: 0
-  randomTimer: 0
-  durationTimer: 0
-  backwardsObjectiveText: Drive in reverse
-  amtOfSeconds: 5
-  backwardReward: 100
-  carCrashObjectiveText: Crash Into Cars
-  numOfCars: 5
-  carCrashReward: 50
-  collisionObjectiveText: Crash into Anything
-  numTimesToCollide: 10
-  collideReward: 30
-  destructionObjectiveText: Use Powerup to Destroy
-  numToDestroy: 10
-  destroyReward: 70
-  nearMissObjectiveText: Nearly Miss
-  nearMiss: 5
-  nearMissReward: 50
 --- !u!114 &1331975426342428464
 MonoBehaviour:
   m_ObjectHideFlags: 0
