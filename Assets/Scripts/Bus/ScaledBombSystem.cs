@@ -35,7 +35,7 @@ public class ScaledBombSystem : MonoBehaviour
 
     [Header("Bomb Values")]
     [SerializeField] int startBombTime;
-    [SerializeField][Range(0,100)] int slowSpeedRange;
+    [SerializeField][Range(0, 100)] int slowSpeedRange;
     [SerializeField][Range(0, 100)] int midSpeedRange;
     [SerializeField] int slowTickRate;
     [SerializeField] int midTickRate;
@@ -88,7 +88,7 @@ public class ScaledBombSystem : MonoBehaviour
     {
         if (!firstStart)
         {
-            if(currentTimer <= 0)
+            if (currentTimer <= 0)
             {
                 //gameover
                 bombTextOnBus.text = "BOOM!";
@@ -103,7 +103,8 @@ public class ScaledBombSystem : MonoBehaviour
             digitalDisplay.localPosition = orgPosOfDigitalDisplay + Random.insideUnitSphere * shakeIntensity;
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        //any input to move bus
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.Space))
         {
             firstStart = false;
         }
