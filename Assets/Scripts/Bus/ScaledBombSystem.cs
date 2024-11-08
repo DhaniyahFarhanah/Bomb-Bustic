@@ -17,6 +17,9 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] Transform digitalDisplay;
 
     [Header("Speedometer UI Stuff")]
+    public bool freeze;
+    [SerializeField] GameObject freezeNeedle;
+    [SerializeField] GameObject freezeSpeedometer;
     [SerializeField] UIManager UIManger;
     [SerializeField] Image speedometerSlowImg;
     [SerializeField] Image speedometerFastImg;
@@ -130,13 +133,12 @@ public class ScaledBombSystem : MonoBehaviour
     {
         busSpeed = bus.Velocity.magnitude;
 
-
-        if (secTimer < 1)
+        if (secTimer < 1 && !freeze)
         {
             secTimer += Time.deltaTime;
         }
 
-        else if (secTimer >= 1) //per 1 sec
+        else if (secTimer >= 1 && !freeze) //per 1 sec
         {
             float intensity = 0f;
 
@@ -171,23 +173,52 @@ public class ScaledBombSystem : MonoBehaviour
             secTimer = 0;
         }
 
-        bombTextOnBus.text = currentTimer.ToString();
+        if (freeze)
+        {
+            bombTextOnBus.text = ">:C";
+            bombTextOnBus.color = Color.cyan;
+
+            shake = true;
+            shakeIntensity = midShakeIntensity;
+        }
+
+        else
+        {
+            bombTextOnBus.text = currentTimer.ToString();
+        }
     }
 
     void UpdateNeedleRotation()
     {
         float currentZAngle = needle.transform.localEulerAngles.z;
-        float currentSpeedZ = (busSpeed / maxSpeed) * (minZRotationNeedle - maxZRotationNeedle);
+        float currentSpeedZ = 0f;
 
-        Debug.Log(currentSpeedZ);
-
-        if(busSpeed > maxSpeed)
+        if(busSpeed > maxSpeed && !freeze)
         {
             //keep needle pointing at max
             needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, minZRotationNeedle);
         }
+
+        if(busSpeed < 0f && !freeze)
+        {
+            needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, maxZRotationNeedle);
+        }
+
         else if(busSpeed <= maxSpeed)
         {
+            if (freeze)
+            {
+                freezeNeedle.SetActive(true);
+                freezeSpeedometer.SetActive(true);
+                currentSpeedZ = needle.transform.localEulerAngles.z;
+            }
+            else
+            {
+                freezeNeedle.SetActive(false);
+                freezeSpeedometer.SetActive(false);
+                currentSpeedZ = (busSpeed / maxSpeed) * (minZRotationNeedle - maxZRotationNeedle);
+            }
+
             needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, currentSpeedZ);
         }
        
