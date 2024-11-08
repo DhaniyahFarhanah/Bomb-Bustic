@@ -25,7 +25,7 @@ MonoBehaviour:
   m_SpringRestLength: 1.4
   m_SpringStrength: 4366
   m_SpringDamper: 600
-  m_AcceleratePower: 1200
+  m_AcceleratePower: 1400
   m_BrakesPower: 0.2
   m_MaxSpeed: 80
   m_MaxReverseSpeed: 40
