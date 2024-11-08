@@ -27,6 +27,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
     private ScaledBombSystem bombSystem;
     private Vehicle bus;
     private JeepVisual busVisual;
+    private PowerUpHandler powerUpHandler;
 
     [Header("Objectives")]
     [SerializeField] private ChaosType chaosType;
@@ -77,6 +78,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
         bombSystem = gameObject.GetComponent<ScaledBombSystem>();
         bus = gameObject.GetComponent<Vehicle>();
         busVisual = gameObject.GetComponent<JeepVisual>();
+        powerUpHandler = gameObject.GetComponent<PowerUpHandler>();
 
         active = false;
     }
@@ -119,7 +121,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
         durationTimer = duration;
         objectiveShowcase.SetActive(true);
 
-        chaosType = (ChaosType)Random.Range(1, 6);
+        chaosType = (ChaosType)Random.Range(0, 6);
 
         InstantiateObjective();
     }
@@ -131,29 +133,28 @@ public class ChaosObjectiveHandler : MonoBehaviour
             case ChaosType.destruction:
                 reward = destroyReward;
                 requirement = numToDestroy;
-                rewardAmtText.text = destroyReward.ToString() + "sec";
+                rewardAmtText.text = destroyReward.ToString() + "s";
                 objectiveText.text = destructionObjectiveText;
-
                 break;
 
             case ChaosType.carCrash:
                 reward = carCrashReward;
                 requirement = numOfCars;
-                rewardAmtText.text = carCrashReward.ToString() + "sec";
+                rewardAmtText.text = "+" + carCrashReward.ToString() + "s";
                 objectiveText.text = carCrashObjectiveText;
                 break;
 
             case ChaosType.collision:
                 reward = collideReward;
                 requirement = numTimesToCollide;
-                rewardAmtText.text = collideReward.ToString() + "sec";
+                rewardAmtText.text = "+" + collideReward.ToString() + "s";
                 objectiveText.text = collisionObjectiveText;
                 break;
 
             case ChaosType.backwards: 
                 reward = backwardReward;
                 requirement = amtOfSeconds;
-                rewardAmtText.text = backwardReward.ToString() + "sec";
+                rewardAmtText.text = "+" + backwardReward.ToString() + "s";
                 objectiveText.text = backwardsObjectiveText;
 
                 break;
@@ -161,7 +162,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
             case ChaosType.miss: 
                 reward = nearMissReward;
                 requirement = nearMiss;
-                rewardAmtText.text = nearMissReward.ToString() + "sec";
+                rewardAmtText.text = "+" + nearMissReward.ToString() + "s";
                 objectiveText.text = nearMissObjectiveText;
                 break;
         }
@@ -175,11 +176,11 @@ public class ChaosObjectiveHandler : MonoBehaviour
                 requirementText.text = "x " + ((int)requirement).ToString();
 
 
-
                 break;
 
             case ChaosType.carCrash:
                 requirementText.text = "x " + ((int)requirement).ToString();
+
 
                 break;
 
