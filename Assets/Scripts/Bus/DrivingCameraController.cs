@@ -20,6 +20,7 @@ namespace ArcadeVehicleController
         [SerializeField] private UIManager uiManager;
         [SerializeField] private GameObject m_CameraHolder;
         [SerializeField] private BusAudioHandler m_BusAudioHandler;
+        [SerializeField] private GameObject vignette;
         [SerializeField] private float m_Distance = 10.0f;
         [SerializeField] private float m_Height = 5.0f;
         [SerializeField] private float m_HeightDamping = 2.0f;
@@ -164,6 +165,7 @@ namespace ArcadeVehicleController
                     Crosshair.SetActive(false);
                     HandleCameraPosition();
                     HandleFov();
+                    vignette.SetActive(false);
 
                     m_YawRotation = 0f;
                     m_PitchRotation = 0f;
@@ -196,6 +198,7 @@ namespace ArcadeVehicleController
                     HandleMouseRotation2();
                     HandleCameraPosition2();
                     HandleFov();
+                    vignette.SetActive(true);
 
                     //time dilation
                     TimeDilation();
