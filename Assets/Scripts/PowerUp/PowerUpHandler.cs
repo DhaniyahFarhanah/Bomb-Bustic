@@ -25,6 +25,7 @@ public class PowerUpHandler : MonoBehaviour
     [SerializeField] Image powerUpImage;
     public Image backingImage;
     [SerializeField] Sprite emptyImage;
+    ChaosObjectiveHandler chaosHandler;
 
     //Turret activates Turret powerup
     [Header("Turret PowerUp")]
@@ -58,6 +59,7 @@ public class PowerUpHandler : MonoBehaviour
 
         //Default empty on start up
         busValues = Bus.GetComponent<Vehicle>();
+        chaosHandler = gameObject.GetComponent<ChaosObjectiveHandler>();
         bombControl = gameObject.GetComponent<ScaledBombSystem>();
 
         activated = false;
@@ -137,6 +139,11 @@ public class PowerUpHandler : MonoBehaviour
     {
         activated = true;
         PickUpAnimator.SetBool("Activate", true);
+
+        if(chaosHandler.active && chaosHandler.chaosType == ChaosType.powerUp)
+        {
+            chaosHandler.requirement--;
+        }
 
         switch (type)
         {

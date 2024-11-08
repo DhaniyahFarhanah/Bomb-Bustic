@@ -12,7 +12,7 @@ public enum ChaosType
     backwards,
     carCrash,
     collision,
-    destruction,
+    powerUp,
     miss
 }
 
@@ -20,6 +20,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
 {
     [Header("Instantiating")]
     [SerializeField] private GameObject objectiveShowcase;
+    [SerializeField] private Animator objectShowcaseAnim;
     [SerializeField] private TMP_Text objectiveText;
     [SerializeField] private TMP_Text requirementText;
     [SerializeField] private TMP_Text rewardAmtText;
@@ -30,14 +31,14 @@ public class ChaosObjectiveHandler : MonoBehaviour
     private PowerUpHandler powerUpHandler;
 
     [Header("Objectives")]
-    [SerializeField] private ChaosType chaosType;
-    [SerializeField] private bool active;
+    public ChaosType chaosType;
+    public bool active;
     [SerializeField] private float duration;
     [SerializeField] private float maxSecsTilNew;
     [SerializeField] private float minSecsTilNew;
-    private float reward;
+    [HideInInspector] public int reward;
     private string objectiveString;
-    private float requirement;
+    public float requirement;
 
     [SerializeField] private float newTimer;
     [SerializeField] private float randomTimer;
@@ -58,10 +59,10 @@ public class ChaosObjectiveHandler : MonoBehaviour
     [SerializeField] private int numTimesToCollide;
     [SerializeField] private int collideReward;
 
-    [Header("Destruction")]
-    [SerializeField] private string destructionObjectiveText;
-    [SerializeField] private int numToDestroy;
-    [SerializeField] private int destroyReward;
+    [Header("Power Up")]
+    [SerializeField] private string pWObjectiveText;
+    [SerializeField] private int numToUse;
+    [SerializeField] private int pWReward;
 
     [Header("Miss")]
     [SerializeField] private string nearMissObjectiveText;
@@ -118,10 +119,12 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
     void GiveObjective()
     {
+        objectShowcaseAnim.SetBool("Done", false);
         durationTimer = duration;
         objectiveShowcase.SetActive(true);
 
-        chaosType = (ChaosType)Random.Range(0, 6);
+        chaosType = (ChaosType)Random.Range(0, 5);
+        requirement = 0;
 
         InstantiateObjective();
     }
@@ -130,11 +133,11 @@ public class ChaosObjectiveHandler : MonoBehaviour
     {
         switch (chaosType)
         {
-            case ChaosType.destruction:
-                reward = destroyReward;
-                requirement = numToDestroy;
-                rewardAmtText.text = destroyReward.ToString() + "s";
-                objectiveText.text = destructionObjectiveText;
+            case ChaosType.powerUp:
+                reward = pWReward;
+                requirement = numToUse;
+                rewardAmtText.text = pWReward.ToString() + "s";
+                objectiveText.text = pWObjectiveText;
                 break;
 
             case ChaosType.carCrash:
@@ -172,21 +175,36 @@ public class ChaosObjectiveHandler : MonoBehaviour
     {
         switch (chaosType)
         {
-            case ChaosType.destruction:
-                requirementText.text = "x " + ((int)requirement).ToString();
+            case ChaosType.powerUp:
+                requirementText.text = "x " + ((int)requirement).ToString() + "Time(s)";
 
+                if (requirement <= 0)
+                {
+                    requirementText.text = "Success!";
+                    StartCoroutine(EndObjective(true));
+                }
 
                 break;
 
             case ChaosType.carCrash:
                 requirementText.text = "x " + ((int)requirement).ToString();
 
+                if (requirement <= 0)
+                {
+                    requirementText.text = "Success!";
+                    StartCoroutine(EndObjective(true));
+                }
 
                 break;
 
             case ChaosType.collision:
                 requirementText.text = "x " + ((int)requirement).ToString();
 
+                if (requirement <= 0)
+                {
+                    requirementText.text = "Success!";
+                    StartCoroutine(EndObjective(true));
+                }
                 break;
 
             case ChaosType.backwards:
@@ -211,6 +229,12 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
             case ChaosType.miss:
                 requirementText.text = "x " + ((int)requirement).ToString();
+
+                if(requirement <= 0)
+                {
+                    requirementText.text = "Success!";
+                    StartCoroutine(EndObjective(true));
+                }
                 break;
         }
         
@@ -219,9 +243,22 @@ public class ChaosObjectiveHandler : MonoBehaviour
     IEnumerator EndObjective(bool success)
     {
         active = false;
-        //play animation
+        bombSystem.objectiveFinished = true;
+        objectShowcaseAnim.SetBool("Done", true);
         //for as long as animation clip
         yield return new WaitForSeconds(1f);
+
+        if (success)
+        {
+            bombSystem.AddTime(reward);
+        }
+        else if (!success)
+        {
+            bombSystem.AddTime(-10);
+        }
         objectiveShowcase.SetActive(false);
     }
+
+
+
 }

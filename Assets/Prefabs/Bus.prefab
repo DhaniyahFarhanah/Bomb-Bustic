@@ -350,7 +350,7 @@ MonoBehaviour:
   driftFrontWheelFriction: 0
   driftBackWheelFriction: 0
   Nitro: 0
-  nitroAcceleration: 3
+  nitroAcceleration: 2
   nitroSteering: 0.5
   nitroSpeed: 0
   m_Passengers: 0
@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveShowcase: {fileID: 0}
+  objectShowcaseAnim: {fileID: 0}
   objectiveText: {fileID: 0}
   requirementText: {fileID: 0}
   rewardAmtText: {fileID: 0}
@@ -420,8 +421,10 @@ MonoBehaviour:
   chaosType: 0
   active: 0
   duration: 20
-  maxSecsTilNew: 10
-  minSecsTilNew: 15
+  maxSecsTilNew: 15
+  minSecsTilNew: 30
+  reward: 0
+  requirement: 0
   newTimer: 0
   randomTimer: 0
   durationTimer: 0
@@ -434,9 +437,9 @@ MonoBehaviour:
   collisionObjectiveText: Crash into anything!
   numTimesToCollide: 10
   collideReward: 30
-  destructionObjectiveText: Use powerups to destroy objects
-  numToDestroy: 5
-  destroyReward: 70
+  pWObjectiveText: Use powerups
+  numToUse: 2
+  pWReward: 50
   nearMissObjectiveText: Nearly miss cars
   nearMiss: 3
   nearMissReward: 50
@@ -481,6 +484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombTextOnBus: {fileID: 9005159845452743055}
   digitalDisplay: {fileID: 8287319588906499170}
+  objectiveFinished: 0
   freeze: 0
   freezeNeedle: {fileID: 0}
   freezeSpeedometer: {fileID: 0}
@@ -505,6 +509,8 @@ MonoBehaviour:
   slowShakeIntensity: 0.0225
   midShakeIntensity: 0.0181
   fastShakeIntensity: 0.0112
+  addingColor: {r: 0, g: 1, b: 0.51527715, a: 1}
+  subtractColor: {r: 1, g: 0.2729143, b: 0, a: 1}
   currentTimer: 0
 --- !u!114 &1331975426342428464
 MonoBehaviour:
@@ -570,7 +576,7 @@ MonoBehaviour:
   emptyImage: {fileID: 21300000, guid: 8c7b6779847da8645acbcd5e0d34579c, type: 3}
   turret: {fileID: 6946694407976258194}
   cam: {fileID: 0}
-  turretCooldown: 15
+  turretCooldown: 10
   hackCooldown: 5
   nitroCooldown: 2
   addFov: 15
@@ -11702,7 +11708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4157178286751870843
 Transform:
   m_ObjectHideFlags: 0
@@ -11802,8 +11808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bus: {fileID: 582055895660397785}
-  comboObject: {fileID: 0}
-  comboUI: {fileID: 0}
+  objectiveHandler: {fileID: 6305582121347749629}
   InsideTriggerBox: []
 --- !u!1 &3721538721511493607
 GameObject:

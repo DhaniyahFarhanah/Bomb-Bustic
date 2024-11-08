@@ -15,6 +15,7 @@ public class ScaledBombSystem : MonoBehaviour
     private float busSpeed;
     private float secTimer;
     [SerializeField] Transform digitalDisplay;
+    [HideInInspector] public bool objectiveFinished;
 
     [Header("Speedometer UI Stuff")]
     public bool freeze;
@@ -41,6 +42,7 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] int midTickRate;
     [SerializeField] int fastTickRate;
     private float maxSpeed;
+    private float newTime;
 
     [Header("Visual Aid")]
     private Vector3 orgPosOfDigitalDisplay;
@@ -51,6 +53,8 @@ public class ScaledBombSystem : MonoBehaviour
     [Range(0.00f, 0.05f)][SerializeField] private float slowShakeIntensity;
     [Range(0.00f, 0.05f)][SerializeField] private float midShakeIntensity;
     [Range(0.00f, 0.05f)][SerializeField] private float fastShakeIntensity;
+    [SerializeField] private Color addingColor;
+    [SerializeField] private Color subtractColor;
 
     [Header("BombStuff")]
     [SerializeField] int currentTimer;
@@ -123,6 +127,7 @@ public class ScaledBombSystem : MonoBehaviour
                 shake = false;
             }
         }
+
     }
 
     private void FixedUpdate()
@@ -134,12 +139,12 @@ public class ScaledBombSystem : MonoBehaviour
     {
         busSpeed = bus.Velocity.magnitude;
 
-        if (secTimer < 1 && !freeze)
+        if (secTimer < 1 && !freeze && !objectiveFinished)
         {
             secTimer += Time.deltaTime;
         }
 
-        else if (secTimer >= 1 && !freeze) //per 1 sec
+        else if (secTimer >= 1 && !freeze && !objectiveFinished) //per 1 sec
         {
             float intensity = 0f;
 
@@ -187,6 +192,26 @@ public class ScaledBombSystem : MonoBehaviour
         {
             bombTextOnBus.text = currentTimer.ToString();
         }
+
+        if (objectiveFinished)
+        {
+
+            if(currentTimer < newTime)
+            {
+                currentTimer ++;
+                bombTextOnBus.color = addingColor;
+            }
+            else if(currentTimer > newTime)
+            {
+                currentTimer--;
+                bombTextOnBus.color = subtractColor;
+            }
+
+            else if (currentTimer == newTime)
+            {
+                objectiveFinished = false;
+            }
+        }
     }
 
     void UpdateNeedleRotation()
@@ -222,6 +247,11 @@ public class ScaledBombSystem : MonoBehaviour
 
             needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, currentSpeedZ);
         }
-       
+    }
+
+    public void AddTime(int time)
+    {
+        objectiveFinished = true;
+        newTime = currentTimer + time;
     }
 }

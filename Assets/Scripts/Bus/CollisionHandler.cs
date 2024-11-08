@@ -8,6 +8,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float m_CollisionCooldown;
     private CameraShake m_CamShake;
     private GameObject bus;
+    private ChaosObjectiveHandler objectiveHandler;
 
     [Header("Light Obstacle Camera Shake")]
     [SerializeField] private float minSpeedLight = 10f;
@@ -55,6 +56,7 @@ public class CollisionHandler : MonoBehaviour
 
         bus = FindAnyObjectByType<BombMeter>().gameObject;
         FindAnyObjectByType<BombMeter>().SetCrashSpeedUI(minCrashSpeed);
+        objectiveHandler = gameObject.GetComponent<ChaosObjectiveHandler>();
     }
 
     // Update is called once per frame
@@ -160,14 +162,32 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
         ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
 
         if (obs == null) return;
 
         ObstacleTag m_ObstacleType = obs.obstacleTag;
+
+        if(collision.gameObject != null)
+        {
+            if (objectiveHandler.active && objectiveHandler.chaosType == ChaosType.collision)
+            {
+                objectiveHandler.requirement--;
+            }
+        }
+
         if (m_CanCollide)
         {
             m_CanCollide = false;
+
+            if(m_ObstacleType == ObstacleTag.CarAI)
+            {
+                if (objectiveHandler.active && objectiveHandler.chaosType == ChaosType.carCrash)
+                {
+                    objectiveHandler.requirement--;
+                }
+            }
 
             ExecuteCollisionShit(obs.obstacleTag);
 

@@ -11,6 +11,7 @@ public class PowerUpScript : MonoBehaviour
     [SerializeField] Sprite NitroImage;
     [SerializeField] Sprite EnergyPulseImage;
     [SerializeField] GameObject Sparkle;
+
     Sprite givenImage;
     // Start is called before the first frame update
 
