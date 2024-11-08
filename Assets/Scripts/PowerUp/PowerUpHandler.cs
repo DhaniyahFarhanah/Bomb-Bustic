@@ -35,9 +35,9 @@ public class PowerUpHandler : MonoBehaviour
     //Hack makes the bomb limit to 0 for a while
     [Header("Hack PowerUp")]
     [SerializeField] float hackCooldown;
-    BombMeter bombMeter;
     Vehicle busValues;
     float bombMeterNorm;
+    private ScaledBombSystem bombControl;
 
     //speeds up bus (maybe make acceleration 100 or smth)
     [Header("Nitro PowerUp")]
@@ -58,9 +58,8 @@ public class PowerUpHandler : MonoBehaviour
 
         //Default empty on start up
         busValues = Bus.GetComponent<Vehicle>();
-        bombMeter = Bus.GetComponent<BombMeter>();
+        bombControl = gameObject.GetComponent<ScaledBombSystem>();
 
-        bombMeterNorm = bombMeter.minSpeed;
         activated = false;
         currentPickUp = PickUpType.Empty;
     }
@@ -183,7 +182,7 @@ public class PowerUpHandler : MonoBehaviour
                 Cursor.visible = false;
                 break;
             case PickUpType.Hack:
-                bombMeter.minSpeed = bombMeterNorm;
+                bombControl.freeze = false;
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
@@ -216,7 +215,7 @@ public class PowerUpHandler : MonoBehaviour
         Debug.Log("Hack");
         currentTimer = hackCooldown;
         imageTimer = hackCooldown;
-        bombMeter.minSpeed = 0f;
+        bombControl.freeze = true;
 
     }
 

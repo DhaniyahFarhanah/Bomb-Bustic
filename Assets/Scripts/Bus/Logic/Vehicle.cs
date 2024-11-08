@@ -122,7 +122,8 @@ namespace ArcadeVehicleController
         public void Braking()
         {
             /*// Get the current forward speed of the vehicle
-            float forwardSpeed = Vector3.Dot(m_Transform.forward, m_Rigidbody.velocity);
+            float 
+            = Vector3.Dot(m_Transform.forward, m_Rigidbody.velocity);
             float speed = Mathf.Abs(forwardSpeed);
 
             // Brakes ratio logic, increase braking effect when almost stopped

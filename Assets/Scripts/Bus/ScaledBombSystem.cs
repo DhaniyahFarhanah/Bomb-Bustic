@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScaledBombSystem : MonoBehaviour
 {
@@ -15,13 +16,31 @@ public class ScaledBombSystem : MonoBehaviour
     private float secTimer;
     [SerializeField] Transform digitalDisplay;
 
+    [Header("Speedometer UI Stuff")]
+    public bool freeze;
+    [SerializeField] GameObject freezeNeedle;
+    [SerializeField] GameObject freezeSpeedometer;
+    [SerializeField] UIManager UIManger;
+    [SerializeField] Image speedometerSlowImg;
+    [SerializeField] Image speedometerFastImg;
+    [SerializeField] Image speedometerSlowBackingImg;
+    [SerializeField] Image speedometerFastBackingImg;
+    [SerializeField] TMP_Text speedometerSlowRateText;
+    [SerializeField] TMP_Text speedometerMidRateText;
+    [SerializeField] TMP_Text speedometerFastRateText;
+    [SerializeField] TMP_Text speedMaxText;
+    [SerializeField] Image needle;
+    private float maxZRotationNeedle;
+    private float minZRotationNeedle;
+
     [Header("Bomb Values")]
     [SerializeField] int startBombTime;
-    [SerializeField][Range(0,100)] int slowSpeedRange;
+    [SerializeField][Range(0, 100)] int slowSpeedRange;
     [SerializeField][Range(0, 100)] int midSpeedRange;
     [SerializeField] int slowTickRate;
     [SerializeField] int midTickRate;
     [SerializeField] int fastTickRate;
+    private float maxSpeed;
 
     [Header("Visual Aid")]
     private Vector3 orgPosOfDigitalDisplay;
@@ -45,6 +64,23 @@ public class ScaledBombSystem : MonoBehaviour
         currentTimer = startBombTime;
         bus = gameObject.GetComponent<Vehicle>();
         orgPosOfDigitalDisplay = digitalDisplay.localPosition;
+        maxSpeed = bus.Settings.MaxSpeed;
+
+        speedometerSlowImg.fillAmount = slowSpeedRange / bus.Settings.MaxSpeed;
+        speedometerSlowBackingImg.fillAmount = speedometerSlowImg.fillAmount + 0.02f;
+        speedometerFastImg.fillAmount = (bus.Settings.MaxSpeed - midSpeedRange) / bus.Settings.MaxSpeed;
+        speedometerFastBackingImg.fillAmount = speedometerFastImg.fillAmount + 0.02f;
+
+        //tick rate
+        speedometerSlowRateText.text = "-" + (slowTickRate).ToString();
+        speedometerMidRateText.text = "-" + (midTickRate).ToString();
+        speedometerFastRateText.text = "-" + (fastTickRate).ToString();
+
+        //speed limits
+        speedMaxText.text = ((int)maxSpeed).ToString();
+
+        maxZRotationNeedle = needle.transform.localEulerAngles.z;
+        minZRotationNeedle = maxZRotationNeedle - 180f;
     }
 
     // Update is called once per frame
@@ -52,7 +88,7 @@ public class ScaledBombSystem : MonoBehaviour
     {
         if (!firstStart)
         {
-            if(currentTimer <= 0)
+            if (currentTimer <= 0)
             {
                 //gameover
                 bombTextOnBus.text = "BOOM!";
@@ -67,7 +103,8 @@ public class ScaledBombSystem : MonoBehaviour
             digitalDisplay.localPosition = orgPosOfDigitalDisplay + Random.insideUnitSphere * shakeIntensity;
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        //any input to move bus
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.Space))
         {
             firstStart = false;
         }
@@ -88,17 +125,21 @@ public class ScaledBombSystem : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        UpdateNeedleRotation();
+    }
+
     void CalculateBombReduction()
     {
         busSpeed = bus.Velocity.magnitude;
 
-
-        if (secTimer < 1)
+        if (secTimer < 1 && !freeze)
         {
             secTimer += Time.deltaTime;
         }
 
-        else if (secTimer >= 1) //per 1 sec
+        else if (secTimer >= 1 && !freeze) //per 1 sec
         {
             float intensity = 0f;
 
@@ -133,6 +174,54 @@ public class ScaledBombSystem : MonoBehaviour
             secTimer = 0;
         }
 
-        bombTextOnBus.text = currentTimer.ToString();
+        if (freeze)
+        {
+            bombTextOnBus.text = ">:C";
+            bombTextOnBus.color = Color.cyan;
+
+            shake = true;
+            shakeIntensity = midShakeIntensity;
+        }
+
+        else
+        {
+            bombTextOnBus.text = currentTimer.ToString();
+        }
+    }
+
+    void UpdateNeedleRotation()
+    {
+        float currentZAngle = needle.transform.localEulerAngles.z;
+        float currentSpeedZ = 0f;
+
+        if(busSpeed > maxSpeed && !freeze)
+        {
+            //keep needle pointing at max
+            needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, minZRotationNeedle);
+        }
+
+        if(busSpeed < 0f && !freeze)
+        {
+            needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, maxZRotationNeedle);
+        }
+
+        else if(busSpeed <= maxSpeed)
+        {
+            if (freeze)
+            {
+                freezeNeedle.SetActive(true);
+                freezeSpeedometer.SetActive(true);
+                currentSpeedZ = needle.transform.localEulerAngles.z;
+            }
+            else
+            {
+                freezeNeedle.SetActive(false);
+                freezeSpeedometer.SetActive(false);
+                currentSpeedZ = (busSpeed / maxSpeed) * (minZRotationNeedle - maxZRotationNeedle);
+            }
+
+            needle.transform.localEulerAngles = new Vector3(needle.transform.localEulerAngles.x, needle.transform.localEulerAngles.y, currentSpeedZ);
+        }
+       
     }
 }
