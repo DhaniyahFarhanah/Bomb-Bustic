@@ -488,6 +488,7 @@ MonoBehaviour:
   digitalDisplay: {fileID: 8287319588906499170}
   objectiveFinished: 0
   UI: {fileID: 0}
+  spawnEnemy: {fileID: 0}
   freeze: 0
   freezeNeedle: {fileID: 0}
   freezeSpeedometer: {fileID: 0}
@@ -622,7 +623,7 @@ MonoBehaviour:
   midTick: {fileID: 8300000, guid: 750c30968df7f9b48b8bafba94c5b5bd, type: 3}
   slowTick: {fileID: 8300000, guid: 6c23dd12d9041f246925a244ddc9ed49, type: 3}
   WinningSoundtrack: {fileID: 0}
-  PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
+  PoliceAlert: {fileID: 0}
   ShootPassenger: {fileID: 8300000, guid: d41fffc7b73054147ac13444ff15ba35, type: 3}
   TurretShot: {fileID: 8300000, guid: 799bb1e1516df604baa99c06e8502f1e, type: 3}
   Shockwave: {fileID: 8300000, guid: ead366faeb2678e49a6b2ba189c1f578, type: 3}
