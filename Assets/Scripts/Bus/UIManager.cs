@@ -308,12 +308,9 @@ public class UIManager : MonoBehaviour
 
         if (m_Bus.GetComponent<BusAudioHandler>().sfxIsLooping == true)
         {
+            m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombDeadZone);
             m_Bus.GetComponent<BusAudioHandler>().StopSFXLoop();
         }
-
-        m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombDeadZone);
-        m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombExplosion);
-
     }
 
     public void ShowPassengers()

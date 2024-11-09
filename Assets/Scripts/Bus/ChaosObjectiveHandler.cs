@@ -268,13 +268,11 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
         if (success)
         {
-            Debug.Log("plus");
             bombSystem.AddTime(reward, true);
         }
         else if (!success)
         {
-            Debug.Log("minus");
-            bombSystem.AddTime(-10, false);
+            bombSystem.AddTime(10, false);
         }
 
         rewardBacking.color = Color.white;

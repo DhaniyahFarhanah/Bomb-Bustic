@@ -1,6 +1,7 @@
 using ArcadeVehicleController;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] Transform digitalDisplay;
     public bool objectiveFinished;
     [SerializeField] UIManager UI;
-    [SerializeField] GameObject roguePrefab, spawnPoint; 
+    [SerializeField] RougeAIManager spawnEnemy;
 
     [Header("Speedometer UI Stuff")]
     public bool freeze;
@@ -35,6 +36,9 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] Image needle;
     private float maxZRotationNeedle;
     private float minZRotationNeedle;
+
+    bool decrease;
+    bool increase;
 
     [Header("Bomb Values")]
     [SerializeField] int startBombTime;
@@ -62,6 +66,7 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] int currentTimer;
 
     BusAudioHandler audioHandler;
+    bool playOnce;
 
     // Start is called before the first frame update
     void Start()
@@ -99,9 +104,13 @@ public class ScaledBombSystem : MonoBehaviour
         {
             if (currentTimer <= 0)
             {
-                
                 bombTextOnBus.text = "BOOM!";
-                UI.Lose();
+
+                if (!playOnce)
+                {
+                    UI.Lose();
+                }
+                
             }
             else
             {
@@ -133,8 +142,6 @@ public class ScaledBombSystem : MonoBehaviour
                 shake = false;
             }
         }
-
-        Debug.Log(newTime);
 
     }
 
@@ -207,14 +214,14 @@ public class ScaledBombSystem : MonoBehaviour
 
         if (objectiveFinished)
         {
-            if(currentTimer < newTime)
+            if(currentTimer < newTime && increase)
             {
                 currentTimer ++;
                 audioHandler.PlayOneShotSFX(audioHandler.fastTick);
                 bombTextOnBus.color = addingColor;
             }
 
-            else if(currentTimer > newTime)
+            else if(currentTimer > newTime && decrease)
             {
                 currentTimer--;
                 audioHandler.PlayOneShotSFX(audioHandler.slowTick);
@@ -223,6 +230,8 @@ public class ScaledBombSystem : MonoBehaviour
 
             else if (currentTimer == newTime)
             {
+                increase = false;
+                decrease = false;
                 objectiveFinished = false;
             }
         }
@@ -268,13 +277,17 @@ public class ScaledBombSystem : MonoBehaviour
         if (success)
         {
             newTime = currentTimer + time;
+            increase = true;
             objectiveFinished = true;
+            Debug.Log(newTime);
         }
 
         else if (!success)
         {
-            newTime = currentTimer - time/4;
+            decrease = true;
+            newTime = currentTimer - time;
             objectiveFinished = true;
+            spawnEnemy.Spawn = true;
         }
         
     }
