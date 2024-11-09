@@ -25,6 +25,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
     [SerializeField] private TMP_Text requirementText;
     [SerializeField] private TMP_Text rewardAmtText;
     [SerializeField] private Image timerTime;
+    [SerializeField] private Image rewardBacking;
     private ScaledBombSystem bombSystem;
     private Vehicle bus;
     private JeepVisual busVisual;
@@ -136,7 +137,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
             case ChaosType.powerUp:
                 reward = pWReward;
                 requirement = numToUse;
-                rewardAmtText.text = pWReward.ToString() + "s";
+                rewardAmtText.text = "+" + pWReward.ToString() + "s";
                 objectiveText.text = pWObjectiveText;
                 break;
 
@@ -208,7 +209,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
                 break;
 
             case ChaosType.backwards:
-                requirementText.text = "for " + ((int)requirement).ToString() + "secs";
+                requirementText.text = ((int)requirement).ToString("0.0") + "secs";
 
                 if (busVisual.ForwardSpeed < -5.0f)
                 {
@@ -243,6 +244,16 @@ public class ChaosObjectiveHandler : MonoBehaviour
     IEnumerator EndObjective(bool success)
     {
         active = false;
+
+        if (success)
+        {
+            rewardBacking.color = Color.green;
+        }
+        else if (!success)
+        {
+            rewardBacking.color = Color.red;
+        }
+
         bombSystem.objectiveFinished = true;
         objectShowcaseAnim.SetBool("Done", true);
         //for as long as animation clip
@@ -256,7 +267,9 @@ public class ChaosObjectiveHandler : MonoBehaviour
         {
             bombSystem.AddTime(-10);
         }
+        rewardBacking.color = Color.white;
         objectiveShowcase.SetActive(false);
+
     }
 
 

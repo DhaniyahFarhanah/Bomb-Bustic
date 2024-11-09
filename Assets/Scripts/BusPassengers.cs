@@ -321,7 +321,7 @@ public class BusPassengers : MonoBehaviour
                 powerupHandler = gameObject.GetComponent<PowerUpHandler>();
             }
 
-            if(powerupHandler.currentPickUp == PickUpType.Turret)
+            if(powerupHandler.currentPickUp == PickUpType.Turret && powerupHandler.activated)
             {
                 cam.SetCameraMode(CameraModes.Turret);
             }

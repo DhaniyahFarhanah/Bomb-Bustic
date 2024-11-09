@@ -24,6 +24,9 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip flush;
     [SerializeField] public AudioClip win;   
     [SerializeField] public AudioClip[] DrivingSoundtrack;
+    [SerializeField] public AudioClip fastTick;
+    [SerializeField] public AudioClip midTick;
+    [SerializeField] public AudioClip slowTick;
     //[SerializeField] public AudioClip MenuSoundtrack;
     [SerializeField] public AudioClip WinningSoundtrack;
     [SerializeField] public AudioClip PoliceAlert;

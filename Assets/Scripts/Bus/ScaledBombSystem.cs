@@ -59,6 +59,8 @@ public class ScaledBombSystem : MonoBehaviour
     [Header("BombStuff")]
     [SerializeField] int currentTimer;
 
+    BusAudioHandler audio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,7 @@ public class ScaledBombSystem : MonoBehaviour
         bus = gameObject.GetComponent<Vehicle>();
         orgPosOfDigitalDisplay = digitalDisplay.localPosition;
         maxSpeed = bus.Settings.MaxSpeed;
+        audio = gameObject.GetComponent<BusAudioHandler>();
 
         speedometerSlowImg.fillAmount = slowSpeedRange / bus.Settings.MaxSpeed;
         speedometerSlowBackingImg.fillAmount = speedometerSlowImg.fillAmount + 0.02f;
@@ -154,6 +157,8 @@ public class ScaledBombSystem : MonoBehaviour
                 currentTimer -= slowTickRate;
                 intensity = slowShakeIntensity;
                 bombTextOnBus.color = Color.red;
+
+                audio.PlayOneShotSFX(audio.fastTick);
             }
 
             //when middle speed 
@@ -162,6 +167,7 @@ public class ScaledBombSystem : MonoBehaviour
                 currentTimer -= midTickRate;
                 intensity = midShakeIntensity;
                 bombTextOnBus.color = Color.yellow;
+                audio.PlayOneShotSFX(audio.midTick);
             }
 
             //when fast
@@ -170,6 +176,7 @@ public class ScaledBombSystem : MonoBehaviour
                 currentTimer -= fastTickRate;
                 intensity = fastShakeIntensity;
                 bombTextOnBus.color = Color.green;
+                audio.PlayOneShotSFX(audio.slowTick);
             }
 
             shake = true;
@@ -198,12 +205,14 @@ public class ScaledBombSystem : MonoBehaviour
 
             if(currentTimer < newTime)
             {
-                currentTimer ++;
+                currentTimer += 2;
+                audio.PlayOneShotSFX(audio.fastTick);
                 bombTextOnBus.color = addingColor;
             }
             else if(currentTimer > newTime)
             {
                 currentTimer--;
+                audio.PlayOneShotSFX(audio.slowTick);
                 bombTextOnBus.color = subtractColor;
             }
 

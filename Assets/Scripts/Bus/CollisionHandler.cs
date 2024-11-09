@@ -9,6 +9,7 @@ public class CollisionHandler : MonoBehaviour
     private CameraShake m_CamShake;
     private GameObject bus;
     private ChaosObjectiveHandler objectiveHandler;
+    [SerializeField] GameObject sparks;
 
     [Header("Light Obstacle Camera Shake")]
     [SerializeField] private float minSpeedLight = 10f;
@@ -162,6 +163,16 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        float crashImpact = (collision.relativeVelocity).magnitude;
+        if (m_CanCollide && crashImpact > 5f && (collision.gameObject.GetComponent<ObstacleType>() == null || (collision.gameObject.GetComponent<ObstacleType>() != null && collision.gameObject.GetComponent<ObstacleType>().obstacleTag != ObstacleTag.Light)))
+        {
+            ContactPoint contact = collision.contacts[0];
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 pos = contact.point;
+
+            Instantiate(sparks, pos, rot);
+        }
+
 
         ObstacleType obs = collision.gameObject.GetComponent<ObstacleType>();
 
@@ -206,6 +217,20 @@ public class CollisionHandler : MonoBehaviour
 
             // Trigger NearMiss behavior
             nearMiss.BusCollisionWith();
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        float crashImpact = (collision.relativeVelocity).magnitude;
+
+        if (m_CanCollide && crashImpact > 20f && collision.gameObject.GetComponent<ObstacleType>() == null)
+        {
+            ContactPoint contact = collision.contacts[0];
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            Vector3 pos = contact.point;
+
+            Instantiate(sparks, pos, rot);
         }
     }
 

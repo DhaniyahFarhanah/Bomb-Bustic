@@ -418,6 +418,7 @@ MonoBehaviour:
   requirementText: {fileID: 0}
   rewardAmtText: {fileID: 0}
   timerTime: {fileID: 0}
+  rewardBacking: {fileID: 0}
   chaosType: 0
   active: 0
   duration: 20
@@ -428,18 +429,18 @@ MonoBehaviour:
   newTimer: 0
   randomTimer: 0
   durationTimer: 0
-  backwardsObjectiveText: Drive Backwards
+  backwardsObjectiveText: Drive Backwards without stopping
   amtOfSeconds: 3
   backwardReward: 100
   carCrashObjectiveText: Crash into cars
   numOfCars: 5
   carCrashReward: 50
   collisionObjectiveText: Crash into anything!
-  numTimesToCollide: 10
+  numTimesToCollide: 5
   collideReward: 30
   pWObjectiveText: Use powerups
-  numToUse: 2
-  pWReward: 50
+  numToUse: 1
+  pWReward: 30
   nearMissObjectiveText: Nearly miss cars
   nearMiss: 3
   nearMissReward: 50
@@ -456,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CollisionCooldown: 0
+  sparks: {fileID: 767026449149926596, guid: 7e356ab390b455f4a8802e937060f1a0, type: 3}
   minSpeedLight: 10
   m_LightDuration: 0.2
   m_LightIntensity: 0.1
@@ -37867,6 +37869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5d116a520bb2e47b4002bb74de54f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SmokeCloud: {fileID: 767026449149926596, guid: eedd63e518c69ac4793f94f141c103f2, type: 3}
 --- !u!1 &8867709148706179952
 GameObject:
   m_ObjectHideFlags: 0
