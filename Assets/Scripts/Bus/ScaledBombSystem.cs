@@ -17,6 +17,7 @@ public class ScaledBombSystem : MonoBehaviour
     [SerializeField] Transform digitalDisplay;
     public bool objectiveFinished;
     [SerializeField] UIManager UI;
+    [SerializeField] GameObject roguePrefab, spawnPoint; 
 
     [Header("Speedometer UI Stuff")]
     public bool freeze;
@@ -132,6 +133,8 @@ public class ScaledBombSystem : MonoBehaviour
                 shake = false;
             }
         }
+
+        Debug.Log(newTime);
 
     }
 
@@ -260,9 +263,19 @@ public class ScaledBombSystem : MonoBehaviour
         }
     }
 
-    public void AddTime(int time)
+    public void AddTime(int time, bool success)
     {
-        newTime = currentTimer + time;
-        objectiveFinished = true;
+        if (success)
+        {
+            newTime = currentTimer + time;
+            objectiveFinished = true;
+        }
+
+        else if (!success)
+        {
+            newTime = currentTimer - time/4;
+            objectiveFinished = true;
+        }
+        
     }
 }

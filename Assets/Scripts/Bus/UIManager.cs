@@ -306,6 +306,12 @@ public class UIManager : MonoBehaviour
 
         passengersSavedText.text = savedPassengers.ToString() + "/" + m_PassengerInfo.PassengerStateList.Count;
 
+        if (m_Bus.GetComponent<BusAudioHandler>().sfxIsLooping == true)
+        {
+            m_Bus.GetComponent<BusAudioHandler>().StopSFXLoop();
+        }
+
+        m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombDeadZone);
         m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombExplosion);
 
     }
