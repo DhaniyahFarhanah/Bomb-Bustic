@@ -10,6 +10,7 @@ public enum PickUpType
     Empty,
     Hack,
     Nitro,
+    Turret,
     EnergyPulse
 }
 
@@ -149,9 +150,9 @@ public class PowerUpHandler : MonoBehaviour
             case PickUpType.Empty: 
                 Debug.Log("Empty");
                 break;
-            //case PickUpType.Turret:
-                //ActivateTurret();
-                //break;
+            case PickUpType.Turret:
+                ActivateTurret();
+                break;
             case PickUpType.Hack:
                 ActivateHack();
                 GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Emp);
@@ -182,11 +183,11 @@ public class PowerUpHandler : MonoBehaviour
 
         switch (type)
         {
-            //case PickUpType.Turret:
-                //turret.SetActive(false);
-                //cam.SetCameraMode(CameraModes.Normal);
-                //Cursor.visible = false;
-                //break;
+            case PickUpType.Turret:
+                turret.SetActive(false);
+                cam.SetCameraMode(CameraModes.Normal);
+                Cursor.visible = false;
+                break;
             case PickUpType.Hack:
                 bombControl.freeze = false;
                 break;

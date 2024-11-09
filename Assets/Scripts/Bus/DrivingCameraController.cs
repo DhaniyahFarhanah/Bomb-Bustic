@@ -94,6 +94,7 @@ namespace ArcadeVehicleController
             }
 
             CameraMode();
+
         }
 
         void HandleCameraPosition()
@@ -313,10 +314,7 @@ namespace ArcadeVehicleController
                 cameraMode = mode;
                 StartCoroutine(TransistionCamera(true));
             }
-            else if (cameraMode == CameraModes.PassengerEject && mode == CameraModes.Normal)
-            {
-                StartCoroutine(TransistionCamera(false));
-            }
+
             else
             {
                 cameraMode = mode;

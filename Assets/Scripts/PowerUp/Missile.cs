@@ -11,6 +11,7 @@ public class Missile : MonoBehaviour
     private float speed = 5f;
     private Rigidbody rb;
     public GameObject target;
+    [SerializeField] GameObject smokeCloud;
     //public Vector3 Crosshair;
     public bool homeIn;
 
@@ -27,9 +28,9 @@ public class Missile : MonoBehaviour
     {
         if (homeIn && target)
         {
-            rb.velocity = Vector3.zero;
             speed += Time.deltaTime * 100f;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
+            rb.MovePosition(Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f));
+            //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
         }
         
     }
@@ -40,24 +41,24 @@ public class Missile : MonoBehaviour
 
         if (hitObject.GetComponentInParent<RougeAI>())
         {
-            Debug.Log("Destroy car");
             hitObject.GetComponentInParent<RougeAI>().SelfDestruct();
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             return;
         }
 
         if (hitObject.GetComponentInParent<BasicAI>())
         {
-            Debug.Log("Destroy car");
             Destroy(hitObject.GetComponentInParent<BasicAI>().gameObject);
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             return;
         }
 
         if (hitObject.GetComponent<ObstacleType>() != null && !hitObject.CompareTag("Player") && !hitObject.CompareTag("Indestructable") && !hitObject.CompareTag("DropOff"))
         {
-            Debug.Log("Destroy anyhting else");
-            Destroy(hitObject.GetComponentInParent<ObstacleType>());
+            Destroy(hitObject.GetComponentInParent<ObstacleType>().gameObject);
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

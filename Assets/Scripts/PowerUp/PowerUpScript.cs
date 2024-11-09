@@ -35,9 +35,9 @@ public class PowerUpScript : MonoBehaviour
 
                         switch (powerUp)
                         {
-                            //case PickUpType.Turret:
-                                //givenImage = TurretImage;
-                                //break;
+                            case PickUpType.Turret:
+                                givenImage = TurretImage;
+                                break;
                             case PickUpType.Hack:
                                 givenImage = HackImage;
                                 break;
@@ -63,9 +63,9 @@ public class PowerUpScript : MonoBehaviour
                     {
                         switch (type)
                         {
-                            //case PickUpType.Turret:
-                                //givenImage = TurretImage;
-                                //break;
+                            case PickUpType.Turret:
+                                givenImage = TurretImage;
+                                break;
                             case PickUpType.Hack:
                                 givenImage = HackImage;
                                 break;

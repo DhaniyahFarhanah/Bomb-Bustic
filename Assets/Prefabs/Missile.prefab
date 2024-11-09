@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  smokeCloud: {fileID: 767026449149926596, guid: 14148540cf994ec4c88ad98db981de40, type: 3}
   homeIn: 0
 --- !u!54 &1718177112031908045
 Rigidbody:
@@ -128,7 +129,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!65 &-3252466065278592734
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5218853, y: 0.5757792, z: 0.6169528}
+  m_Size: {x: 1.4401118, y: 1.4191308, z: 1.4931881}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3067011693948513074
 GameObject:
