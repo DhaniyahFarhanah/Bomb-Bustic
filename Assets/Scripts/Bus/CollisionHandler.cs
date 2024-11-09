@@ -33,6 +33,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float verticaDirection = 1.5f;
 
     [SerializeField] private NearMiss nearMiss;
+    BusAudioHandler audioHandler;
 
     public enum CrashTypes
     {
@@ -47,6 +48,7 @@ public class CollisionHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioHandler = GetComponent<BusAudioHandler>();
         m_CamShake = Camera.main.GetComponent<CameraShake>();
 
         if (m_CamShake == null)
@@ -100,6 +102,7 @@ public class CollisionHandler : MonoBehaviour
                 m_CamShake.DoCameraShake(m_HeavyIntensity, m_HeavyDuration);
                 break;
             default:
+                m_CamShake.DoCameraShake(m_LightIntensity, m_LightDuration);
                 break;
         }
     }
@@ -161,6 +164,26 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
+    private AudioClip CrashSound(ObstacleTag obstacleType)
+    {
+        switch (obstacleType)
+        {
+            case ObstacleTag.Medium:
+                return audioHandler.mCrash;
+            case ObstacleTag.CarAI:
+                return audioHandler.mCrash;
+            case ObstacleTag.Heavy:
+                return audioHandler.lCrash;
+            case ObstacleTag.Light:
+                int random = Random.Range(0, audioHandler.sCrash.Length);
+                return audioHandler.sCrash[random];
+            case ObstacleTag.Pedestrian:
+            default:
+                int random2 = Random.Range(0, audioHandler.sCrash.Length);
+                return audioHandler.sCrash[random2];
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         float crashImpact = (collision.relativeVelocity).magnitude;
@@ -170,7 +193,10 @@ public class CollisionHandler : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
             Vector3 pos = contact.point;
 
+
             Instantiate(sparks, pos, rot);
+            audioHandler.PlayOneShotSFX(CrashSound(ObstacleTag.None));
+            m_CamShake.DoCameraShake(m_LightIntensity, m_LightDuration);
         }
 
 
@@ -199,6 +225,8 @@ public class CollisionHandler : MonoBehaviour
                     objectiveHandler.requirement--;
                 }
             }
+
+            audioHandler.PlayOneShotSFX(CrashSound(m_ObstacleType));
 
             ExecuteCollisionShit(obs.obstacleTag);
 

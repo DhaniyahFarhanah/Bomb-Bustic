@@ -21,7 +21,7 @@ public class NearMiss : MonoBehaviour
         if (obs == null) return;
 
         // Ensure the object entering the trigger is not the bus itself
-        if (other.gameObject != bus)
+        if (other.gameObject != bus && obs.obstacleTag == ObstacleTag.CarAI)
         {
             //Debug.Log($"Added {other.gameObject.name}");
             InsideTriggerBox.Add(other.gameObject.gameObject);
@@ -34,7 +34,7 @@ public class NearMiss : MonoBehaviour
         if (obs == null) return;
 
         // Ensure the object exiting the trigger is not the bus itself
-        if (other.gameObject != bus && objectiveHandler.active && objectiveHandler.chaosType == ChaosType.miss)
+        if (other.gameObject != bus && objectiveHandler.active && objectiveHandler.chaosType == ChaosType.miss && obs.obstacleTag == ObstacleTag.CarAI)
         {
             Combo++;
             if (InsideTriggerBox.Contains(other.gameObject))

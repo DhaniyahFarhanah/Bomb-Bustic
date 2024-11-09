@@ -155,7 +155,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Hack:
                 ActivateHack();
-                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Emp);
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
                 break;
             case PickUpType.Nitro:
                 ActivateNitro();
@@ -163,7 +163,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.EnergyPulse:
                 ActivateEnergyPulse();
-                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Emp);
                 break;
         }
         //navigate to correct mechanic

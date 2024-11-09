@@ -16,6 +16,7 @@ public class ScaledBombSystem : MonoBehaviour
     private float secTimer;
     [SerializeField] Transform digitalDisplay;
     [HideInInspector] public bool objectiveFinished;
+    [SerializeField] UIManager UI;
 
     [Header("Speedometer UI Stuff")]
     public bool freeze;
@@ -59,7 +60,7 @@ public class ScaledBombSystem : MonoBehaviour
     [Header("BombStuff")]
     [SerializeField] int currentTimer;
 
-    BusAudioHandler audio;
+    BusAudioHandler audioHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +72,7 @@ public class ScaledBombSystem : MonoBehaviour
         bus = gameObject.GetComponent<Vehicle>();
         orgPosOfDigitalDisplay = digitalDisplay.localPosition;
         maxSpeed = bus.Settings.MaxSpeed;
-        audio = gameObject.GetComponent<BusAudioHandler>();
+        audioHandler = gameObject.GetComponent<BusAudioHandler>();
 
         speedometerSlowImg.fillAmount = slowSpeedRange / bus.Settings.MaxSpeed;
         speedometerSlowBackingImg.fillAmount = speedometerSlowImg.fillAmount + 0.02f;
@@ -97,8 +98,10 @@ public class ScaledBombSystem : MonoBehaviour
         {
             if (currentTimer <= 0)
             {
-                //gameover
+                
                 bombTextOnBus.text = "BOOM!";
+                UI.Lose();
+                audioHandler.PlayOneShotSFX(audioHandler.BombExplosion);
             }
             else
             {
@@ -158,7 +161,7 @@ public class ScaledBombSystem : MonoBehaviour
                 intensity = slowShakeIntensity;
                 bombTextOnBus.color = Color.red;
 
-                audio.PlayOneShotSFX(audio.fastTick);
+                audioHandler.PlayOneShotSFX(audioHandler.fastTick);
             }
 
             //when middle speed 
@@ -167,7 +170,7 @@ public class ScaledBombSystem : MonoBehaviour
                 currentTimer -= midTickRate;
                 intensity = midShakeIntensity;
                 bombTextOnBus.color = Color.yellow;
-                audio.PlayOneShotSFX(audio.midTick);
+                audioHandler.PlayOneShotSFX(audioHandler.midTick);
             }
 
             //when fast
@@ -176,7 +179,7 @@ public class ScaledBombSystem : MonoBehaviour
                 currentTimer -= fastTickRate;
                 intensity = fastShakeIntensity;
                 bombTextOnBus.color = Color.green;
-                audio.PlayOneShotSFX(audio.slowTick);
+                audioHandler.PlayOneShotSFX(audioHandler.slowTick);
             }
 
             shake = true;
@@ -206,13 +209,13 @@ public class ScaledBombSystem : MonoBehaviour
             if(currentTimer < newTime)
             {
                 currentTimer += 2;
-                audio.PlayOneShotSFX(audio.fastTick);
+                audioHandler.PlayOneShotSFX(audioHandler.fastTick);
                 bombTextOnBus.color = addingColor;
             }
             else if(currentTimer > newTime)
             {
                 currentTimer--;
-                audio.PlayOneShotSFX(audio.slowTick);
+                audioHandler.PlayOneShotSFX(audioHandler.slowTick);
                 bombTextOnBus.color = subtractColor;
             }
 
