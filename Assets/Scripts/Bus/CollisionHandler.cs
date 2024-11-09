@@ -186,6 +186,14 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision != null)
+        {
+            if (objectiveHandler.active && objectiveHandler.chaosType == ChaosType.collision)
+            {
+                objectiveHandler.requirement--;
+            }
+        }
+
         float crashImpact = (collision.relativeVelocity).magnitude;
         if (m_CanCollide && crashImpact > 5f && (collision.gameObject.GetComponent<ObstacleType>() == null || (collision.gameObject.GetComponent<ObstacleType>() != null && collision.gameObject.GetComponent<ObstacleType>().obstacleTag != ObstacleTag.Light)))
         {
@@ -205,14 +213,6 @@ public class CollisionHandler : MonoBehaviour
         if (obs == null) return;
 
         ObstacleTag m_ObstacleType = obs.obstacleTag;
-
-        if(collision.gameObject != null)
-        {
-            if (objectiveHandler.active && objectiveHandler.chaosType == ChaosType.collision)
-            {
-                objectiveHandler.requirement--;
-            }
-        }
 
         if (m_CanCollide)
         {
