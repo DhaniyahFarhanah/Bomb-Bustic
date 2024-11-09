@@ -64,11 +64,25 @@ public class AICarEngine : MonoBehaviour
     [SerializeField] private Renderer brakeLightLeft;
     [SerializeField] private Renderer brakeLightRight;
 
+    private float frontSensorAngle3;
+    private float sensorLengthHalf;
+    private float sensorLengthForth;
+    private float reverseSpeed;
+    private float slowSpeed;
+
+    private void Start()
+    {
+        frontSensorAngle3 = frontSensorAngle * 3;
+        sensorLengthHalf = sensorLength * 0.5f;
+        sensorLengthForth = sensorLength * 0.25f;
+        reverseSpeed = -maxMotorTorque * reverseSpeedMultiplier;
+        slowSpeed = maxSpeed * slowSpeedThreshold;
+    }
 
     protected void Init()
     {
         rb = GetComponent<Rigidbody>();
-        GetComponent<Rigidbody>().centerOfMass = centerOfMass;
+        rb.centerOfMass = centerOfMass;
     }
 
     protected void EngineUpdate()
@@ -83,7 +97,7 @@ public class AICarEngine : MonoBehaviour
         Drive();  // Move the car forward
 
         // Only check if the car is stuck when it's not reversing
-        if (!isReversing)
+        if (!isReversing && !stop)
             CheckIfSlow();
     }
 
@@ -91,96 +105,50 @@ public class AICarEngine : MonoBehaviour
     private void Sensors()
     {
         RaycastHit hit;
-        Vector3 sensorStartPos = transform.position;
-        sensorStartPos += transform.forward * frontSensorPosition.z;
-        sensorStartPos += transform.up * frontSensorPosition.y;
+        Vector3 sensorStartPos = transform.position +
+            transform.forward * frontSensorPosition.z +
+            transform.up * frontSensorPosition.y;
         avoidMultiplier = 0;
         detectedObstacle = false;
 
         // Front right sensor
         sensorStartPos += transform.right * frontSideSensorPosition;
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier -= 1f;
-            }
-        }
-        // Front right angled sensor
-        else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, Vector3.up) * transform.forward, out hit, sensorLength * 0.5f))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier -= 0.5f;
-            }
-        }
-        // Front right 90 angled sensor
-        else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle * 3, Vector3.up) * transform.forward, out hit, sensorLength * 0.25f))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier -= 0.25f;
-            }
-        }
+        if (CheckSensor(sensorStartPos, transform.forward, sensorLength, out hit, -1f)) return;
+        else if (CheckSensor(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, Vector3.up) * transform.forward, sensorLengthHalf, out hit, -0.5f)) return;
+        else if (CheckSensor(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle3, Vector3.up) * transform.forward, sensorLengthForth, out hit, -0.25f)) return;
 
-        // Front left sensor
+        // Front left sensor logic
         sensorStartPos -= transform.right * frontSideSensorPosition * 2;
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier += 1f;
-            }
-        }
-        // Front left angled sensor
-        else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, Vector3.up) * transform.forward, out hit, sensorLength * 0.5f))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier += 0.5f;
-            }
-        }
-        // Front left 90 angled sensor
-        else if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle * 3, Vector3.up) * transform.forward, out hit, sensorLength * 0.25f))
-        {
-            DrawDebugLine(sensorStartPos, hit.point);
-            if (hit.collider.gameObject.GetComponent<ObstacleType>())
-            {
-                SetDetectedObstacle(hit);
-                avoidMultiplier += 0.25f;
-            }
-        }
+        if (CheckSensor(sensorStartPos, transform.forward, sensorLength, out hit, 1f)) return;
+        else if (CheckSensor(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, Vector3.up) * transform.forward, sensorLengthHalf, out hit, 0.5f)) return;
+        else if (CheckSensor(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle3, Vector3.up) * transform.forward, sensorLengthForth, out hit, 0.25f)) return;
+
 
         // Front center sensor
-        if (avoidMultiplier == 0)
+        if (avoidMultiplier == 0 && Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
+            DrawDebugLine(sensorStartPos, hit.point);
+            if (hit.collider.TryGetComponent(out ObstacleType obstacleType))
             {
-                DrawDebugLine(sensorStartPos, hit.point);
-                if (hit.collider.gameObject.GetComponent<ObstacleType>())
-                {
-                    SetDetectedObstacle(hit);
-                    if (hit.normal.x < 0)
-                    {
-                        avoidMultiplier -= 1;
-                    }
-                    else
-                    {
-                        avoidMultiplier += 1;
-                    }
-                }
+                SetDetectedObstacle(hit);
+                avoidMultiplier = hit.normal.x < 0 ? -1f : 1f;
             }
         }
+    }
+
+    private bool CheckSensor(Vector3 startPos, Vector3 direction, float length, out RaycastHit hit, float multiplier)
+    {
+        if (Physics.Raycast(startPos, direction, out hit, length))
+        {
+            DrawDebugLine(startPos, hit.point);
+            if (hit.collider.TryGetComponent(out ObstacleType obstacleType))
+            {
+                SetDetectedObstacle(hit);
+                avoidMultiplier += multiplier;
+                return true; // Stop further checks if an obstacle is detected
+            }
+        }
+        return false;
     }
 
     private void SetDetectedObstacle(RaycastHit detectedObject)
@@ -239,8 +207,7 @@ public class AICarEngine : MonoBehaviour
             Debug.DrawLine(transform.position, targetPosition, targetLineColor);
 
         Vector3 relativeVector = transform.InverseTransformPoint(targetPosition);
-        float newSteer = (relativeVector.x / relativeVector.magnitude) * maxSteerAngle;
-        targetSteerAngle = newSteer;
+        targetSteerAngle = (relativeVector.x / relativeVector.magnitude) * maxSteerAngle;
     }
 
     private void LerpToSteerAngle()
@@ -267,8 +234,8 @@ public class AICarEngine : MonoBehaviour
             }
             else
             {
-                wheelFL.motorTorque = -maxMotorTorque * reverseSpeedMultiplier;  // Apply reverse torque
-                wheelFR.motorTorque = -maxMotorTorque * reverseSpeedMultiplier;
+                wheelFL.motorTorque = reverseSpeed;  // Apply reverse torque
+                wheelFR.motorTorque = reverseSpeed;
             }
         }
         else
@@ -285,7 +252,7 @@ public class AICarEngine : MonoBehaviour
         if (stop)
             return;
 
-        if (currentSpeed < maxSpeed * slowSpeedThreshold && !isBraking)
+        if (currentSpeed < slowSpeed && !isBraking)
         {
             slowTimeCounter += Time.deltaTime;  // Increment slow time counter
 
@@ -293,6 +260,7 @@ public class AICarEngine : MonoBehaviour
             {
                 if (reversible)
                     StartCoroutine(ReverseCoroutine());
+
                 slowTimeCounter = 0f;  // Reset the slow time counter
             }
         }
