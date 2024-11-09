@@ -306,6 +306,7 @@ public class UIManager : MonoBehaviour
 
         passengersSavedText.text = savedPassengers.ToString() + "/" + m_PassengerInfo.PassengerStateList.Count;
 
+        m_Bus.GetComponent<BusAudioHandler>().PlayOneShotSFX(m_Bus.GetComponent<BusAudioHandler>().BombExplosion);
 
     }
 

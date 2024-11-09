@@ -15,7 +15,7 @@ public class ScaledBombSystem : MonoBehaviour
     private float busSpeed;
     private float secTimer;
     [SerializeField] Transform digitalDisplay;
-    [HideInInspector] public bool objectiveFinished;
+    public bool objectiveFinished;
     [SerializeField] UIManager UI;
 
     [Header("Speedometer UI Stuff")]
@@ -101,7 +101,6 @@ public class ScaledBombSystem : MonoBehaviour
                 
                 bombTextOnBus.text = "BOOM!";
                 UI.Lose();
-                audioHandler.PlayOneShotSFX(audioHandler.BombExplosion);
             }
             else
             {
@@ -205,13 +204,13 @@ public class ScaledBombSystem : MonoBehaviour
 
         if (objectiveFinished)
         {
-
             if(currentTimer < newTime)
             {
-                currentTimer += 2;
+                currentTimer ++;
                 audioHandler.PlayOneShotSFX(audioHandler.fastTick);
                 bombTextOnBus.color = addingColor;
             }
+
             else if(currentTimer > newTime)
             {
                 currentTimer--;
@@ -263,7 +262,7 @@ public class ScaledBombSystem : MonoBehaviour
 
     public void AddTime(int time)
     {
-        objectiveFinished = true;
         newTime = currentTimer + time;
+        objectiveFinished = true;
     }
 }

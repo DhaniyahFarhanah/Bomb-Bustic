@@ -30,8 +30,8 @@ MonoBehaviour:
   m_MaxSpeed: 80
   m_MaxReverseSpeed: 40
   m_SteerAngle: 13
-  m_FrontWheelsGripFactor: 0.7
-  m_RearWheelsGripFactor: 0.7
+  m_FrontWheelsGripFactor: 0.911
+  m_RearWheelsGripFactor: 1
   m_DriftBrakesPower: 1
   m_DriftReverseSpeed: 0
   m_DriftSteerAngle: 17.6

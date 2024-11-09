@@ -114,6 +114,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
             else if (durationTimer <= 0)
             {
                 StartCoroutine(EndObjective(false));
+                active = false;
             }
         }
     }
@@ -181,6 +182,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
                 if (requirement <= 0)
                 {
+                    active = false;
                     requirementText.text = "Success!";
                     StartCoroutine(EndObjective(true));
                 }
@@ -192,6 +194,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
                 if (requirement <= 0)
                 {
+                    active = false;
                     requirementText.text = "Success!";
                     StartCoroutine(EndObjective(true));
                 }
@@ -203,21 +206,23 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
                 if (requirement <= 0)
                 {
+                    active = false;
                     requirementText.text = "Success!";
                     StartCoroutine(EndObjective(true));
                 }
                 break;
 
             case ChaosType.backwards:
-                requirementText.text = ((int)requirement).ToString("0.0") + "secs";
+                requirementText.text = (requirement + 1).ToString("0.0") + "secs";
 
-                if (busVisual.ForwardSpeed < -5.0f)
+                if (busVisual.ForwardSpeed < -5.0f && requirement > 0)
                 {
                     requirement -= Time.deltaTime;
                 }
 
                 else if (requirement <= 0)
                 {
+                    active = false;
                     requirementText.text = "Success!";
                     StartCoroutine(EndObjective(true));
                 }
@@ -233,6 +238,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
                 if(requirement <= 0)
                 {
+                    active = false;
                     requirementText.text = "Success!";
                     StartCoroutine(EndObjective(true));
                 }
@@ -243,6 +249,7 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
     IEnumerator EndObjective(bool success)
     {
+        Debug.Log("Play");
         active = false;
 
         if (success)
@@ -261,12 +268,15 @@ public class ChaosObjectiveHandler : MonoBehaviour
 
         if (success)
         {
+            Debug.Log("plus");
             bombSystem.AddTime(reward);
         }
         else if (!success)
         {
+            Debug.Log("minus");
             bombSystem.AddTime(-10);
         }
+
         rewardBacking.color = Color.white;
         objectiveShowcase.SetActive(false);
 

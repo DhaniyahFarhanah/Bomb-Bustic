@@ -350,7 +350,7 @@ MonoBehaviour:
   driftFrontWheelFriction: 0
   driftBackWheelFriction: 0
   Nitro: 0
-  nitroAcceleration: 2
+  nitroAcceleration: 3
   nitroSteering: 0.5
   nitroSpeed: 0
   m_Passengers: 0
@@ -487,6 +487,7 @@ MonoBehaviour:
   bombTextOnBus: {fileID: 9005159845452743055}
   digitalDisplay: {fileID: 8287319588906499170}
   objectiveFinished: 0
+  UI: {fileID: 0}
   freeze: 0
   freezeNeedle: {fileID: 0}
   freezeSpeedometer: {fileID: 0}
@@ -617,6 +618,9 @@ MonoBehaviour:
   DrivingSoundtrack:
   - {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
   - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
+  fastTick: {fileID: 8300000, guid: dc80b13c5ce74c846a15cf262905cda1, type: 3}
+  midTick: {fileID: 8300000, guid: 750c30968df7f9b48b8bafba94c5b5bd, type: 3}
+  slowTick: {fileID: 8300000, guid: 6c23dd12d9041f246925a244ddc9ed49, type: 3}
   WinningSoundtrack: {fileID: 0}
   PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
   ShootPassenger: {fileID: 8300000, guid: d41fffc7b73054147ac13444ff15ba35, type: 3}
