@@ -121,7 +121,10 @@ public class BasicAI : AICarEngine
     protected override void BrakeLogic()
     {
         isBraking = false;
-
+        if (currentSpeed > maxSpeed)
+        {
+            isBraking = true;
+        }
         if (State == AIState.AvoidingObstacle && slowWhenAvoiding && currentSpeed > highSpeed)
         {
             isBraking = true;
