@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapCamera: {fileID: 0}
-  mapSize: 125
+  mapSize: 180
 --- !u!1 &3681445423307580146
 GameObject:
   m_ObjectHideFlags: 0
