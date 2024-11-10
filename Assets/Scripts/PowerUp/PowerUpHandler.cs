@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public enum PickUpType
 {
     Empty,
-    Turret,
     Hack,
     Nitro,
+    Turret,
     EnergyPulse
 }
 
@@ -25,7 +25,7 @@ public class PowerUpHandler : MonoBehaviour
     [SerializeField] Image powerUpImage;
     public Image backingImage;
     [SerializeField] Sprite emptyImage;
-    private BusAudioHandler busAudioHandler;
+    ChaosObjectiveHandler chaosHandler;
 
     //Turret activates Turret powerup
     [Header("Turret PowerUp")]
@@ -36,9 +36,9 @@ public class PowerUpHandler : MonoBehaviour
     //Hack makes the bomb limit to 0 for a while
     [Header("Hack PowerUp")]
     [SerializeField] float hackCooldown;
-    BombMeter bombMeter;
     Vehicle busValues;
     float bombMeterNorm;
+    private ScaledBombSystem bombControl;
 
     //speeds up bus (maybe make acceleration 100 or smth)
     [Header("Nitro PowerUp")]
@@ -59,13 +59,11 @@ public class PowerUpHandler : MonoBehaviour
 
         //Default empty on start up
         busValues = Bus.GetComponent<Vehicle>();
-        bombMeter = Bus.GetComponent<BombMeter>();
+        chaosHandler = gameObject.GetComponent<ChaosObjectiveHandler>();
+        bombControl = gameObject.GetComponent<ScaledBombSystem>();
 
-        bombMeterNorm = bombMeter.minSpeed;
         activated = false;
         currentPickUp = PickUpType.Empty;
-
-        busAudioHandler = GetComponent<BusAudioHandler>();
     }
 
     // Update is called once per frame
@@ -142,6 +140,11 @@ public class PowerUpHandler : MonoBehaviour
         activated = true;
         PickUpAnimator.SetBool("Activate", true);
 
+        if(chaosHandler.active && chaosHandler.chaosType == ChaosType.powerUp)
+        {
+            chaosHandler.requirement--;
+        }
+
         switch (type)
         {
             case PickUpType.Empty: 
@@ -152,15 +155,15 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Hack:
                 ActivateHack();
-                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Emp);
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
                 break;
             case PickUpType.Nitro:
                 ActivateNitro();
-                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Boost);
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Boost);
                 break;
             case PickUpType.EnergyPulse:
                 ActivateEnergyPulse();
-                busAudioHandler.PlayPriority(GetComponent<BusAudioHandler>().Shockwave);
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().Emp);
                 break;
         }
         //navigate to correct mechanic
@@ -186,7 +189,7 @@ public class PowerUpHandler : MonoBehaviour
                 Cursor.visible = false;
                 break;
             case PickUpType.Hack:
-                bombMeter.minSpeed = bombMeterNorm;
+                bombControl.freeze = false;
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
@@ -219,7 +222,7 @@ public class PowerUpHandler : MonoBehaviour
         Debug.Log("Hack");
         currentTimer = hackCooldown;
         imageTimer = hackCooldown;
-        bombMeter.minSpeed = 0f;
+        bombControl.freeze = true;
 
     }
 

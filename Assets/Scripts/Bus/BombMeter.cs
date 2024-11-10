@@ -151,7 +151,7 @@ public class BombMeter : MonoBehaviour
             bombTimerText.text = "BOOM!";
             countdownTimer = 0f;
 
-            /*if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
+            if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
             {
                 GetComponent<BusAudioHandler>().StopSFXLoop();
             }
@@ -159,10 +159,9 @@ public class BombMeter : MonoBehaviour
 
             if (!UI.end)
             {
-                GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().BombExplosion);
                 GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().BombDeadZone);
                 UI.Lose();
-            }*/
+            }
             
         }
         else
@@ -185,10 +184,10 @@ public class BombMeter : MonoBehaviour
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
             BombImage.transform.localScale = Vector3.Lerp(bombOrginalScale, bombExpandScale, pulseValue);
 
-            /*if(GetComponent<BusAudioHandler>().sfxIsLooping == false)
+            if(GetComponent<BusAudioHandler>().sfxIsLooping == false)
             {
                 GetComponent<BusAudioHandler>().PlaySFXLoop(GetComponent<BusAudioHandler>().BombRedZone);
-            }*/
+            }
         }
     }
 
@@ -209,10 +208,10 @@ public class BombMeter : MonoBehaviour
         BombImage.color = Color.white;
         BombImage.transform.localScale = Vector3.Lerp(BombImage.transform.localScale, bombOrginalScale, Time.deltaTime * pulseSpeed);
 
-        /*if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
+        if(GetComponent<BusAudioHandler>().sfxIsLooping == true)
         {
             GetComponent<BusAudioHandler>().StopSFXLoop();
-        }*/
+        }
     }
 
     public void BombPhysical()

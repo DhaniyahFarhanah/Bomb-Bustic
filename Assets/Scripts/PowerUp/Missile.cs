@@ -11,6 +11,7 @@ public class Missile : MonoBehaviour
     private float speed = 5f;
     private Rigidbody rb;
     public GameObject target;
+    [SerializeField] GameObject smokeCloud;
     //public Vector3 Crosshair;
     public bool homeIn;
 
@@ -27,15 +28,11 @@ public class Missile : MonoBehaviour
     {
         if (homeIn && target)
         {
-            rb.velocity = Vector3.zero;
             speed += Time.deltaTime * 100f;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
+            rb.MovePosition(Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f));
+            //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
         }
-        /*else
-        {
-            speed += Time.deltaTime * 100f;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime * 5f);
-        }*/
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -45,6 +42,7 @@ public class Missile : MonoBehaviour
         if (hitObject.GetComponentInParent<RougeAI>())
         {
             hitObject.GetComponentInParent<RougeAI>().SelfDestruct();
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             return;
         }
@@ -52,13 +50,15 @@ public class Missile : MonoBehaviour
         if (hitObject.GetComponentInParent<BasicAI>())
         {
             Destroy(hitObject.GetComponentInParent<BasicAI>().gameObject);
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
             return;
         }
 
         if (hitObject.GetComponent<ObstacleType>() != null && !hitObject.CompareTag("Player") && !hitObject.CompareTag("Indestructable") && !hitObject.CompareTag("DropOff"))
         {
-            Destroy(hitObject.transform.parent.gameObject);
+            Destroy(hitObject.GetComponentInParent<ObstacleType>().gameObject);
+            Instantiate(smokeCloud, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

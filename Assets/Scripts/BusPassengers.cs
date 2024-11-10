@@ -54,7 +54,7 @@ public class BusPassengers : MonoBehaviour
     [SerializeField] private Color normalColor = Color.green;
     [SerializeField] private GameObject InsideShootingZone;
     private Vector3 originalCrosshairScale;
-    private BusAudioHandler busAudioHandler;
+    private PowerUpHandler powerupHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +64,8 @@ public class BusPassengers : MonoBehaviour
         {
             PassengerStateList.Add(PassengerState.undefined);
         }
+
+        powerupHandler = gameObject.GetComponent<PowerUpHandler>();
     }
 
     void Update()
@@ -163,8 +165,8 @@ public class BusPassengers : MonoBehaviour
             UpdatePassengerText();
 
             // Play the shooting sound effect
-            busAudioHandler.PlayOneShotSFX(GetComponent<BusAudioHandler>().ShootPassenger);
-            busAudioHandler.Play(GetComponent<BusAudioHandler>().passengerWee);
+            GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().ShootPassenger);
+            GetComponent<BusAudioHandler>().Play(GetComponent<BusAudioHandler>().passengerWee);
         }
     }
 
@@ -303,7 +305,7 @@ public class BusPassengers : MonoBehaviour
         shootingObject.SetActive(activatePassengerEjectionMode);
         if (enabled)
         {
-            GetComponent<PowerUpHandler>().DeactivateCurrent();
+            powerupHandler.DeactivateCurrent();
 
             //slowMotionElapsedTime = slowMotionTime;
             StartCoroutine(AnimateCrosshairScale());
@@ -312,9 +314,22 @@ public class BusPassengers : MonoBehaviour
 
             cam.SetCameraMode(CameraModes.PassengerEject);
         }
-        else
+        else 
         {
-            cam.SetCameraMode(CameraModes.Normal);
+            if(powerupHandler == null)
+            {
+                powerupHandler = gameObject.GetComponent<PowerUpHandler>();
+            }
+
+            if(powerupHandler.currentPickUp == PickUpType.Turret && powerupHandler.activated)
+            {
+                cam.SetCameraMode(CameraModes.Turret);
+            }
+            else
+            {
+                cam.SetCameraMode(CameraModes.Normal);
+            }
+            
         }
     }
 

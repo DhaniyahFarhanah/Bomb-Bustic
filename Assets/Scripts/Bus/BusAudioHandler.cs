@@ -24,6 +24,9 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip flush;
     [SerializeField] public AudioClip win;   
     [SerializeField] public AudioClip[] DrivingSoundtrack;
+    [SerializeField] public AudioClip fastTick;
+    [SerializeField] public AudioClip midTick;
+    [SerializeField] public AudioClip slowTick;
     //[SerializeField] public AudioClip MenuSoundtrack;
     [SerializeField] public AudioClip WinningSoundtrack;
     [SerializeField] public AudioClip PoliceAlert;
@@ -52,6 +55,10 @@ public class BusAudioHandler : MonoBehaviour
         extraAudioSource = gameObject.AddComponent<AudioSource>();
         extraAudioSource.volume = volumeSFX;
 
+        GameObject PlayerCamera = GameObject.Find("Player Camera");
+        bgm_AudioSource1 = PlayerCamera.GetComponent<AudioSource>();
+        bgm_AudioSource2 = PlayerCamera.AddComponent<AudioSource>();
+
         // Check if DrivingSoundtrack has enough elements
         if (DrivingSoundtrack.Length > 0)
         {
@@ -63,18 +70,24 @@ public class BusAudioHandler : MonoBehaviour
         {
             Debug.LogWarning("DrivingSoundtrack array is empty. Please assign audio clips.");
         }
-    }
 
-
-    void Update() 
-    {
-        if(ActiveAudioSource && DrivingSoundtrack.Length > 1) 
+        if (DrivingSoundtrack.Length > 1)
         {
             bgm_AudioSource2.volume = volumebgm;
             bgm_AudioSource2.clip = DrivingSoundtrack[1];
-            bgm_AudioSource2.PlayDelayed(DrivingSoundtrack[0].length - 0.01f);
+        }
+        else
+        {
+            Debug.LogWarning("DrivingSoundtrack array has fewer than 2 elements. Please assign additional audio clips.");
+        }
+    }
+
+
+    void Update() {
+        if(ActiveAudioSource && !bgm_AudioSource1.isPlaying) {
+            ActiveAudioSource  = false;
             bgm_AudioSource2.loop = true;
-            ActiveAudioSource = false;
+            bgm_AudioSource2.Play();
         }
     }
     public void Play(AudioClip clip)

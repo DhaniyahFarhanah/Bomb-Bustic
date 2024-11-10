@@ -15781,10 +15781,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1493410744}
     - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8009369760897389329, guid: 26aa39833f23a814b8e421556c674e06, type: 3}
       propertyPath: camControl
       value: 
       objectReference: {fileID: 2976827039248419619}
@@ -61373,7 +61369,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   icon: {fileID: 8001321870742624418}
-  iconOffset: 25
 --- !u!222 &3905404068476455189
 CanvasRenderer:
   m_ObjectHideFlags: 0

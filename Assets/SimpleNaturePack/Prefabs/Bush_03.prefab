@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.85, y: 4.85, z: 4.85}
+  m_LocalScale: {x: 1.9999999, y: 1.9999999, z: 1.9999999}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9215513372443883872}
@@ -152,9 +152,10 @@ GameObject:
   - component: {fileID: 9139703928979508264}
   - component: {fileID: 6955585385951576129}
   - component: {fileID: 7360275539877163817}
+  - component: {fileID: 6311020674164570166}
   m_Layer: 0
   m_Name: Bush_03_LOD0
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -245,3 +246,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.59417367, y: 0.51553077, z: 0.6313469}
   m_Center: {x: 0.03532842, y: 0.23830993, z: -0.03979501}
+--- !u!114 &6311020674164570166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376679987348616387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4953e15a0f75043b412b51efe2b96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleTag: 1

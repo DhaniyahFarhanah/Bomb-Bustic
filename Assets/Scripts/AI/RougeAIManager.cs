@@ -11,6 +11,7 @@ public class RougeAIManager : MonoBehaviour
     [SerializeField] private float chaseDuration = 60f;
     [SerializeField] private float minAI = 8f;
     [SerializeField] private float spawnInterval = 15f;
+    public bool Spawn;
 
     private enum RougeAIStates
     {
@@ -40,6 +41,12 @@ public class RougeAIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P) && rougeAIState != RougeAIStates.ChaseActive)
         {
             rougeAIState = RougeAIStates.ChaseStart;
+        }
+
+        if (Spawn && rougeAIState != RougeAIStates.ChaseActive)
+        {
+            rougeAIState = RougeAIStates.ChaseStart;
+            Spawn = false;
         }
 
         UpdateState();

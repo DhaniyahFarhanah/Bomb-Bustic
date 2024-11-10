@@ -6,14 +6,14 @@ namespace ArcadeVehicleController
     {
         [SerializeField] private Vehicle m_Vehicle;
         [SerializeField] private JeepVisual m_JeepVisual;
-        //[SerializeField] private ThirdPersonCameraController m_CameraController;
+        [SerializeField] private ThirdPersonCameraController m_CameraController;
         [SerializeField] private DrivingCameraController m_DrivingCamera;
 
         private void Start()
         {
             m_JeepVisual.SpringsRestLength = m_Vehicle.Settings.SpringRestLength;
             m_JeepVisual.SteerAngle = m_Vehicle.Settings.SteerAngle;
-            //m_CameraController.FollowTarget = m_Vehicle.transform;
+            m_CameraController.FollowTarget = m_Vehicle.transform;
             m_DrivingCamera.FollowTarget = m_Vehicle.transform;
         }
 
@@ -31,7 +31,7 @@ namespace ArcadeVehicleController
             m_JeepVisual.SpringsCurrentLength[Wheel.BackLeft] = m_Vehicle.GetSpringCurrentLength(Wheel.BackLeft);
             m_JeepVisual.SpringsCurrentLength[Wheel.BackRight] = m_Vehicle.GetSpringCurrentLength(Wheel.BackRight);
 
-            //m_CameraController.SpeedRatio = m_Vehicle.Velocity.magnitude / (m_Vehicle.Settings.MaxSpeed);
+            m_CameraController.SpeedRatio = m_Vehicle.Velocity.magnitude / (m_Vehicle.Settings.MaxSpeed);
         }
     }
 }

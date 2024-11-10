@@ -6,15 +6,13 @@ using TMPro;
 public class NearMiss : MonoBehaviour
 {
     [SerializeField] private GameObject bus; // Reference to the bus
-    [SerializeField] private GameObject comboObject;
-    [SerializeField] private TextMeshProUGUI comboUI;
+    [SerializeField] private ChaosObjectiveHandler objectiveHandler;
     public List<GameObject> InsideTriggerBox = new List<GameObject>();
     private int Combo = 0;
 
     private void Start()
     {
         Combo = 0;
-        comboObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +21,7 @@ public class NearMiss : MonoBehaviour
         if (obs == null) return;
 
         // Ensure the object entering the trigger is not the bus itself
-        if (other.gameObject != bus)
+        if (other.gameObject != bus && obs.obstacleTag == ObstacleTag.CarAI)
         {
             //Debug.Log($"Added {other.gameObject.name}");
             InsideTriggerBox.Add(other.gameObject.gameObject);
@@ -36,13 +34,12 @@ public class NearMiss : MonoBehaviour
         if (obs == null) return;
 
         // Ensure the object exiting the trigger is not the bus itself
-        if (other.gameObject != bus)
+        if (other.gameObject != bus && objectiveHandler.active && objectiveHandler.chaosType == ChaosType.miss && obs.obstacleTag == ObstacleTag.CarAI)
         {
+            Combo++;
             if (InsideTriggerBox.Contains(other.gameObject))
             {
-                ++Combo;
-                comboObject.SetActive(true);
-                comboUI.text = "NEAR MISS COMBO: " + Combo;
+                objectiveHandler.requirement--;
                 InsideTriggerBox.Remove(other.gameObject);
             }
         }
@@ -51,7 +48,6 @@ public class NearMiss : MonoBehaviour
     public void BusCollisionWith()
     {
         Combo = 0;
-        comboObject.SetActive(false);
         InsideTriggerBox.Clear();
     }
 }

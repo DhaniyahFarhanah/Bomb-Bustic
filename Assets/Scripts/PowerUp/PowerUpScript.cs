@@ -11,6 +11,7 @@ public class PowerUpScript : MonoBehaviour
     [SerializeField] Sprite NitroImage;
     [SerializeField] Sprite EnergyPulseImage;
     [SerializeField] GameObject Sparkle;
+
     Sprite givenImage;
     // Start is called before the first frame update
 
@@ -30,7 +31,7 @@ public class PowerUpScript : MonoBehaviour
                 {
                     if (hit.CompareTag("Player"))
                     {
-                        PickUpType powerUp = (PickUpType)Random.Range(1, 5);
+                        PickUpType powerUp = (PickUpType)Random.Range(1, 4);
 
                         switch (powerUp)
                         {

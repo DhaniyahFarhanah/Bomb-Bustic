@@ -251,7 +251,9 @@ GameObject:
   - component: {fileID: 4723766497020543901}
   - component: {fileID: 4310510902827167036}
   - component: {fileID: 3548545743966341369}
+  - component: {fileID: 6305582121347749629}
   - component: {fileID: 8434654239452625271}
+  - component: {fileID: 5570456706914859266}
   - component: {fileID: 1331975426342428464}
   - component: {fileID: 930155380597902409}
   - component: {fileID: 1713831921313684075}
@@ -324,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overturnAngleThreshold: 45
   minSpeedThreshold: 0.1
-  resetHeight: 2
+  resetHeight: 3
   autoFlipDelay: 2
   manualFlipCooldown: 2
   m_Bus: {fileID: 0}
@@ -348,7 +350,7 @@ MonoBehaviour:
   driftFrontWheelFriction: 0
   driftBackWheelFriction: 0
   Nitro: 0
-  nitroAcceleration: 2
+  nitroAcceleration: 3
   nitroSteering: 0.5
   nitroSpeed: 0
   m_Passengers: 0
@@ -398,6 +400,50 @@ MonoBehaviour:
   m_DriftDustLeft: {fileID: 7042175172785165824}
   m_DriftTrailLeft: {fileID: 6182181687358179780}
   brakeLights: {fileID: 2100000, guid: 28818b83232f21a4fabd24342fdc56fa, type: 2}
+--- !u!114 &6305582121347749629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0776b079bb9a21d428de30d18d721d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveShowcase: {fileID: 0}
+  objectShowcaseAnim: {fileID: 0}
+  objectiveText: {fileID: 0}
+  requirementText: {fileID: 0}
+  rewardAmtText: {fileID: 0}
+  timerTime: {fileID: 0}
+  rewardBacking: {fileID: 0}
+  chaosType: 0
+  active: 0
+  duration: 20
+  maxSecsTilNew: 15
+  minSecsTilNew: 30
+  reward: 0
+  requirement: 0
+  newTimer: 0
+  randomTimer: 0
+  durationTimer: 0
+  backwardsObjectiveText: Drive Backwards without stopping
+  amtOfSeconds: 3
+  backwardReward: 100
+  carCrashObjectiveText: Crash into cars
+  numOfCars: 5
+  carCrashReward: 50
+  collisionObjectiveText: Crash into anything!
+  numTimesToCollide: 5
+  collideReward: 30
+  pWObjectiveText: Use powerups
+  numToUse: 1
+  pWReward: 30
+  nearMissObjectiveText: Nearly miss cars
+  nearMiss: 3
+  nearMissReward: 50
 --- !u!114 &8434654239452625271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CollisionCooldown: 0
+  sparks: {fileID: 767026449149926596, guid: 7e356ab390b455f4a8802e937060f1a0, type: 3}
   minSpeedLight: 10
   m_LightDuration: 0.2
   m_LightIntensity: 0.1
@@ -421,10 +468,54 @@ MonoBehaviour:
   m_HeavyDuration: 0.4
   m_HeavyIntensity: 0.27
   lostChance: 0.5
-  minCrashSpeed: 60
+  minCrashSpeed: 70
   EjectionForce: 200
   verticaDirection: 1.5
   nearMiss: {fileID: 5625231821553790463}
+--- !u!114 &5570456706914859266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582055895660397785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a261d6ff1e9198b4abcfc1f54e7dcc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombTextOnBus: {fileID: 9005159845452743055}
+  digitalDisplay: {fileID: 8287319588906499170}
+  objectiveFinished: 0
+  UI: {fileID: 0}
+  spawnEnemy: {fileID: 0}
+  freeze: 0
+  freezeNeedle: {fileID: 0}
+  freezeSpeedometer: {fileID: 0}
+  UIManger: {fileID: 0}
+  speedometerSlowImg: {fileID: 0}
+  speedometerFastImg: {fileID: 0}
+  speedometerSlowBackingImg: {fileID: 0}
+  speedometerFastBackingImg: {fileID: 0}
+  speedometerSlowRateText: {fileID: 0}
+  speedometerMidRateText: {fileID: 0}
+  speedometerFastRateText: {fileID: 0}
+  speedMaxText: {fileID: 0}
+  needle: {fileID: 0}
+  startBombTime: 300
+  slowSpeedRange: 20
+  midSpeedRange: 50
+  slowTickRate: 5
+  midTickRate: 2
+  fastTickRate: 1
+  shakeSpeed: 0.05
+  shakeIntensity: 0.0088
+  slowShakeIntensity: 0.0225
+  midShakeIntensity: 0.0181
+  fastShakeIntensity: 0.0112
+  addingColor: {r: 0, g: 1, b: 0.51527715, a: 1}
+  subtractColor: {r: 1, g: 0.2729143, b: 0, a: 1}
+  currentTimer: 0
 --- !u!114 &1331975426342428464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,13 +536,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582055895660397785}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5984d89d095d3f142a27fc7eeaff50aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 30
-  bombBuffer: 20
+  minSpeed: 20
+  bombBuffer: 10
   vignette: {fileID: 0}
   bombMeterSlider: {fileID: 0}
   countdownTextUI: {fileID: 0}
@@ -489,7 +580,7 @@ MonoBehaviour:
   emptyImage: {fileID: 21300000, guid: 8c7b6779847da8645acbcd5e0d34579c, type: 3}
   turret: {fileID: 6946694407976258194}
   cam: {fileID: 0}
-  turretCooldown: 15
+  turretCooldown: 10
   hackCooldown: 5
   nitroCooldown: 2
   addFov: 15
@@ -528,12 +619,15 @@ MonoBehaviour:
   DrivingSoundtrack:
   - {fileID: 8300000, guid: 5931412ca8dc8fd4c937d152ed363e7c, type: 3}
   - {fileID: 8300000, guid: d938860c25ad20b4585d408bcb2d62d0, type: 3}
+  fastTick: {fileID: 8300000, guid: dc80b13c5ce74c846a15cf262905cda1, type: 3}
+  midTick: {fileID: 8300000, guid: 750c30968df7f9b48b8bafba94c5b5bd, type: 3}
+  slowTick: {fileID: 8300000, guid: 6c23dd12d9041f246925a244ddc9ed49, type: 3}
   WinningSoundtrack: {fileID: 0}
-  PoliceAlert: {fileID: 8300000, guid: ca381e624f22a25499a39646840ca401, type: 3}
+  PoliceAlert: {fileID: 0}
   ShootPassenger: {fileID: 8300000, guid: d41fffc7b73054147ac13444ff15ba35, type: 3}
   TurretShot: {fileID: 8300000, guid: 799bb1e1516df604baa99c06e8502f1e, type: 3}
   Shockwave: {fileID: 8300000, guid: ead366faeb2678e49a6b2ba189c1f578, type: 3}
-  Emp: {fileID: 8300000, guid: fbf9d30ab4a155943b07d6cfc43f8045, type: 3}
+  Emp: {fileID: 8300000, guid: b1048e1d259dba3429fd5436cc4561e2, type: 3}
   Boost: {fileID: 8300000, guid: 000a675bcf94c8b4999c1f67cf9bc357, type: 3}
   BombRedZone: {fileID: 8300000, guid: 441b1fffb052fd54887782f58fe3a90d, type: 3}
   BombDeadZone: {fileID: 8300000, guid: acd60a97ace1bf246ba53227f75e54b2, type: 3}
@@ -556,7 +650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIhandler: {fileID: 0}
   passengerPrefab: {fileID: 838689364423267720, guid: 0e202b7da0347ef4398bf408e43ba153, type: 3}
-  passengerTotal: 10
+  passengerTotal: 20
   cam: {fileID: 0}
   passengersCurrent: 0
   passengersDelivered: 0
@@ -564,7 +658,7 @@ MonoBehaviour:
   passengersLost: 0
   PassengerStateList: 
   exitOffset: {x: 0, y: 0, z: 0}
-  passengerExitForce: 1500
+  passengerExitForce: 750
   fireRate: 0.25
   passengerInfoUI: {fileID: 0}
   shootingObject: {fileID: 0}
@@ -941,12 +1035,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466434401227338245}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6059136, y: 0.36450824, z: -0.6059157, w: -0.3645115}
-  m_LocalPosition: {x: -1.05, y: 0.01, z: 0.3}
-  m_LocalScale: {x: 0.5021248, y: 0.50212485, z: 0.50212485}
+  m_LocalRotation: {x: -0.5000001, y: -0.49999982, z: 0.49999976, w: 0.5000003}
+  m_LocalPosition: {x: -0.36326602, y: -0.059049767, z: -0.0012570559}
+  m_LocalScale: {x: 0.17287508, y: 0.17287508, z: 0.17287508}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8287319588906499170}
+  m_Father: {fileID: 1608347009826038696}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
 --- !u!198 &5871458045194853003
 ParticleSystem:
@@ -6115,7 +6209,7 @@ Transform:
   m_GameObject: {fileID: 2097041048622496018}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.016240776, z: -0, w: 0.99986815}
-  m_LocalPosition: {x: -0.099, y: 1.818, z: -1.991}
+  m_LocalPosition: {x: -0.02, y: 1.82, z: -1.99}
   m_LocalScale: {x: 3.009246, y: 3.009246, z: 3.009246}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6124,6 +6218,7 @@ Transform:
   - {fileID: 8924713615714944696}
   - {fileID: 1875289472694377418}
   - {fileID: 2474928691183493395}
+  - {fileID: 7241764894371617677}
   - {fileID: 8287319588906499170}
   m_Father: {fileID: 1889830796186935929}
   m_LocalEulerAnglesHint: {x: 0, y: 1.861, z: 0}
@@ -11014,17 +11109,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2652794894918473015}
   m_LocalRotation: {x: -0.24140489, y: 0.0000027362255, z: -0.00000006286427, w: -0.97042453}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0941}
+  m_LocalPosition: {x: 0, y: 0, z: -0.107}
   m_LocalScale: {x: 0.34428704, y: 0.34428707, z: 0.34428704}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7241764894371617677}
   - {fileID: 1924843264829437111}
   m_Father: {fileID: 1608347009826038696}
   m_LocalEulerAnglesHint: {x: 27.939, y: 360, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.0017, y: -0.0137}
+  m_AnchoredPosition: {x: -0.002, y: -0.016}
   m_SizeDelta: {x: 1.1824, y: 0.5103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3238075725523230832
@@ -11525,7 +11619,7 @@ Transform:
   m_GameObject: {fileID: 3678710302715220322}
   serializedVersion: 2
   m_LocalRotation: {x: 0.24360241, y: 0.00000028312203, z: 0.000000853557, w: 0.96987516}
-  m_LocalPosition: {x: 0, y: -0.017, z: -0.086}
+  m_LocalPosition: {x: 0, y: -0.024, z: -0.09}
   m_LocalScale: {x: -0.42222336, y: -0.18958044, z: -0.014651794}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11621,7 +11715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4157178286751870843
 Transform:
   m_ObjectHideFlags: 0
@@ -11631,7 +11725,7 @@ Transform:
   m_GameObject: {fileID: 3700028853506249633}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.08, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 2, z: 12}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11721,8 +11815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bus: {fileID: 582055895660397785}
-  comboObject: {fileID: 0}
-  comboUI: {fileID: 0}
+  objectiveHandler: {fileID: 6305582121347749629}
   InsideTriggerBox: []
 --- !u!1 &3721538721511493607
 GameObject:
@@ -21533,7 +21626,7 @@ Transform:
   m_GameObject: {fileID: 4442804687746848095}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.58, y: -1.37, z: -1.66}
+  m_LocalPosition: {x: -1.57, y: -1.37, z: -1.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31716,7 +31809,7 @@ Transform:
   m_GameObject: {fileID: 6410440593029064366}
   serializedVersion: 2
   m_LocalRotation: {x: 0.24360241, y: 0.00000028312203, z: 0.000000853557, w: 0.96987516}
-  m_LocalPosition: {x: 0, y: -0.019, z: -0.083}
+  m_LocalPosition: {x: 0, y: -0.026, z: -0.087}
   m_LocalScale: {x: -0.44094402, y: -0.20596495, z: -0.015918078}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31941,7 +32034,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SAFE
+  m_text: '>:)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9785feb81a85c043a64978133c97232, type: 2}
   m_sharedMaterial: {fileID: -196331216807351651, guid: d9785feb81a85c043a64978133c97232, type: 2}
@@ -31950,8 +32043,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -32035,7 +32128,7 @@ Transform:
   m_GameObject: {fileID: 6946694407976258194}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.71849644, z: -0, w: 0.69553065}
-  m_LocalPosition: {x: -21.8, y: -133.2088, z: 164}
+  m_LocalPosition: {x: -21.72, y: -133.21, z: 164}
   m_LocalScale: {x: 0.9999999, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37781,6 +37874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5d116a520bb2e47b4002bb74de54f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SmokeCloud: {fileID: 767026449149926596, guid: eedd63e518c69ac4793f94f141c103f2, type: 3}
 --- !u!1 &8867709148706179952
 GameObject:
   m_ObjectHideFlags: 0
