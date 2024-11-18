@@ -600,6 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   b_AudioSourceSFX1: {fileID: 0}
+  beepEffect: {fileID: 3430375677938387027, guid: b7270fe097d5c7641b832a16aa138432, type: 3}
   bgm_AudioSource1: {fileID: 0}
   bgm_AudioSource2: {fileID: 0}
   volumebgm: 0.5
@@ -630,13 +631,16 @@ MonoBehaviour:
   Shockwave: {fileID: 8300000, guid: b6594f56c52145a4e961e51f68ad1b54, type: 3}
   IceBreak: {fileID: 8300000, guid: ee5257298f4544c43a1286c5154417bf, type: 3}
   Emp: {fileID: 8300000, guid: b1048e1d259dba3429fd5436cc4561e2, type: 3}
-  Boost: {fileID: 8300000, guid: 000a675bcf94c8b4999c1f67cf9bc357, type: 3}
+  Boost: {fileID: 8300000, guid: 7725f2f84ed735947b34400d3737c881, type: 3}
+  BoostDown: {fileID: 8300000, guid: 36612417d89314144bdb6883de16daf0, type: 3}
   BombRedZone: {fileID: 8300000, guid: 441b1fffb052fd54887782f58fe3a90d, type: 3}
   BombDeadZone: {fileID: 8300000, guid: acd60a97ace1bf246ba53227f75e54b2, type: 3}
   BombExplosion: {fileID: 8300000, guid: 33e6b1e1f87873a4798d000cf875383f, type: 3}
   Splat: {fileID: 8300000, guid: c2e2f3d5bcbde0843abaa8f29397bc3f, type: 3}
   engineHum: {fileID: 8300000, guid: 435b4d5fe98851c4cbf2f97fda36becc, type: 3}
   Beep: {fileID: 8300000, guid: 2e11886328be2fe47a4ab84b1bb7258c, type: 3}
+  TireScreech: {fileID: 8300000, guid: 4a902c2ee7d217043945bd910fda7d5a, type: 3}
+  MetalScreech: {fileID: 8300000, guid: 7a12d0454e67fd845a9423d9a64e8b0c, type: 3}
   camControl: {fileID: 0}
   sfxIsLooping: 0
 --- !u!114 &2962379419639768851

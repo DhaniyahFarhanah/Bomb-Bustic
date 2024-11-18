@@ -197,6 +197,7 @@ public class PowerUpHandler : MonoBehaviour
                 cam.nitroFOVIncrease = 0f;
                 NitroProtector.SetActive(false);
                 gameObject.GetComponent<CollisionHandler>().enabled = true;
+                GetComponent<BusAudioHandler>().PlayPriority(GetComponent<BusAudioHandler>().BoostDown);
                 break;
             case PickUpType.EnergyPulse:
                 empPulse.SetActive(false);

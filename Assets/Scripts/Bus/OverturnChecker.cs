@@ -92,11 +92,7 @@ public class OverturnChecker : MonoBehaviour
         Vector3 busPosition = transform.position;
         m_BusVisual.SetActive(false);
 
-        // Optional: Trigger cloud spawn effect here if needed
-        if (m_CloudSpawn != null)
-        {
-            Instantiate(m_CloudSpawn, gameObject.transform.position, quaternion.identity);
-        }
+        Instantiate(m_CloudSpawn, gameObject.transform.position, quaternion.identity);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -113,12 +109,6 @@ public class OverturnChecker : MonoBehaviour
 
         // Re-enable physics
         m_BusRigidbody.isKinematic = false;
-
-        // Optional: Deactivate cloud spawn effect after flip
-        if (m_CloudSpawn != null)
-        {
-            m_CloudSpawn.SetActive(false);
-        }
 
         m_IsFlipping = false; // Reset flip state after completion
     }

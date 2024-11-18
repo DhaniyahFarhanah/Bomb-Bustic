@@ -47,6 +47,8 @@ namespace ArcadeVehicleController
         private Quaternion m_WheelFrontLeftRoll;
         private Quaternion m_WheelFrontRightRoll;
 
+        BusAudioHandler audioHandler;
+
         [Header("Visuals")]
         public Material brakeLights;
 
@@ -74,6 +76,7 @@ namespace ArcadeVehicleController
 
         private void Start()
         {
+            audioHandler = GetComponent<BusAudioHandler>();
             m_WheelFrontLeftRoll = m_WheelFrontLeft.localRotation;
             m_WheelFrontRightRoll = m_WheelFrontRight.localRotation;
         }
@@ -154,6 +157,10 @@ namespace ArcadeVehicleController
             if(ForwardSpeed > highSpeed)
             {
                 SpeedSmoke(true);
+                if (audioHandler.skidSound.isPlaying)
+                {
+                    audioHandler.skidSound.Stop();
+                }
             }
 
             //Turning at mid speed
@@ -168,6 +175,12 @@ namespace ArcadeVehicleController
                 {
                     SpeedSmoke(true);
                     TrailEffect(true);
+
+                    if (!audioHandler.skidSound.isPlaying)
+                    {
+                        audioHandler.skidSound.pitch = Random.Range(0.90f, 1.1f);
+                        audioHandler.skidSound.Play();
+                    }
                     
                 }
             }
@@ -176,10 +189,18 @@ namespace ArcadeVehicleController
             else if(ForwardSpeed < 0.0f || BrakeInput < 0.0f)
             {
                 TrailEffect(true);
+                if (audioHandler.skidSound.isPlaying)
+                {
+                    audioHandler.skidSound.Stop();
+                }
             }
             else if(ForwardSpeed > -5.0f && ForwardSpeed < 0.0f)
             {
                 SpeedSmoke(true);
+                if (audioHandler.skidSound.isPlaying)
+                {
+                    audioHandler.skidSound.Stop();
+                }
             }
 
             //drifting
@@ -187,6 +208,12 @@ namespace ArcadeVehicleController
             {
                 TrailEffect(true);
                 DriftSmoke(true);
+
+                if (!audioHandler.skidSound.isPlaying)
+                {
+                    audioHandler.skidSound.pitch = Random.Range(0.90f, 1.1f);
+                    audioHandler.skidSound.Play();
+                }
             }
 
             //on sand
@@ -198,6 +225,10 @@ namespace ArcadeVehicleController
                 TrailEffect(false);
                 DriftSmoke(false);
                 currentTime = skidDelay;
+                if (audioHandler.skidSound.isPlaying)
+                {
+                    audioHandler.skidSound.Stop();
+                }
             }
         }
 

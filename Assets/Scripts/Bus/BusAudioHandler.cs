@@ -6,11 +6,13 @@ using UnityEngine.UIElements;
 
 public class BusAudioHandler : MonoBehaviour
 {
-    [SerializeField] private AudioSource b_AudioSourceSFX1;
+    [SerializeField] public AudioSource b_AudioSourceSFX1;
+    [SerializeField] private GameObject beepEffect;
     private AudioSource b_BeepSource;
     public AudioSource bgm_AudioSource1;
     public AudioSource bgm_AudioSource2;
-    private AudioSource extraAudioSource;
+    public AudioSource extraAudioSource;
+    public AudioSource skidSound;
     [SerializeField] float volumebgm = 0.5f;
     [SerializeField] float volumeSFX = 1.0f;
     //[SerializeField] float fadeTime = 2.0f;
@@ -37,12 +39,15 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip IceBreak;
     [SerializeField] public AudioClip Emp;
     [SerializeField] public AudioClip Boost;
+    [SerializeField] public AudioClip BoostDown;
     [SerializeField] public AudioClip BombRedZone;
     [SerializeField] public AudioClip BombDeadZone;
     [SerializeField] public AudioClip BombExplosion;
     [SerializeField] public AudioClip Splat;
     [SerializeField] public AudioClip engineHum;
     [SerializeField] public AudioClip Beep;
+    [SerializeField] public AudioClip TireScreech;
+    [SerializeField] public AudioClip MetalScreech;
 
     [SerializeField] public DrivingCameraController camControl;
     //private bool isFading = false;
@@ -57,6 +62,12 @@ public class BusAudioHandler : MonoBehaviour
 
         extraAudioSource = gameObject.AddComponent<AudioSource>();
         extraAudioSource.volume = volumeSFX;
+
+        skidSound = gameObject.AddComponent<AudioSource>();
+        skidSound.volume = volumeSFX;
+        skidSound.loop = false;
+        skidSound.clip = TireScreech;
+        skidSound.Stop();
 
         b_BeepSource = gameObject.AddComponent<AudioSource>();
         b_BeepSource.volume = volumeSFX;
@@ -103,6 +114,7 @@ public class BusAudioHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             b_BeepSource.pitch = Random.Range(0.99f, 1.01f);
+            Instantiate(beepEffect, gameObject.transform);
             b_BeepSource.Play();
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
@@ -114,15 +126,6 @@ public class BusAudioHandler : MonoBehaviour
     {
         if(b_AudioSourceSFX1.isPlaying)
         {
-            if (extraAudioSource.isPlaying)
-            {
-                return;
-            }
-            else
-            {
-                PlayOneShotSFX(clip);
-            }
-
             return;
             
         }
