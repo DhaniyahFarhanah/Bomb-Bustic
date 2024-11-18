@@ -12,6 +12,7 @@ public class BusAudioHandler : MonoBehaviour
     public AudioSource bgm_AudioSource1;
     public AudioSource bgm_AudioSource2;
     public AudioSource extraAudioSource;
+    public AudioSource collisionSounds;
     public AudioSource skidSound;
     [SerializeField] float volumebgm = 0.5f;
     [SerializeField] float volumeSFX = 1.0f;
@@ -48,6 +49,7 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip Beep;
     [SerializeField] public AudioClip TireScreech;
     [SerializeField] public AudioClip MetalScreech;
+    [SerializeField] public AudioClip EngineHiss;
 
     [SerializeField] public DrivingCameraController camControl;
     //private bool isFading = false;
@@ -68,6 +70,12 @@ public class BusAudioHandler : MonoBehaviour
         skidSound.loop = false;
         skidSound.clip = TireScreech;
         skidSound.Stop();
+
+        collisionSounds = gameObject.AddComponent<AudioSource>();
+        collisionSounds.volume = volumeSFX;
+        collisionSounds.loop = false;
+        collisionSounds.clip = TireScreech;
+        collisionSounds.Stop();
 
         b_BeepSource = gameObject.AddComponent<AudioSource>();
         b_BeepSource.volume = volumeSFX;
@@ -184,5 +192,12 @@ public class BusAudioHandler : MonoBehaviour
         extraAudioSource.volume = volumeSFX;
         extraAudioSource.clip = clip;
         extraAudioSource.Play();
+    }
+
+    public void CollisionSounds(AudioClip clip)
+    {
+        collisionSounds.volume = volumeSFX;
+        collisionSounds.clip = clip;
+        collisionSounds.Play();
     }
 }

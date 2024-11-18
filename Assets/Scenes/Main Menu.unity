@@ -22538,7 +22538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1573540714}
   instructionPage: {fileID: 1621880676}
-  buttonDisabledTime: 3
+  buttonDisabledTime: 0.2
   pages:
   - {fileID: 1476016802}
   - {fileID: 1020627272}
@@ -53845,7 +53845,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f93298bcfbdd2034299a6289a35ca0da, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -179,8 +179,7 @@ public class CollisionHandler : MonoBehaviour
                 return audioHandler.sCrash[random];
             case ObstacleTag.Pedestrian:
             default:
-                int random2 = Random.Range(0, audioHandler.sCrash.Length);
-                return audioHandler.sCrash[random2];
+                return audioHandler.mCrash;
         }
     }
 
@@ -203,7 +202,8 @@ public class CollisionHandler : MonoBehaviour
 
 
             Instantiate(sparks, pos, rot);
-            audioHandler.Play(CrashSound(ObstacleTag.None));
+            audioHandler.collisionSounds.pitch = Random.Range(0.6f, 1.2f);
+            audioHandler.CollisionSounds(CrashSound(ObstacleTag.None));
             m_CamShake.DoCameraShake(m_LightIntensity, m_LightDuration);
         }
 
@@ -226,7 +226,8 @@ public class CollisionHandler : MonoBehaviour
                 }
             }
 
-            audioHandler.Play(CrashSound(m_ObstacleType));
+            audioHandler.collisionSounds.pitch = Random.Range(0.60f, 1.2f);
+            audioHandler.CollisionSounds(CrashSound(m_ObstacleType));
 
             ExecuteCollisionShit(obs.obstacleTag);
 

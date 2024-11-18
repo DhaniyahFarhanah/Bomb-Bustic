@@ -83,6 +83,15 @@ namespace ArcadeVehicleController
 
         private void Update()
         {
+            if(ForwardSpeed == 0.0f)
+            {
+                if (!audioHandler.b_AudioSourceSFX1.isPlaying)
+                {
+                    audioHandler.PlayPriority(audioHandler.EngineHiss);
+                }
+                
+            }
+
             IsLeftGrounded = Physics.Raycast(m_LeftWheelGround.position, -m_LeftWheelGround.up, m_CheckHeight, m_Ground);
             IsRightGrounded = Physics.Raycast(m_RightWheelGround.position, -m_RightWheelGround.up, m_CheckHeight, m_Ground);
 
