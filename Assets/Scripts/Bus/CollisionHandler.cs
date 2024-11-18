@@ -203,7 +203,7 @@ public class CollisionHandler : MonoBehaviour
 
 
             Instantiate(sparks, pos, rot);
-            audioHandler.PlayOneShotSFX(CrashSound(ObstacleTag.None));
+            audioHandler.Play(CrashSound(ObstacleTag.None));
             m_CamShake.DoCameraShake(m_LightIntensity, m_LightDuration);
         }
 
@@ -226,7 +226,7 @@ public class CollisionHandler : MonoBehaviour
                 }
             }
 
-            audioHandler.PlayOneShotSFX(CrashSound(m_ObstacleType));
+            audioHandler.Play(CrashSound(m_ObstacleType));
 
             ExecuteCollisionShit(obs.obstacleTag);
 

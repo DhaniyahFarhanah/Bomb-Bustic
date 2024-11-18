@@ -331,7 +331,7 @@ MonoBehaviour:
   manualFlipCooldown: 2
   m_Bus: {fileID: 0}
   m_BusVisual: {fileID: 4442804687746848095}
-  m_CloudSpawn: {fileID: 0}
+  m_CloudSpawn: {fileID: 767026449149926596, guid: eedd63e518c69ac4793f94f141c103f2, type: 3}
 --- !u!114 &4310510902827167036
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class BusAudioHandler : MonoBehaviour
 {
-    private AudioSource b_AudioSource;
+    [SerializeField] private AudioSource b_AudioSourceSFX1;
     public AudioSource bgm_AudioSource1;
     public AudioSource bgm_AudioSource2;
     private AudioSource extraAudioSource;
@@ -49,8 +49,8 @@ public class BusAudioHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        b_AudioSource = GetComponent<AudioSource>();
-        b_AudioSource.volume = volumeSFX;
+        b_AudioSourceSFX1 = GetComponent<AudioSource>();
+        b_AudioSourceSFX1.volume = volumeSFX;
 
         extraAudioSource = gameObject.AddComponent<AudioSource>();
         extraAudioSource.volume = volumeSFX;
@@ -92,32 +92,42 @@ public class BusAudioHandler : MonoBehaviour
     }
     public void Play(AudioClip clip)
     {
-        if(b_AudioSource.isPlaying)
+        if(b_AudioSourceSFX1.isPlaying)
         {
+            if (extraAudioSource.isPlaying)
+            {
+                return;
+            }
+            else
+            {
+                PlayOneShotSFX(clip);
+            }
             return;
+            
         }
-        b_AudioSource.loop = false;
-        b_AudioSource.clip = clip;
-        b_AudioSource.Play();
+
+        b_AudioSourceSFX1.loop = false;
+        b_AudioSourceSFX1.clip = clip;
+        b_AudioSourceSFX1.Play();
     }
     public void PlayPriority(AudioClip clip)
     {
-        if(b_AudioSource.isPlaying)
+        if(b_AudioSourceSFX1.isPlaying)
         {
-            b_AudioSource.Stop();
+            b_AudioSourceSFX1.Stop();
         }
-        b_AudioSource.clip = clip;
-        b_AudioSource.Play();
+        b_AudioSourceSFX1.clip = clip;
+        b_AudioSourceSFX1.Play();
     }
 
     public void Play(AudioClip[] clips)
     {
-        if(b_AudioSource.isPlaying)
+        if(b_AudioSourceSFX1.isPlaying)
         {
             return;
         }
-        b_AudioSource.clip = clips[Random.Range(0, clips.Length)];
-        b_AudioSource.Play();
+        b_AudioSourceSFX1.clip = clips[Random.Range(0, clips.Length)];
+        b_AudioSourceSFX1.Play();
     }
 
     
@@ -132,16 +142,16 @@ public class BusAudioHandler : MonoBehaviour
 
     public void PlaySFXLoop(AudioClip clip)
     {
-        b_AudioSource.clip = clip;
-        b_AudioSource.loop = true;
-        b_AudioSource.Play();
+        b_AudioSourceSFX1.clip = clip;
+        b_AudioSourceSFX1.loop = true;
+        b_AudioSourceSFX1.Play();
         sfxIsLooping = true;
     }
 
     public void StopSFXLoop()
     {
-        b_AudioSource.loop = false;
-        b_AudioSource.Stop();
+        b_AudioSourceSFX1.loop = false;
+        b_AudioSourceSFX1.Stop();
         sfxIsLooping = false;
     }
 

@@ -1,5 +1,6 @@
 using ArcadeVehicleController;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class OverturnChecker : MonoBehaviour
@@ -80,6 +81,7 @@ public class OverturnChecker : MonoBehaviour
 
     IEnumerator FlipBusBack()
     {
+        
         m_IsFlipping = true; // Prevent multiple flips at once
         lastFlipTime = Time.time; // Set cooldown time
 
@@ -93,7 +95,7 @@ public class OverturnChecker : MonoBehaviour
         // Optional: Trigger cloud spawn effect here if needed
         if (m_CloudSpawn != null)
         {
-            m_CloudSpawn.SetActive(true);
+            Instantiate(m_CloudSpawn, gameObject.transform.position, quaternion.identity);
         }
 
         yield return new WaitForSeconds(0.1f);
