@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1652057605747897892}
   m_Layer: 0
   m_Name: Road_SlantFlat_45
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

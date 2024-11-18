@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6524096523184755290}
   m_Layer: 0
   m_Name: light_curvedCross
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

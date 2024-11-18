@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7216540355638405350}
   m_Layer: 0
   m_Name: skyscraperD (1)
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

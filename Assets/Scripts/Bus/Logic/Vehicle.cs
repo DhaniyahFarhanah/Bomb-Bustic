@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +49,18 @@ namespace ArcadeVehicleController
             }
         }
 
+        [Header("Drifting")]
+        public bool isDrift;
+        public float driftSteering;
+        public float driftFrontWheelFriction;
+        public float driftBackWheelFriction;
+
+        [Header("PowerUpStats")]
+        public bool Nitro;
+        [SerializeField] float nitroAcceleration;
+        [SerializeField] float nitroSteering;
+        [SerializeField] float nitroSpeed;
+
         [Header("Passenger Stuff")]
         public int m_Passengers = 0;
         public int m_DeliveredPassengers = 0;
@@ -73,7 +86,7 @@ namespace ArcadeVehicleController
 
         }
 
-        public void ThrowPassengers(bool delivered)
+       /* public void ThrowPassengers(bool delivered)
         {
             for (int i = m_Passengers; i > 0; i--) 
             {
@@ -84,7 +97,7 @@ namespace ArcadeVehicleController
                 if (delivered)
                     m_DeliveredPassengers++;
             }
-        }
+        }*/
         public void CountdownPickUp(float time, float maxTime, Color color)
         {
             Timer.fillAmount = (time / maxTime) * 1.0f;
@@ -108,8 +121,9 @@ namespace ArcadeVehicleController
 
         public void Braking()
         {
-            // Get the current forward speed of the vehicle
-            float forwardSpeed = Vector3.Dot(m_Transform.forward, m_Rigidbody.velocity);
+            /*// Get the current forward speed of the vehicle
+            float 
+            = Vector3.Dot(m_Transform.forward, m_Rigidbody.velocity);
             float speed = Mathf.Abs(forwardSpeed);
 
             // Brakes ratio logic, increase braking effect when almost stopped
@@ -150,7 +164,7 @@ namespace ArcadeVehicleController
             {
                 m_Rigidbody.velocity = Vector3.zero; // Force the vehicle to stop
                 m_Rigidbody.angularVelocity = Vector3.zero; // Stop any rotation
-            }
+            }*/
         }
 
 
@@ -189,7 +203,7 @@ namespace ArcadeVehicleController
             m_Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             m_Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
             m_Rigidbody.constraints = RigidbodyConstraints.None;
-            m_Rigidbody.centerOfMass = Vector3.zero;
+            m_Rigidbody.centerOfMass = new Vector3(0f, 0.04f, 0f);
         }
 
         // To be called once per physics frame per spring.
@@ -255,8 +269,26 @@ namespace ArcadeVehicleController
 
             if (frontWheel)
             {
-                var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
-                return steerQuaternion * m_Transform.forward;
+                if (Nitro)
+                {
+                    var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * (m_Settings.SteerAngle + nitroSteering), Vector3.up);
+                    return steerQuaternion * m_Transform.forward;
+                }
+                else
+                {
+                    if (isDrift)
+                    {
+                        var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.DriftSteerAngle, Vector3.up);
+                        return steerQuaternion * m_Transform.forward;
+                    }
+
+                    else
+                    {
+                        var steerQuaternion = Quaternion.AngleAxis(m_SteerInput * m_Settings.SteerAngle, Vector3.up);
+                        return steerQuaternion * m_Transform.forward;
+                    }
+                    
+                }
             }
             else
             {
@@ -299,8 +331,17 @@ namespace ArcadeVehicleController
 
         private float GetWheelGripFactor(Wheel wheel)
         {
-            bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
-            return frontWheel ? m_Settings.FrontWheelsGripFactor : m_Settings.RearWheelsGripFactor;
+            if (isDrift)
+            {
+                bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
+                return frontWheel ? m_Settings.DriftFrontWheelsGripFactor : m_Settings.DriftRearWheelsGripFactor;
+            }
+            else
+            {
+                bool frontWheel = wheel == Wheel.FrontLeft || wheel == Wheel.FrontRight;
+                return frontWheel ? m_Settings.FrontWheelsGripFactor : m_Settings.RearWheelsGripFactor;
+            }
+            
         }
 
         private bool IsGrounded(Wheel wheel)
@@ -361,7 +402,11 @@ namespace ArcadeVehicleController
             {
                 return;
             }
-            else if (!movingForward && speed > m_Settings.MaxReverseSpeed)
+            else if (!movingForward && speed > m_Settings.MaxReverseSpeed && !isDrift)
+            {
+                return;
+            }
+            else if(!movingForward && speed > m_Settings.DriftReverseSpeed && isDrift)
             {
                 return;
             }
@@ -375,7 +420,17 @@ namespace ArcadeVehicleController
 
                 Vector3 position = GetWheelTorquePosition(wheel);
                 Vector3 wheelForward = GetWheelRollDirection(wheel);
-                m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower) * wheelForward, position);
+
+                if (Nitro)
+                {
+                    m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower * nitroAcceleration) * wheelForward, position);
+                }
+
+                else
+                {
+                    m_Rigidbody.AddForceAtPosition(m_AccelerateInput * (m_Settings.AcceleratePower) * wheelForward, position);
+                }
+                
             }
         }
 
@@ -386,7 +441,7 @@ namespace ArcadeVehicleController
 
             float brakesRatio;
 
-            const float ALMOST_STOPPING_SPEED = 2.0f;
+            const float ALMOST_STOPPING_SPEED = 0.0f;
             bool almostStopping = speed < ALMOST_STOPPING_SPEED;
             if (almostStopping)
             {
@@ -422,8 +477,17 @@ namespace ArcadeVehicleController
                 Vector3 springPosition = GetSpringPosition(wheel);
                 Vector3 rollDirection = GetWheelRollDirection(wheel);
                 float rollVelocity = Vector3.Dot(rollDirection, m_Rigidbody.GetPointVelocity(springPosition));
+                float desiredVelocityChange;
 
-                float desiredVelocityChange = -rollVelocity * m_Settings.BrakesPower * brakesRatio;
+                if (isDrift)
+                {
+                    desiredVelocityChange = -rollVelocity * m_Settings.DriftBrakesPower * brakesRatio;
+                }
+                else
+                {
+                    desiredVelocityChange = -rollVelocity * m_Settings.BrakesPower * brakesRatio;
+                }
+                
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
 
                 Vector3 force = desiredAcceleration * m_Settings.TireMass * rollDirection;

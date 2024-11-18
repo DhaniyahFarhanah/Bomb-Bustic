@@ -1,34 +1,9 @@
 fileFormatVersion: 2
-guid: 391db689dcc3f3244959237d631feeee
+guid: a68938fe7d94c6a44b22bfbf2ee08478
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: AntennaBase
-    second: {fileID: 2100000, guid: f2fc6dc99402f1b4dbbbda22a7c1c000, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: AntennaBody.001
-    second: {fileID: 2100000, guid: 5c98c5e62c51adf47aeb3083f35b7cb7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BusBody
-    second: {fileID: 2100000, guid: 3bcb4d245b0b76c49bbaa476e366c6ea, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: SideMirror.001
-    second: {fileID: 2100000, guid: e0db1c49813509948bd27afb1f97fbd9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Wheel
-    second: {fileID: 2100000, guid: bd89a40fcfa7ead469a09955e2b6157e, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

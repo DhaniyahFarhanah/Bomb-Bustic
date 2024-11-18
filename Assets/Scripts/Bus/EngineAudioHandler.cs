@@ -11,12 +11,12 @@ public class EngineAudioHandler : MonoBehaviour
     public float minPitch = 0.1f;
     public float maxPitch = 1.0f;
     public float engineVolume = 0.7f;   
-    private GameObject _bus;
+    private Vehicle _bus;
 
     // Start is called before the first frame update
     void Start()
     {
-        _bus = GameObject.FindGameObjectWithTag("Player");
+        _bus = GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>();
         _AudioSource = GetComponent<AudioSource>();
         _AudioSource.volume = engineVolume;
         _AudioSource.clip = engineLoop;
@@ -26,18 +26,16 @@ public class EngineAudioHandler : MonoBehaviour
     
     void Update()
     {
-        PoopMeter _poopMeter = _bus.GetComponent<PoopMeter>();
-        if(_poopMeter.GetCurrentSpeed() > 0.0f)
+        if(_bus.Velocity.magnitude > 0.0f)
         {
             AdjustPitch();
         }
-
     }
 
     void AdjustPitch()
     {
         //float maxSpeed = _bus.GetComponent<Vehicle>().MaxSpeed;        
-        float pitch = Mathf.Lerp(minPitch, maxPitch, _bus.GetComponent<PoopMeter>().GetCurrentSpeed()/maxSpeed);
+        float pitch = Mathf.Lerp(minPitch, maxPitch, _bus.Velocity.magnitude / maxSpeed);
 
         _AudioSource.pitch = pitch;
     }

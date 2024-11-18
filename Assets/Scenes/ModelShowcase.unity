@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 78af7ccd64d4b854287d4a98b548c5f3, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -284,75 +284,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fde956ce609eb4849920e6957b2bc3e7, type: 3}
   m_PrefabInstance: {fileID: 116344547}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &170274933
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.57788813
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.57788813
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.57788813
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -19.71
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 12.39
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 391db689dcc3f3244959237d631feeee, type: 3}
-      propertyPath: m_Name
-      value: Bus_Version4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 391db689dcc3f3244959237d631feeee, type: 3}
 --- !u!1 &215243755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3175,10 +3106,33 @@ MonoBehaviour:
   m_FindBus: 0
   m_PassengerStatusText: {fileID: 0}
   m_CurrentNumPassengerText: {fileID: 0}
+  end: 0
+  win: 0
+  playOnce: 0
+  m_PassengerInfo: {fileID: 0}
+  m_PassengerIconPrefab: {fileID: 0}
+  m_PassengerShowcase: {fileID: 0}
+  m_Time: 0
   m_WinCanvas: {fileID: 0}
+  m_DeliveredColor: {r: 0, g: 0, b: 0, a: 0}
+  m_InjuredColor: {r: 0, g: 0, b: 0, a: 0}
+  m_LostColor: {r: 0, g: 0, b: 0, a: 0}
+  m_unsavedColor: {r: 0, g: 0, b: 0, a: 0}
+  m_WinCanvasAnim: {fileID: 0}
+  score: 0
+  timeTextBox: {fileID: 0}
+  gradeTextBox: {fileID: 0}
+  bronzeColor: {r: 0, g: 0, b: 0, a: 0}
+  silverColor: {r: 0, g: 0, b: 0, a: 0}
+  goldColor: {r: 0, g: 0, b: 0, a: 0}
+  silverScore: 0
+  goldScore: 0
   m_PauseCanvas: {fileID: 9041002349640234055}
   m_IsPaused: 0
   m_LoseCanvas: {fileID: 0}
+  timeTextBoxLose: {fileID: 0}
+  passengersSavedText: {fileID: 0}
+  loseHolder: {fileID: 0}
 --- !u!4 &2348787448443897721
 Transform:
   m_ObjectHideFlags: 0
@@ -5220,7 +5174,6 @@ SceneRoots:
   - {fileID: 543548372}
   - {fileID: 8656747441788632915}
   - {fileID: 1057958887}
-  - {fileID: 170274933}
   - {fileID: 796087027}
   - {fileID: 543450651871821475}
   - {fileID: 1403929258}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6015514748251711813}
   m_Layer: 0
   m_Name: small_buildingC
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1246699599777231301}
   m_Layer: 0
   m_Name: wall_windowB
-  m_TagString: Untagged
+  m_TagString: Indestructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
