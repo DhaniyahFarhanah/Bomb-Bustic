@@ -31,7 +31,7 @@ public class PowerUpScript : MonoBehaviour
                 {
                     if (hit.CompareTag("Player"))
                     {
-                        PickUpType powerUp = (PickUpType)Random.Range(1, 5);
+                        PickUpType powerUp = (PickUpType)Random.Range(1, 4);
 
                         switch (powerUp)
                         {

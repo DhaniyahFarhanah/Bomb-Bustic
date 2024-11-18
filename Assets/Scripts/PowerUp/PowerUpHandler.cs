@@ -190,6 +190,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.Hack:
                 bombControl.freeze = false;
+                GetComponent<BusAudioHandler>().PlayOneShotSFX(GetComponent<BusAudioHandler>().IceBreak);
                 break;
             case PickUpType.Nitro:
                 busValues.Nitro = false;
@@ -199,6 +200,7 @@ public class PowerUpHandler : MonoBehaviour
                 break;
             case PickUpType.EnergyPulse:
                 empPulse.SetActive(false);
+                GetComponent<BusAudioHandler>().StopSFXLoop();
                 break;
         }
 

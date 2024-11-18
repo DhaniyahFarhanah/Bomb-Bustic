@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class BusAudioHandler : MonoBehaviour
 {
     [SerializeField] private AudioSource b_AudioSourceSFX1;
+    private AudioSource b_BeepSource;
     public AudioSource bgm_AudioSource1;
     public AudioSource bgm_AudioSource2;
     private AudioSource extraAudioSource;
@@ -33,6 +34,7 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip ShootPassenger;
     [SerializeField] public AudioClip TurretShot;
     [SerializeField] public AudioClip Shockwave;
+    [SerializeField] public AudioClip IceBreak;
     [SerializeField] public AudioClip Emp;
     [SerializeField] public AudioClip Boost;
     [SerializeField] public AudioClip BombRedZone;
@@ -40,6 +42,7 @@ public class BusAudioHandler : MonoBehaviour
     [SerializeField] public AudioClip BombExplosion;
     [SerializeField] public AudioClip Splat;
     [SerializeField] public AudioClip engineHum;
+    [SerializeField] public AudioClip Beep;
 
     [SerializeField] public DrivingCameraController camControl;
     //private bool isFading = false;
@@ -54,6 +57,13 @@ public class BusAudioHandler : MonoBehaviour
 
         extraAudioSource = gameObject.AddComponent<AudioSource>();
         extraAudioSource.volume = volumeSFX;
+
+        b_BeepSource = gameObject.AddComponent<AudioSource>();
+        b_BeepSource.volume = volumeSFX;
+        b_BeepSource.loop = true;
+        b_BeepSource.clip = Beep;
+        b_BeepSource.Stop();
+
 
         GameObject PlayerCamera = GameObject.Find("Player Camera");
         bgm_AudioSource1 = PlayerCamera.GetComponent<AudioSource>();
@@ -89,6 +99,16 @@ public class BusAudioHandler : MonoBehaviour
             bgm_AudioSource2.loop = true;
             bgm_AudioSource2.Play();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            b_BeepSource.pitch = Random.Range(0.99f, 1.01f);
+            b_BeepSource.Play();
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            b_BeepSource.Stop();
+        }
     }
     public void Play(AudioClip clip)
     {
@@ -102,6 +122,7 @@ public class BusAudioHandler : MonoBehaviour
             {
                 PlayOneShotSFX(clip);
             }
+
             return;
             
         }

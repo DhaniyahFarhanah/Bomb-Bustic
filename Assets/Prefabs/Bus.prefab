@@ -599,9 +599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fe14e9d6aabed04896df5abcf6809e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  b_AudioSourceSFX1: {fileID: 0}
   bgm_AudioSource1: {fileID: 0}
   bgm_AudioSource2: {fileID: 0}
-  volumebgm: 0.8
+  volumebgm: 0.5
   volumeSFX: 1
   sCrash:
   - {fileID: 8300000, guid: e7228cf9ef0a2ec4c8583df2215ddd31, type: 3}
@@ -626,7 +627,8 @@ MonoBehaviour:
   PoliceAlert: {fileID: 0}
   ShootPassenger: {fileID: 8300000, guid: d41fffc7b73054147ac13444ff15ba35, type: 3}
   TurretShot: {fileID: 8300000, guid: 799bb1e1516df604baa99c06e8502f1e, type: 3}
-  Shockwave: {fileID: 8300000, guid: ead366faeb2678e49a6b2ba189c1f578, type: 3}
+  Shockwave: {fileID: 8300000, guid: b6594f56c52145a4e961e51f68ad1b54, type: 3}
+  IceBreak: {fileID: 8300000, guid: ee5257298f4544c43a1286c5154417bf, type: 3}
   Emp: {fileID: 8300000, guid: b1048e1d259dba3429fd5436cc4561e2, type: 3}
   Boost: {fileID: 8300000, guid: 000a675bcf94c8b4999c1f67cf9bc357, type: 3}
   BombRedZone: {fileID: 8300000, guid: 441b1fffb052fd54887782f58fe3a90d, type: 3}
@@ -634,6 +636,7 @@ MonoBehaviour:
   BombExplosion: {fileID: 8300000, guid: 33e6b1e1f87873a4798d000cf875383f, type: 3}
   Splat: {fileID: 8300000, guid: c2e2f3d5bcbde0843abaa8f29397bc3f, type: 3}
   engineHum: {fileID: 8300000, guid: 435b4d5fe98851c4cbf2f97fda36becc, type: 3}
+  Beep: {fileID: 8300000, guid: 2e11886328be2fe47a4ab84b1bb7258c, type: 3}
   camControl: {fileID: 0}
   sfxIsLooping: 0
 --- !u!114 &2962379419639768851
